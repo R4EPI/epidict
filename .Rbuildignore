@@ -2,8 +2,10 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
+^README\.html$
 ^cran-comments\.md$
 ^\.github$
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^codecov\.yml$
+

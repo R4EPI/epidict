@@ -116,12 +116,6 @@ print(dict)
 #  - 2nd column: translations
 #  - 3rd column: data column name
 #  - 4th column: order of options
-#
-# we also want to make sure to filter out any columns that are blank for
-# the option codes, because this means that they don't have a fixed number of
-# options
-dict <- dplyr::filter(dict, !is.na(option_code))
-print(dict)
 
 # Now we can use linelist to filter the data:
 dat_clean <- matchmaker::match_us(dat, dict, 
