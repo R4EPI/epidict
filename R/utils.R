@@ -12,7 +12,7 @@
 # Not needed because we don't deal with accents here: importFrom stringi stri_trans_general
 #' @noRd
 tidy_labels <- function(x, sep = "_", #transformation = "Any-Latin; Latin-ASCII",
-                         protect = "") {
+                        protect = "") {
   x <- as.character(x)
   
   ## On the processing of the input:

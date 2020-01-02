@@ -1,13 +1,28 @@
 Package: msfdict
-Title: What the Package Does (One Line, Title Case)
+Title: Standardized Data Dictionaries for the 'R4EPIs' Project
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R: c(
     person(given = "Zhian N.",
            family = "Kamvar",
            role = c("aut", "cre"),
            email = "zkamvar@gmail.com",
-           comment = c(ORCID = "0000-0003-1458-7108"))
-Description: What the package does (one paragraph).
+           comment = c(ORCID = "0000-0003-1458-7108")),
+    person(given = "Alex",
+           family = "Spina",
+           role = c("aut")),
+    person(given = "Lukas",
+           family = "Richter",
+           role = c("aut")),
+    person(given = "Patrick",
+           family = "Keating",
+           role = c("aut")))
+Description: The 'R4EPIs' project seeks to provide a set of standardized tools
+    for analysis of outbreak and survey data in humanitarian aid settings. This
+    package provides standardized data dictionaries for four outbreak scenarios
+    (Acute Jaundice Syndrome, Cholera, Measles, Meningitis) and three surveys
+    (Retrospective mortality and access to care, Malnutrition, and Vaccination
+    coverage). In addition, a data generator from these dictionaries is provided.
+URL: https://r4epis.netlify.org, https://github.com/R4EPI/msfdict
 License: GPL-3
 Imports: 
     sf,
