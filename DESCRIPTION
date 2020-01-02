@@ -35,7 +35,8 @@ Imports:
     rlang
 Suggests: 
     testthat (>= 2.1.0),
-    matchmaker
+    matchmaker,
+    covr
 Remotes:
   reconhub/matchmaker
 Encoding: UTF-8
