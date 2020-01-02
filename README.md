@@ -194,16 +194,16 @@ gen_data("Measles", varnames = "data_element_shortname", numcases = 100)
 #> # A tibble: 100 x 52
 #>    seizure_episodes trimester croup dehydration_lev… residential_sta…
 #>    <fct>            <fct>     <fct> <fct>            <fct>           
-#>  1 0                <NA>      1     UN               2               
-#>  2 0                <NA>      1     UN               3               
-#>  3 0                <NA>      1     SE               1               
-#>  4 0                <NA>      0     NO               5               
-#>  5 1                <NA>      0     NO               2               
-#>  6 1                <NA>      1     SE               2               
-#>  7 1                <NA>      0     SE               1               
-#>  8 0                <NA>      1     SE               3               
-#>  9 1                <NA>      0     SE               1               
-#> 10 0                <NA>      0     SE               1               
+#>  1 1                <NA>      0     UN               4               
+#>  2 0                <NA>      0     SO               3               
+#>  3 0                <NA>      1     SO               3               
+#>  4 1                <NA>      0     UN               3               
+#>  5 0                <NA>      0     SE               5               
+#>  6 1                <NA>      1     SE               1               
+#>  7 0                <NA>      0     SO               2               
+#>  8 1                <NA>      1     UN               3               
+#>  9 1                <NA>      0     NO               1               
+#> 10 0                <NA>      1     SO               3               
 #> # … with 90 more rows, and 47 more variables:
 #> #   previously_vaccinated <fct>, patient_origin_free_text <chr>,
 #> #   age_days <lgl>, msf_involvement <fct>,
@@ -230,16 +230,16 @@ gen_data("Vaccination", varnames = "column_name", numcases = 100)
 #> # A tibble: 100 x 41
 #>    q77_what_is_the… health_district village q14_hh_no q15_home
 #>               <dbl> <chr>           <chr>       <int> <fct>   
-#>  1                2 District A      Villag…         4 Yes     
-#>  2                3 District B      Villag…         3 Yes     
-#>  3                4 District B      Villag…         6 Yes     
-#>  4                4 District B      Villag…         6 Yes     
-#>  5                4 District B      Villag…         2 Yes     
-#>  6                4 District B      Villag…         1 No      
-#>  7                3 District B      Villag…         3 Yes     
-#>  8                2 District A      Villag…         2 Yes     
-#>  9                4 District B      Villag…         3 Yes     
-#> 10                4 District B      Villag…         4 No      
+#>  1                4 District B      Villag…         2 No      
+#>  2                3 District B      Villag…         5 No      
+#>  3                3 District B      Villag…         6 Yes     
+#>  4                4 District B      Villag…         4 Yes     
+#>  5                1 District A      Villag…         4 No      
+#>  6                2 District A      Villag…         1 No      
+#>  7                3 District B      Villag…         6 No      
+#>  8                4 District B      Villag…         6 No      
+#>  9                2 District A      Villag…         4 No      
+#> 10                1 District A      Villag…         3 Yes     
 #> # … with 90 more rows, and 36 more variables: q16_occupant_age <lgl>,
 #> #   q58_consent <fct>, q75_caretaker <fct>, q76_caretaker_other <lgl>,
 #> #   q65_consent_no_reason <fct>, q66_consent_no_reason_other <lgl>,
@@ -278,26 +278,26 @@ print(dat)
 #> # A tibble: 20 x 45
 #>    trimester exit_status treatment_facil… dehydration_lev…
 #>    <fct>     <fct>       <lgl>            <fct>           
-#>  1 <NA>      DD          NA               NO              
-#>  2 <NA>      DH          NA               SO              
-#>  3 <NA>      AD          NA               UN              
-#>  4 <NA>      DOA         NA               SE              
-#>  5 <NA>      DD          NA               UN              
-#>  6 <NA>      DH          NA               UN              
-#>  7 <NA>      LA          NA               SE              
-#>  8 <NA>      TR          NA               NO              
-#>  9 <NA>      TR          NA               NO              
-#> 10 <NA>      TR          NA               UN              
+#>  1 <NA>      LA          NA               UN              
+#>  2 <NA>      DH          NA               SE              
+#>  3 <NA>      DD          NA               NO              
+#>  4 <NA>      LA          NA               UN              
+#>  5 3         TR          NA               SO              
+#>  6 <NA>      DOA         NA               SO              
+#>  7 <NA>      DOA         NA               SE              
+#>  8 <NA>      DD          NA               NO              
+#>  9 <NA>      DH          NA               SO              
+#> 10 1         TR          NA               NO              
 #> 11 <NA>      AD          NA               NO              
-#> 12 <NA>      TR          NA               SO              
-#> 13 <NA>      DD          NA               NO              
-#> 14 <NA>      DOA         NA               NO              
-#> 15 <NA>      TR          NA               UN              
-#> 16 <NA>      DH          NA               SO              
-#> 17 <NA>      DD          NA               SE              
-#> 18 <NA>      DD          NA               SE              
-#> 19 <NA>      TR          NA               SO              
-#> 20 <NA>      AD          NA               SO              
+#> 12 <NA>      AD          NA               NO              
+#> 13 <NA>      AD          NA               SO              
+#> 14 <NA>      DOA         NA               UN              
+#> 15 <NA>      DOA         NA               UN              
+#> 16 <NA>      DD          NA               SO              
+#> 17 <NA>      AD          NA               NO              
+#> 18 1         AD          NA               NO              
+#> 19 <NA>      LA          NA               UN              
+#> 20 <NA>      DD          NA               SE              
 #> # … with 41 more variables: comments_on_lab_results <lgl>,
 #> #   fluids_treatment_plan <fct>, time_to_death <fct>,
 #> #   malaria_rdt_at_admission <fct>, previously_vaccinated <fct>,
@@ -352,29 +352,6 @@ print(dict)
 #  - 2nd column: translations
 #  - 3rd column: data column name
 #  - 4th column: order of options
-#
-# we also want to make sure to filter out any columns that are blank for
-# the option codes, because this means that they don't have a fixed number of
-# options
-dict <- dplyr::filter(dict, !is.na(option_code))
-print(dict)
-#> # A tibble: 165 x 11
-#>    data_element_uid data_element_na… data_element_sh… data_element_de…
-#>    <chr>            <chr>            <chr>            <chr>           
-#>  1 FF7d81Zy0yQ      egen_013_pregna… trimester        If pregnant, tr…
-#>  2 FF7d81Zy0yQ      egen_013_pregna… trimester        If pregnant, tr…
-#>  3 FF7d81Zy0yQ      egen_013_pregna… trimester        If pregnant, tr…
-#>  4 ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#>  5 ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#>  6 ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#>  7 ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#>  8 ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#>  9 ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#> 10 UUVnMdaBY5T      esym_002_dehydr… dehydration_lev… Dehydration bas…
-#> # … with 155 more rows, and 7 more variables:
-#> #   data_element_valuetype <chr>, data_element_formname <chr>,
-#> #   used_optionset_uid <chr>, option_code <chr>, option_name <chr>,
-#> #   option_uid <chr>, option_order_in_set <dbl>
 
 # Now we can use linelist to filter the data:
 dat_clean <- matchmaker::match_us(dat, dict, 
@@ -387,26 +364,26 @@ print(dat_clean)
 #> # A tibble: 20 x 45
 #>    trimester exit_status treatment_facil… dehydration_lev…
 #>    <fct>     <fct>       <lgl>            <fct>           
-#>  1 <NA>      Dead in fa… NA               None            
-#>  2 <NA>      Discharged… NA               Some            
-#>  3 <NA>      Transferre… NA               Unknown         
-#>  4 <NA>      Dead on ar… NA               Severe          
-#>  5 <NA>      Dead in fa… NA               Unknown         
-#>  6 <NA>      Discharged… NA               Unknown         
-#>  7 <NA>      Left again… NA               Severe          
-#>  8 <NA>      Transferre… NA               None            
-#>  9 <NA>      Transferre… NA               None            
-#> 10 <NA>      Transferre… NA               Unknown         
+#>  1 <NA>      Left again… NA               Unknown         
+#>  2 <NA>      Discharged… NA               Severe          
+#>  3 <NA>      Dead in fa… NA               None            
+#>  4 <NA>      Left again… NA               Unknown         
+#>  5 3rd trim… Transferre… NA               Some            
+#>  6 <NA>      Dead on ar… NA               Some            
+#>  7 <NA>      Dead on ar… NA               Severe          
+#>  8 <NA>      Dead in fa… NA               None            
+#>  9 <NA>      Discharged… NA               Some            
+#> 10 1st trim… Transferre… NA               None            
 #> 11 <NA>      Transferre… NA               None            
-#> 12 <NA>      Transferre… NA               Some            
-#> 13 <NA>      Dead in fa… NA               None            
-#> 14 <NA>      Dead on ar… NA               None            
-#> 15 <NA>      Transferre… NA               Unknown         
-#> 16 <NA>      Discharged… NA               Some            
-#> 17 <NA>      Dead in fa… NA               Severe          
-#> 18 <NA>      Dead in fa… NA               Severe          
-#> 19 <NA>      Transferre… NA               Some            
-#> 20 <NA>      Transferre… NA               Some            
+#> 12 <NA>      Transferre… NA               None            
+#> 13 <NA>      Transferre… NA               Some            
+#> 14 <NA>      Dead on ar… NA               Unknown         
+#> 15 <NA>      Dead on ar… NA               Unknown         
+#> 16 <NA>      Dead in fa… NA               Some            
+#> 17 <NA>      Transferre… NA               None            
+#> 18 1st trim… Transferre… NA               None            
+#> 19 <NA>      Left again… NA               Unknown         
+#> 20 <NA>      Dead in fa… NA               Severe          
 #> # … with 41 more variables: comments_on_lab_results <lgl>,
 #> #   fluids_treatment_plan <fct>, time_to_death <fct>,
 #> #   malaria_rdt_at_admission <fct>, previously_vaccinated <fct>,
