@@ -1,6 +1,23 @@
 
-outbreaks <- c("Measles", "Cholera", "AJS", "Meningitis")
-surveys   <- c("Mortality", "Nutrition", "Vaccination")
+outbreaks <- c("MeAsles", "CHolera", "AjS", "meningitis")
+surveys   <- c("MOrtality", "NutritIon", "VaCcination")
+
+test_that("errors are thrown if the wrong dicts are used", {
+
+  expect_error(msf_dict("Mortality"), 
+    "disease must be one of 'Cholera', 'Measles', 'Meningitis', or 'AJS'",
+    fixed = TRUE
+  )
+  expect_error(msf_dict_survey("Measles"), 
+    "disease must be one of 'Mortality', 'Nutrition', 'Vaccination'",
+    fixed = TRUE
+  )
+  expect_error(gen_data("Dada"),
+    "'dictionary' must be one of: 'Cholera', 'Measles', 'Meningitis', 'AJS', 'Mortality', 'Nutrition', 'Vaccination'",
+    fixed = TRUE
+  )
+
+}) 
 
 test_that("msf_dict works", {
 

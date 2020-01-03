@@ -38,3 +38,28 @@ tidy_labels <- function(x, sep = "_", #transformation = "Any-Latin; Latin-ASCII"
   out <- sub(paste0(sep, "$"), "", out, perl = TRUE)
   out
 }
+
+#' get dictionary in format according to dictionaries
+#'
+#' @param dictionary a single character that matches one of the surveys or outbreaks
+#'
+#' @return the correct name of the dictionary
+#' @noRd
+#'
+#' @examples
+#' get_dictionary("MOrTality")
+get_dictionary <- function(dictionary) {
+
+  # define which ones are outbreaks and which ones are survey datasets
+  SURVEYS   <- c("Mortality", "Nutrition", "Vaccination")
+  OUTBREAKS <- c("Cholera", "Measles", "Meningitis", "AJS")
+  surv <- tolower(SURVEYS)   == tolower(dictionary)
+  outb <- tolower(OUTBREAKS) == tolower(dictionary)
+
+  if (!(any(surv) || any(outb))) {
+    stop("'dictionary' must be one of: 'Cholera', 'Measles', 'Meningitis', 'AJS', 'Mortality', 'Nutrition', 'Vaccination'", call. = FALSE)
+  } 
+
+  return(list(survey = SURVEYS[surv], outbreak = OUTBREAKS[outb]))
+
+}
