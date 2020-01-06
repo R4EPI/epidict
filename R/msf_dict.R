@@ -113,7 +113,7 @@ msf_dict <- function(disease, name = "MSF-outbreak-dict.xlsx", tibble = TRUE,
   }
 
   # remove back end codes from front end var in the options list
-  dat_opts$option_name <- gsub(".*] ", "", dat_opts$option_name)
+  dat_opts$option_name <- gsub("^\\[.*\\]", "", dat_opts$option_name)
 
   if (long) {
 
