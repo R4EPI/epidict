@@ -44,39 +44,9 @@ gen_data <- function(dictionary, varnames = "data_element_shortname", numcases =
   }
 
   if (!is_survey) {
-    # Fix DATES ----------------------------------------------------------------
-    # 
-    # The date sampling we did above 
-    # exit dates before date of entry
-    # just add 20 to admission.... (was easiest...)
-    dis_output <- enforce_timing(dis_output,
-      first  = "date_of_consultation_admission",
-      second = "date_of_exit",
-      20
-    )
 
-    # lab sample dates before admission
-    # add 2 to admission....
-    dis_output <- enforce_timing(dis_output,
-      first  = "date_of_consultation_admission",
-      second = "date_lab_sample_taken",
-      2
-    )
-    # vaccination dates after admission
-    # minus 20 to admission...
-    dis_output <- enforce_timing(dis_output,
-      first  = "date_of_consultation_admission",
-      second = "date_of_last_vaccination",
-      20
-    )
-
-    # symptom onset after admission
-    # minus 20 to admission...
-    dis_output <- enforce_timing(dis_output,
-      first  = "date_of_consultation_admission",
-      second = "date_of_onset",
-      20
-    )
+    # Make sure exit dates don't come before entrance dates
+    dis_output <- fix_dates(dis_output)
 
     # Patient identifiers
     dis_output$case_number <- sprintf("A%d", seq(numcases))
@@ -85,25 +55,13 @@ gen_data <- function(dictionary, varnames = "data_element_shortname", numcases =
     dis_output$treatment_facility_site <- sample(1:50, numcases, replace = TRUE)
 
     # patient origin (categorical from a dropdown)
-    dis_output$patient_origin <- sample(
-      c("Village A", "Village B", "Village C", "Village D"),
-      numcases, 
-      replace = TRUE
-    )
+    dis_output$patient_origin <- gen_village(numcases)
 
     # treatment location (categorical from a dropdown)
-    dis_output$treatment_location <- sample(
-      c("Ward A", "Ward B", "Ward C", "Ward D"),
-      numcases, 
-      replace = TRUE
-    )
+    dis_output$treatment_location <- gen_ward(numcases)
 
     # patient origin free text
-    dis_output$patient_origin_free_text <- sample(
-      c("Messy location A", "Messy location B", "Messy location C", "Messy location D"),
-      numcases, 
-      replace = TRUE
-    )
+    dis_output$patient_origin_free_text <- gen_freetext(numcases)
   }
 
   # GENERATE AGES --------------------------------------------------------------
@@ -111,16 +69,25 @@ gen_data <- function(dictionary, varnames = "data_element_shortname", numcases =
   dis_output <- gen_ages(dis_output, numcases, set_age_na = dictionary != "Mortality")
 
 
+  # DISEASE-SPECIFIC GENERATORS ------------------------------------------------
   if (dictionary == "Cholera" | dictionary == "Measles" | dictionary == "AJS") {
-    # fix pregnancy stuff
+    # In this case, not female == not applicable
     dis_output$pregnant[dis_output$sex != "F"] <- "NA"
-    PREGNANT_FEMALE <- dis_output$sex != "F" | dis_output$pregnant != "Y"
 
-    dis_output$foetus_alive_at_admission[PREGNANT_FEMALE]  <- NA
-    dis_output$trimester[PREGNANT_FEMALE]                  <- NA
-    dis_output$delivery_event[PREGNANT_FEMALE]             <- "NA"
-    dis_output$pregnancy_outcome_at_exit[PREGNANT_FEMALE]  <- NA
-    dis_output$pregnancy_outcome_at_exit[dis_output$delivery_event != "1"] <- NA
+    # This includes all who are either not female or female and currently
+    # pregnant
+    NOT_CURRENTLY_PREGNANT <- dis_output$sex != "F" | dis_output$pregnant != "Y"
+
+    dis_output$foetus_alive_at_admission[NOT_CURRENTLY_PREGNANT]  <- NA
+    dis_output$trimester[NOT_CURRENTLY_PREGNANT]                  <- NA
+    # delivery event is a TRUE only category, meaning that it either is a 1 or
+    # NA kind of thing.
+    dis_output$delivery_event[NOT_CURRENTLY_PREGNANT] <- "NA"
+
+    NO_DELIVERY <- dis_output$delivery_event != "1"
+
+    dis_output$pregnancy_outcome_at_exit[NOT_CURRENTLY_PREGNANT] <- NA
+    dis_output$pregnancy_outcome_at_exit[NO_DELIVERY]            <- NA
   }
 
 
@@ -130,8 +97,8 @@ gen_data <- function(dictionary, varnames = "data_element_shortname", numcases =
   }
 
   if (dictionary == "Measles") {
-    dis_output$baby_born_with_complications[PREGNANT_FEMALE &
-                                             dis_output$delivery_event != "1"] <- NA
+
+    dis_output$baby_born_with_complications[NO_DELIVERY] <- NA
 
     # fix vaccine stuff among non vaccinated
     NOTVACC <- which(!dis_output$previously_vaccinated %in% c("C", "V"))
@@ -146,16 +113,19 @@ gen_data <- function(dictionary, varnames = "data_element_shortname", numcases =
     # add 2 to admission....
 
     dis_output <- enforce_timing(dis_output,
-                                 first  = "date_of_consultation_admission",
-                                 second = "date_ti_sample_sent",
-                                 2)
+      first  = "date_of_consultation_admission",
+      second = "date_ti_sample_sent",
+      2
+    )
 
     # fix pregnancy delivery
     dis_output$delivery_event[dis_output$sex != "F"] <- "NA"
 
     # fix vaccine stuff among not vaccinated
-    NOTVACC <- which(!dis_output$vaccinated_meningitis_routine %in% c("C", "V") &
-                     !dis_output$vaccinated_meningitis_mvc %in% c("C", "V"))
+    NOTVACC <- which(
+      !dis_output$vaccinated_meningitis_routine %in% c("C", "V") & 
+      !dis_output$vaccinated_meningitis_mvc %in% c("C", "V")
+    )
 
     dis_output$name_meningitis_vaccine[NOTVACC] <- NA
     dis_output$date_of_last_vaccination[NOTVACC] <- NA
@@ -164,32 +134,10 @@ gen_data <- function(dictionary, varnames = "data_element_shortname", numcases =
   if (dictionary == "Mortality") {
 
 
-    # sample villages
-    dis_output$village <- sample(c("Village A", "Village B",
-                                   "Village C", "Village D"),
-                                 numcases, replace = TRUE)
-
-    # make two health districts
-    dis_output$health_district <- ifelse(dis_output$village == "Village A" |
-                                           dis_output$village == "Village B",
-                                         "District A", "District B")
-
-    # cluster ID (based on village)
-    dis_output$cluster_number <- as.numeric(factor(dis_output$village))
-
-    # q65_iq4 household ID (the GPS point number) - (numbering starts again for each cluster)
-    for (i in unique(dis_output$cluster_number)) {
-
-      nums <- nrow(dis_output[dis_output$cluster_number == i,])
-
-      dis_output[dis_output$cluster_number == i, "q65_iq4"] <- sample(1:(as.integer(nums/5) + 1), nums, replace = TRUE)
-    }
-
-
-
-    dis_output <- gen_eligible_interviewed(dis_output, 
-                                           household = "q65_iq4", 
-                                           cluster = "cluster_number"
+    dis_output <- gen_hh_clusters(dis_output, 
+      n = numcases,
+      cluster = "cluster_number", 
+      household = "q65_iq4"
     )
 
     # use household num as a standin for fact_0_id for now
@@ -251,33 +199,11 @@ gen_data <- function(dictionary, varnames = "data_element_shortname", numcases =
 
   if (dictionary == "Nutrition") {
 
-    # sample villages
-    dis_output$village <- sample(c("Village A", "Village B",
-                                   "Village C", "Village D"),
-                                 numcases, replace = TRUE)
-
-    # make two health districts
-    dis_output$health_district <- ifelse(dis_output$village == "Village A" |
-                                           dis_output$village == "Village B",
-                                         "District A", "District B")
-
-    # cluster ID (based on village)
-    dis_output$cluster_number <- as.numeric(factor(dis_output$village))
-
-
-    # household ID (numbering starts again for each cluster)
-    for (i in unique(dis_output$cluster_number)) {
-
-      nums <- nrow(dis_output[dis_output$cluster_number == i,])
-
-      dis_output[dis_output$cluster_number == i, "household_id"] <- sample(1:(as.integer(nums/5) + 1), nums, replace = TRUE)
-    }
-
-    ## create a var for eligible and interviewed
-
-    dis_output <- gen_eligible_interviewed(dis_output,
-                                           household = "household_id",
-                                           cluster = "cluster_number")
+    dis_output <- gen_hh_clusters(dis_output, 
+      n = numcases,
+      cluster = "cluster_number", 
+      household = "household_id"
+    )
 
     # use household num as a standin for fact_0_id for now
     dis_output$fact_0_id <- dis_output$household_id
@@ -289,46 +215,33 @@ gen_data <- function(dictionary, varnames = "data_element_shortname", numcases =
     # height in cm
     dis_output$height <- round(
       runif(numcases, 40, 120),
-      digits = 1)
+      digits = 1
+    )
 
     # weight in kg
     dis_output$weight <- round(
       runif(numcases, 2, 30),
-      digits = 1)
+      digits = 1
+    )
 
     # MUAC in mm
     dis_output$muac_mm_left_arm <- sample(80:190, numcases, replace = TRUE)
-
   }
+
   if (dictionary == "Vaccination") {
 
 
-    # sample villages
-    dis_output$village <- sample(c("Village A", "Village B",
-                                   "Village C", "Village D"),
-                                 numcases, replace = TRUE)
-
-    # make two health districts
-    dis_output$health_district <- ifelse(dis_output$village == "Village A" |
-                                           dis_output$village == "Village B",
-                                         "District A", "District B")
-
-    # cluster ID (based on village)
-    dis_output$q77_what_is_the_cluster_number <- as.numeric(factor(dis_output$village))
-
-    # household ID (numbering starts again for each cluster)
-    for (i in unique(dis_output$q77_what_is_the_cluster_number)) {
-
-      nums <- nrow(dis_output[dis_output$q77_what_is_the_cluster_number == i,])
-
-      dis_output[dis_output$q77_what_is_the_cluster_number == i, "q14_hh_no"] <- sample(1:(as.integer(nums/5) + 1), nums, replace = TRUE)
-    }
-
-    ## create a var for eligible and interviewed
+    dis_output <- gen_hh_clusters(dis_output, 
+      n = numcases,
+      cluster = "q77_what_is_the_cluster_number", 
+      household = "q14_hh_no"
+    )
+    
 
     dis_output <- gen_eligible_interviewed(dis_output,
-                                           household = "q14_hh_no",
-                                           cluster = "q77_what_is_the_cluster_number")
+      household = "q14_hh_no",
+      cluster = "q77_what_is_the_cluster_number"
+    )
 
     # use household num as a standin for fact_0_id for now
     dis_output$fact_0_id <- dis_output$q14_hh_no
