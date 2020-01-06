@@ -30,6 +30,8 @@ test_that("msf_dict works", {
     expect_is(long, "tbl_df", label = disease)
     expect_is(neither, "list", label = disease)
     expect_named(neither, c("dictionary", "options"), label = disease)
+    expect_false(all(grepl("^\\[", long$option_name)))
+    expect_false(all(grepl("^\\[", neither$options$option_name)))
     expect_equal(nrow(neither$dictionary), nrow(nested), label = disease)
     expect_equal(ncol(long), sum(vapply(neither, ncol, integer(1))) - 1L, label = disease)
     expect_equal(ncol(neither$dictionary) + 1L, ncol(nested), label = disease, info = disease)
