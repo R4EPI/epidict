@@ -20,6 +20,7 @@ gen_data <- function(dictionary, varnames = "data_element_shortname", numcases =
   # define which ones are outbreaks and which ones are survey datasets
   # get msf dictionary specific data dictionary
   dict <- get_dictionary(dictionary)
+  dictionary <- unlist(dict, use.names = FALSE)
   is_survey <- length(dict$survey) == 1
 
   if (is_survey) {
@@ -43,105 +44,74 @@ gen_data <- function(dictionary, varnames = "data_element_shortname", numcases =
   }
 
   if (!is_survey) {
-    # Fix DATES
+    # Fix DATES ----------------------------------------------------------------
+    # 
+    # The date sampling we did above 
     # exit dates before date of entry
     # just add 20 to admission.... (was easiest...)
     dis_output <- enforce_timing(dis_output,
-                                 first  = "date_of_consultation_admission",
-                                 second = "date_of_exit",
-                                 20)
+      first  = "date_of_consultation_admission",
+      second = "date_of_exit",
+      20
+    )
 
     # lab sample dates before admission
     # add 2 to admission....
     dis_output <- enforce_timing(dis_output,
-                                 first  = "date_of_consultation_admission",
-                                 second = "date_lab_sample_taken",
-                                 2)
+      first  = "date_of_consultation_admission",
+      second = "date_lab_sample_taken",
+      2
+    )
     # vaccination dates after admission
     # minus 20 to admission...
     dis_output <- enforce_timing(dis_output,
-                                 first  = "date_of_consultation_admission",
-                                 second = "date_of_last_vaccination",
-                                 20)
+      first  = "date_of_consultation_admission",
+      second = "date_of_last_vaccination",
+      20
+    )
 
     # symptom onset after admission
     # minus 20 to admission...
     dis_output <- enforce_timing(dis_output,
-                                 first  = "date_of_consultation_admission",
-                                 second = "date_of_onset",
-                                 20)
+      first  = "date_of_consultation_admission",
+      second = "date_of_onset",
+      20
+    )
 
     # Patient identifiers
     dis_output$case_number <- sprintf("A%d", seq(numcases))
 
     # treatment site facility
-    dis_output$treatment_facility_site <- sample(1:50,
-                                                 numcases, replace = TRUE)
+    dis_output$treatment_facility_site <- sample(1:50, numcases, replace = TRUE)
 
     # patient origin (categorical from a dropdown)
-    dis_output$patient_origin <- sample(c("Village A", "Village B",
-                                          "Village C", "Village D"),
-                                        numcases, replace = TRUE)
+    dis_output$patient_origin <- sample(
+      c("Village A", "Village B", "Village C", "Village D"),
+      numcases, 
+      replace = TRUE
+    )
 
     # treatment location (categorical from a dropdown)
-    dis_output$treatment_location <- sample(c("Ward A", "Ward B",
-                                              "Ward C", "Ward D"),
-                                            numcases, replace = TRUE)
+    dis_output$treatment_location <- sample(
+      c("Ward A", "Ward B", "Ward C", "Ward D"),
+      numcases, 
+      replace = TRUE
+    )
 
     # patient origin free text
-    dis_output$patient_origin_free_text <- sample(c("Messy location A", "Messy location B",
-                                                    "Messy location C", "Messy location D"),
-                                                  numcases, replace = TRUE)
+    dis_output$patient_origin_free_text <- sample(
+      c("Messy location A", "Messy location B", "Messy location C", "Messy location D"),
+      numcases, 
+      replace = TRUE
+    )
   }
 
-  # sample age_month and age_days if appropriate
-  age_year_var <- grep("age.*year", names(dis_output), value = TRUE)[1]
-  age_month_var <- grep("age.*month", names(dis_output), value = TRUE)[1]
-  age_day_var <- grep("age.*day", names(dis_output), value = TRUE)[1]
+  # GENERATE AGES --------------------------------------------------------------
 
-  # set_age_na controlls if age_year_var should be set to NA if age_month_var is sampled
-  # same is done for age_month_var and age_day_var
-  set_age_na <- TRUE
-  if (dictionary == "Mortality") {
-    set_age_na <- FALSE
-  }
-
-  if (!is.na(age_year_var)) {
-    # sample 0:120
-    dis_output[, age_year_var] <- sample(0:120L, numcases, replace = TRUE)
-    U2_YEARS <- which(dis_output[, age_year_var] <= 2)
-    if (set_age_na) {
-      dis_output[U2_YEARS, age_year_var] <- NA_integer_
-    }
-
-    U2_MONTHS <- integer(0)
-    if (!is.na(age_month_var)) {
-      # age_month
-      if (length(U2_YEARS) > 0) {
-        dis_output[U2_YEARS, age_month_var] <- sample(0:24L,
-                                                      length(U2_YEARS),
-                                                      replace = TRUE)
-        U2_MONTHS <- which(dis_output[, age_month_var] <= 2)
-        if (set_age_na) {
-          dis_output[U2_MONTHS, age_month_var] <- NA_integer_
-        }
-      }
-
-      if (!is.na(age_day_var)) {
-        # age_days
-        if (length(U2_MONTHS) > 0) {
-          dis_output[U2_MONTHS, age_day_var] <- sample(0:60L,
-                                                       length(U2_MONTHS),
-                                                       replace = TRUE)
-        }
-      }
-    }
-  }
+  dis_output <- gen_ages(dis_output, numcases, set_age_na = dictionary != "Mortality")
 
 
-
-  if (dictionary == "Cholera" | dictionary == "Measles" |
-      dictionary == "AJS") {
+  if (dictionary == "Cholera" | dictionary == "Measles" | dictionary == "AJS") {
     # fix pregnancy stuff
     dis_output$pregnant[dis_output$sex != "F"] <- "NA"
     PREGNANT_FEMALE <- dis_output$sex != "F" | dis_output$pregnant != "Y"

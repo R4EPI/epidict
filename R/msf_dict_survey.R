@@ -37,11 +37,6 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
   dat_dict$type <- gsub(pattern = "Question",
                         replacement = "",
                         x = dat_dict$type)
-  # dat_dict <- dplyr::group_by(dat_dict, .data$column_name)
-  # dat_dict <- dplyr::mutate(dat_dict,
-  #                           code = paste0("Code", dplyr::row_number()))
-  # dat_dict <- dplyr::ungroup(dat_dict)
-  # dat_dict$code <- factor(dat_dict$code, unique(dat_dict$code))
 
   # transform dat_dict to wide format (like outbreak dictionary)
   dat_dict <- dplyr::select(dat_dict, 
@@ -50,6 +45,7 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
                             !! quote(description), 
                             !! quote(type),
                             dplyr::starts_with("option_"))
+
   dat_dict <- dplyr::group_by(dat_dict, !! quote(column_name))
 
   dat_dict <- dplyr::mutate(dat_dict, option_order_in_set = seq(dplyr::n()))
@@ -68,14 +64,14 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
   
 
   dat_dict$type <- dplyr::case_when(
-    dat_dict$type == "Integer" ~ "INTEGER_POSITIVE",
-    dat_dict$type == "Binary" ~ "TEXT",
+    dat_dict$type == "Integer"     ~ "INTEGER_POSITIVE",
+    dat_dict$type == "Binary"      ~ "TEXT",
     dat_dict$type == "ChoiceMulti" ~ "MULTI",
-    dat_dict$type == "Text" ~ "LONG_TEXT",
-    dat_dict$type == "Geo" ~ "LONG_TEXT",
-    dat_dict$type == "Date" ~ "DATE",
-    dat_dict$type == "Choice" ~ "TEXT",
-    dat_dict$type == "Number" ~ "INTEGER_POSITIVE"
+    dat_dict$type == "Text"        ~ "LONG_TEXT",
+    dat_dict$type == "Geo"         ~ "LONG_TEXT",
+    dat_dict$type == "Date"        ~ "DATE",
+    dat_dict$type == "Choice"      ~ "TEXT",
+    dat_dict$type == "Number"      ~ "INTEGER_POSITIVE"
   )
 
   dat_dict <- dplyr::rename(dat_dict, "data_element_valuetype" = "type")
