@@ -82,20 +82,20 @@ test_that("outbreak data can be generated", {
 
 test_that("survey data can be generated", {
 
-  for (disease in c(surveys)) {
-    # print(disease)
+  for (disease in surveys) {
     dictionary <- msf_dict_survey(disease)
     data       <- gen_data(disease, varnames = "column_name", numcases = 300)
 
     expect_is(data, "tbl_df", label = disease)
-    if (tolower(disease) != "mortality") {
+    `%NIN%` <- Negate(`%in%`)
+    if (tolower(disease) %NIN% c("mortality", "vaccination")) {
       expect_true(check_exclusive_ages(get_ages(data), 300), label = disease)
     }
     expect_true(check_age_integers(get_ages(data)))
-    skip("These tests need to be updated when we have a better idea of the expected number of columns")
+    # skip("These tests need to be updated when we have a better idea of the expected number of columns")
     # TODO: these tests fail because we need better expectations regarding
     # the number of columns that the dictionaries provide
-    expect_equal(nrow(dictionary), ncol(data), label = disease)
+    # expect_equal(nrow(dictionary), ncol(data), label = disease)
   }
 })
 
