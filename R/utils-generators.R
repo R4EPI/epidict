@@ -1,4 +1,10 @@
 
+sample_age <- function(x, n) {
+  # Sample the value of x n times
+  v      <- sample(0:x, size = n, replace = TRUE)
+  return(v)
+}
+
 #' generate ages and insert in data frame
 #'
 #' @param dis_output a data frame with some age columns
@@ -22,11 +28,6 @@ gen_ages <- function(dis_output, numcases, set_age_na = TRUE) {
   U2_YEARS  <- integer(0)
   U2_MONTHS <- integer(0)
   
-  sample_age <- function(x = 120, n = numcases) {
-    # Sample the value of x n times
-    v      <- sample(0:x, size = n, replace = TRUE)
-    return(v)
-  }
 
   if (has_value(age_year_var)) {
     # sample 0:120

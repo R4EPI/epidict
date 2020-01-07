@@ -27,24 +27,26 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
   # fill NA values with previous non-NA value, replace "." in codes and names
   dat_dict <- tidyr::fill(dat_dict, colnames(dat_dict), .direction = "down")
   dat_dict <- dplyr::rename_at(dat_dict,
-                               dplyr::vars(dplyr::starts_with("choice_")),
-                               .funs = ~gsub("choice", "option", .)
-                              ) 
+    .vars = dplyr::vars(dplyr::starts_with("choice_")),
+    .funs = ~gsub("choice", "option", .)
+  ) 
 
   # minor tidying, e.g.: create "CodeX" assignments
   dat_dict$option_code[dat_dict$option_code == "."] <- NA
   dat_dict$option_name[dat_dict$option_name == "."] <- NA
   dat_dict$type <- gsub(pattern = "Question",
-                        replacement = "",
-                        x = dat_dict$type)
+    replacement = "",
+    x = dat_dict$type
+  )
 
   # transform dat_dict to wide format (like outbreak dictionary)
   dat_dict <- dplyr::select(dat_dict, 
-                            !! quote(level),
-                            !! quote(column_name),
-                            !! quote(description), 
-                            !! quote(type),
-                            dplyr::starts_with("option_"))
+    !! quote(level),
+    !! quote(column_name),
+    !! quote(description), 
+    !! quote(type),
+    dplyr::starts_with("option_")
+  )
 
   dat_dict <- dplyr::group_by(dat_dict, !! quote(column_name))
 

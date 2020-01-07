@@ -67,6 +67,26 @@ get_dictionary <- function(dictionary) {
 # Equivalent of !is.na()
 has_value <- Negate(is.na)
 
+# Enforces timing between two columns in a data frame.
+#
+# The data in the first column must come before the second column. If the timing
+# isn't correct, then force the timing to be correct by making the second column
+# bigger than the first by `add`.
+enforce_timing <- function(x, first, second, add = 2, inclusive = FALSE) {
+
+  if (inclusive) {
+    mistakes <- x[[second]] < x[[first]]
+  } else {
+    mistakes <- x[[second]] <= x[[first]]
+  }
+  mistakes[is.na(mistakes)] <- FALSE
+
+  days <- if (length(add) == 1) add else sample(add, sum(mistakes, na.rm = TRUE), replace = TRUE)
+
+  x[[second]][mistakes] <- x[[first]][mistakes] + days
+  x 
+
+}
 
 fix_dates <- function(dis_output) {
   

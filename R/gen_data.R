@@ -111,7 +111,6 @@ gen_data <- function(dictionary, varnames = "data_element_shortname", numcases =
   if (dictionary == "Meningitis") {
     # T1 lab sample dates before admission
     # add 2 to admission....
-
     dis_output <- enforce_timing(dis_output,
       first  = "date_of_consultation_admission",
       second = "date_ti_sample_sent",
@@ -145,52 +144,81 @@ gen_data <- function(dictionary, varnames = "data_element_shortname", numcases =
 
     # q53_cq4a ("Why is no occupant agreeing to participate?") shoud be NA if
     # Head of Household answers the questions (q49_cq3)
-    dis_output$q53_cq4a[dis_output$q49_cq3 == "Yes"] <- factor(NA, levels(dis_output$q53_cq4a))
+    dis_output$q53_cq4a[dis_output$q49_cq3 == "Yes"] <- NA
+
     # assume person is not born during study when age > 1
-    dis_output$q87_q32_born[dis_output$q155_q5_age_year > 1] <- factor("No", levels(dis_output$q87_q32_born))
-    dis_output$q88_q33_born_date[dis_output$q155_q5_age_year > 1] <- NA
+    OVER_ONE <- dis_output$q155_q5_age_year > 1
+    dis_output$q87_q32_born[OVER_ONE] <- factor("No", levels(dis_output$q87_q32_born))
+    dis_output$q88_q33_born_date[OVER_ONE] <- NA
+
     # pregnancy set to NA for males
     dis_output$q152_q7_pregnant[dis_output$q4_q6_sex == "Male"] <- NA
 
     # resample death yes/no to have lower death rates
-    dis_output$q136_q34_died <- sample(c("Yes", "No"), nrow(dis_output), prob = c(0.05, 0.95), replace = TRUE)
-    # set Columns that are relate to "death" as NA if "q136_q34_died" is "No"
+    dis_output$q136_q34_died <- sample(c("Yes", "No"), 
+      size = nrow(dis_output), 
+      prob = c(0.05, 0.95), 
+      replace = TRUE
+    )
+
+    # set columns that are relate to "death" as NA if "q136_q34_died" is "No"
     died <- dis_output$q136_q34_died == "No"
-    dis_output[died, c("q137_q35_died_date", "q138_q36_died_cause",
-                       "q141_q37_died_violence", "q143_q41_died_place",
-                       "q145_q43_died_country")] <- NA
+    dcols <- c(
+      "q137_q35_died_date", 
+      "q138_q36_died_cause", 
+      "q141_q37_died_violence", 
+      "q143_q41_died_place", 
+      "q145_q43_died_country"
+    )
+    for (d in dcols) {
+      dis_output[[d]][died] <- NA
+    }
+
     # pregnancy related cause of death n.a. for too old/young and for males
-    no_pregnancy <- dis_output$q138_q36_died_cause == "Pregnancy-related" &
-                      (dis_output$q4_q6_sex == "Male"    |
-                       dis_output$q155_q5_age_year >= 50 |
-                       dis_output$q155_q5_age_year < 12
-                      )
+    pregnancy_not_possible <- with(dis_output, 
+      q4_q6_sex == "Male" | q155_q5_age_year >= 50 | q155_q5_age_year < 12
+    )
+
+    no_pregnancy <- dis_output$q138_q36_died_cause == "Pregnancy-related" & pregnancy_not_possible
 
     no_pregnancy[is.na(no_pregnancy)] <- FALSE # replace NAs
-    dis_output[no_pregnancy, "q138_q36_died_cause"] <- "Unknown"
+    dis_output[["q138_q36_died_cause"]][no_pregnancy] <- "Unknown"
 
     # fix arrival/leave dates
-    dis_output$q41_q25_hh_arrive_date <-
-      pmin(dis_output$q41_q25_hh_arrive_date,
-           dis_output$q45_q29_hh_leave_date,
-           dis_output$q88_q33_born_date, na.rm = TRUE)
+    dis_output$q41_q25_hh_arrive_date <- with(dis_output,
+      pmin(
+        q41_q25_hh_arrive_date, 
+        q45_q29_hh_leave_date, 
+        q88_q33_born_date, 
+        na.rm = TRUE
+      )
+    )
 
     # leave date
-    chn_date <- dis_output$q45_q29_hh_leave_date <= dis_output$q41_q25_hh_arrive_date
-    chn_date2 <- dis_output$q45_q29_hh_leave_date < dis_output$q88_q33_born_date
-    chn_date[is.na(chn_date)] <- FALSE
-    chn_date2[is.na(chn_date2)] <- FALSE
-
-    dis_output$q45_q29_hh_leave_date[chn_date] <- dis_output$q41_q25_hh_arrive_date[chn_date] + sample(5:30, sum(chn_date), replace = TRUE)
-    dis_output$q45_q29_hh_leave_date[chn_date2] <- dis_output$q88_q33_born_date[chn_date2] + sample(5:30, sum(chn_date2), replace = TRUE)
+    dis_output <- enforce_timing(dis_output,
+      first  = "q41_q25_hh_arrive_date",
+      second = "q45_q29_hh_leave_date",
+      5:30 
+    )
+    dis_output <- enforce_timing(dis_output,
+      first  = "q88_q33_born_date",
+      second = "q45_q29_hh_leave_date",
+      5:30,
+      inclusive = TRUE
+    )
 
     # died date
-    chn_date <- dis_output$q137_q35_died_date <= dis_output$q41_q25_hh_arrive_date
-    chn_date2 <- dis_output$q137_q35_died_date < dis_output$q88_q33_born_date
-    chn_date[is.na(chn_date)] <- FALSE
-    chn_date2[is.na(chn_date2)] <- FALSE
-    dis_output$q137_q35_died_date[chn_date] <- dis_output$q41_q25_hh_arrive_date[chn_date] + sample(5:30, sum(chn_date), replace = TRUE)
-    dis_output$q137_q35_died_date[chn_date2] <- dis_output$q88_q33_born_date[chn_date2] + sample(5:30, sum(chn_date2), replace = TRUE)
+    dis_output <- enforce_timing(dis_output,
+      first  = "q41_q25_hh_arrive_date",
+      second = "q137_q35_died_date",
+      5:30
+    )
+    dis_output <- enforce_timing(dis_output,
+      first  = "q88_q33_born_date",
+      second = "q137_q35_died_date",
+      5:30,
+      inclusive = TRUE
+    )
 
     dis_output$q45_q29_hh_leave_date[!is.na(dis_output$q137_q35_died_date)] <- NA
 
@@ -200,8 +228,8 @@ gen_data <- function(dictionary, varnames = "data_element_shortname", numcases =
   if (dictionary == "Nutrition") {
 
     dis_output <- gen_hh_clusters(dis_output, 
-      n = numcases,
-      cluster = "cluster_number", 
+      n         = numcases,
+      cluster   = "cluster_number",
       household = "household_id"
     )
 
@@ -230,7 +258,6 @@ gen_data <- function(dictionary, varnames = "data_element_shortname", numcases =
 
   if (dictionary == "Vaccination") {
 
-
     dis_output <- gen_hh_clusters(dis_output, 
       n = numcases,
       cluster = "q77_what_is_the_cluster_number", 
@@ -248,12 +275,11 @@ gen_data <- function(dictionary, varnames = "data_element_shortname", numcases =
 
 
     # age in yr (0 to 14) - assuming doing vaccination coverage among those aged less than 15 yrs
-    dis_output$q10_age_yr <- sample(0:14L, numcases, replace = TRUE)
+    dis_output$q10_age_yr <- sample_age(14L, numcases)
 
     # age in mth (0 to 11)
-    dis_output$q55_age_mth[dis_output$q10_age_yr < 1] <- sample(0:11L,
-                                                                nrow(dis_output[dis_output$q10_age_yr < 1,]),
-                                                                replace = TRUE)
+    zero_yrs <- dis_output$q10_age_yr < 1
+    dis_output$q55_age_mth[zero_yrs] <- sample_age(11L, sum(zero_yrs))
 
   }
 
