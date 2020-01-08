@@ -25,7 +25,7 @@
 #' @importFrom stats aggregate runif
 #' @importFrom utils read.csv
 #' @importFrom rlang !!
-#' @seealso [matchmaker::match_us()]
+#' @seealso [matchmaker::match_df()]
 #' @export
 #' @examples
 #'
@@ -49,7 +49,7 @@
 #' #  - 4th column: order of options
 #'
 #' # Now we can use linelist to filter the data:
-#' dat_clean <- matchmaker::match_us(dat, dict, 
+#' dat_clean <- matchmaker::match_df(dat, dict, 
 #'                                   from = "option_code", 
 #'                                   to = "option_name",
 #'                                   by = "data_element_shortname",
@@ -113,7 +113,7 @@ msf_dict <- function(disease, name = "MSF-outbreak-dict.xlsx", tibble = TRUE,
   }
 
   # remove back end codes from front end var in the options list
-  dat_opts$option_name <- gsub("^\\[.*\\]", "", dat_opts$option_name)
+  dat_opts$option_name <- gsub("^\\[.*\\] ", "", dat_opts$option_name)
 
   if (long) {
 
