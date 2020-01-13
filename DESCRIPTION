@@ -22,7 +22,7 @@ Description: The 'R4EPIs' project seeks to provide a set of standardized tools
     (Acute Jaundice Syndrome, Cholera, Measles, Meningitis) and three surveys
     (Retrospective mortality and access to care, Malnutrition, and Vaccination
     coverage). In addition, a data generator from these dictionaries is provided.
-URL: https://r4epis.netlify.org, https://github.com/R4EPI/msfdict
+URL: https://r4epis.netlify.com, https://github.com/R4EPI/msfdict
 License: GPL-3
 Imports: 
     sf,
