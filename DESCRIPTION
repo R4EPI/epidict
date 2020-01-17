@@ -25,7 +25,6 @@ Description: The 'R4EPIs' project seeks to provide a set of standardized tools
 URL: https://r4epis.netlify.com, https://github.com/R4EPI/msfdict
 License: GPL-3
 Imports: 
-    sf,
     tibble,
     readxl,
     stats,
@@ -37,8 +36,6 @@ Suggests:
     testthat (>= 2.1.0),
     matchmaker,
     covr
-Remotes:
-  reconhub/matchmaker
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
