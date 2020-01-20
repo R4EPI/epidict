@@ -1,4 +1,5 @@
 ---
+title: epidict
 output: github_document
 ---
 
@@ -13,8 +14,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-# epidict
-
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/epidict)](https://CRAN.R-project.org/package=epidict)
@@ -28,16 +27,17 @@ R4EPIs project.
 
 ## Installation
 
-The {epidict} package currently only lives on GitHub, but you can install it
-with the {remotes} package like so:
+To install a stable version of {epidict}, please use the R4epis repository:
 
-``` r
-remotes::install_github("R4EPI/epidict")
+```r
+# install.packages("drat")
+drat::addRepo("R4EPI")
+install.packages("epidict")
 ```
 
 ## Accessing dictionaries
 
-There are four outbreak dictionaries available in {epidict}:
+There are four MSF outbreak dictionaries available in {epidict}:
 
  - Cholera/Acute watery diarrhea ("cholera")
  - Meningitis
@@ -58,7 +58,7 @@ msf_dict("Cholera", compact = FALSE)
 msf_dict("Meningitis", compact = FALSE)
 ```
 
-In addition, there are three survey dictionaries available:
+In addition, there are three MSF survey dictionaries available:
 
  - Retrospective mortality and access to care ("mortality")
  - Malnutrition ("nutrition") 
@@ -82,8 +82,8 @@ The {epidict} package has a function for generating data that's called
 describes the variable names, and how many rows are needed in the output.
 
 ```{r gendata}
-gen_data("Measles", varnames = "data_element_shortname", numcases = 100)
-gen_data("Vaccination", varnames = "column_name", numcases = 100)
+gen_data("Measles", varnames = "data_element_shortname", numcases = 100, org = "MSF")
+gen_data("Vaccination", varnames = "column_name", numcases = 100, org = "MSF")
 ```
 
 ## Cleaning data with the dictionaries
@@ -97,7 +97,8 @@ library("dplyr")
 
 dat <- gen_data(dictionary = "Cholera", 
   varnames = "data_element_shortname",
-  numcases = 20
+  numcases = 20,
+  org = "MSF"
 )
 print(dat)
 
@@ -118,7 +119,7 @@ print(dict)
 #  - 4th column: order of options
 
 # Now we can use linelist to filter the data:
-dat_clean <- matchmaker::match_us(dat, dict, 
+dat_clean <- matchmaker::match_df(dat, dict, 
   from  = "option_code",
   to    = "option_name",
   by    = "data_element_shortname",
