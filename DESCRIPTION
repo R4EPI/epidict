@@ -16,12 +16,13 @@ Authors@R: c(
     person(given = "Patrick",
            family = "Keating",
            role = c("aut")))
-Description: The 'R4EPIs' project seeks to provide a set of standardized tools
-    for analysis of outbreak and survey data in humanitarian aid settings. This
-    package provides standardized data dictionaries for four outbreak scenarios
-    (Acute Jaundice Syndrome, Cholera, Measles, Meningitis) and three surveys
-    (Retrospective mortality and access to care, Malnutrition, and Vaccination
-    coverage). In addition, a data generator from these dictionaries is provided.
+Description: The 'R4EPIs' project <https://R4epis.netlify.com> seeks to provide 
+    a set of standardized tools for analysis of outbreak and survey data in
+    humanitarian aid settings. This package provides standardized data
+    dictionaries for four outbreak scenarios (Acute Jaundice Syndrome, Cholera,
+    Measles, Meningitis) and three surveys (Retrospective mortality and access
+    to care, Malnutrition, and Vaccination coverage). In addition, a data
+    generator from these dictionaries is provided. 
 URL: https://r4epis.netlify.com, https://github.com/R4EPI/msfdict
 License: GPL-3
 Imports: 
