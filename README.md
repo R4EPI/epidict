@@ -1,37 +1,37 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# msfdict
+# epidict
 
 <!-- badges: start -->
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
-status](https://www.r-pkg.org/badges/version/msfdict)](https://CRAN.R-project.org/package=msfdict)
+status](https://www.r-pkg.org/badges/version/epidict)](https://CRAN.R-project.org/package=epidict)
 [![Travis build
-status](https://travis-ci.org/R4EPI/msfdict.svg?branch=master)](https://travis-ci.org/R4EPI/msfdict)
+status](https://travis-ci.org/R4EPI/epidict.svg?branch=master)](https://travis-ci.org/R4EPI/epidict)
 [![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/R4EPI/msfdict?branch=master&svg=true)](https://ci.appveyor.com/project/R4EPI/msfdict)
+status](https://ci.appveyor.com/api/projects/status/github/R4EPI/epidict?branch=master&svg=true)](https://ci.appveyor.com/project/R4EPI/epidict)
 [![Codecov test
-coverage](https://codecov.io/gh/R4EPI/msfdict/branch/master/graph/badge.svg)](https://codecov.io/gh/R4EPI/msfdict?branch=master)
+coverage](https://codecov.io/gh/R4EPI/epidict/branch/master/graph/badge.svg)](https://codecov.io/gh/R4EPI/epidict?branch=master)
 <!-- badges: end -->
 
-The goal of {msfdict} is to provide standardized data dictionaries for
+The goal of {epidict} is to provide standardized data dictionaries for
 the MSF R4EPIs project.
 
 ## Installation
 
-The {msfdict} package currently only lives on GitHub, but you can
+The {epidict} package currently only lives on GitHub, but you can
 install it with the {remotes} package like so:
 
 ``` r
-remotes::install_github("R4EPI/msfdict")
+remotes::install_github("R4EPI/epidict")
 ```
 
 ## Accessing dictionaries
 
-There are four outbreak dictionaries available in {msfdict}:
+There are four outbreak dictionaries available in {epidict}:
 
   - Cholera/Acute watery diarrhea (“cholera”)
   - Meningitis
@@ -47,7 +47,7 @@ specifies a dictionary that describes recorded variables
 categorical):
 
 ``` r
-library("msfdict")
+library("epidict")
 msf_dict("Measles", compact = FALSE)
 #> # A tibble: 176 x 11
 #>    data_element_uid data_element_na… data_element_sh… data_element_de…
@@ -184,7 +184,7 @@ msf_dict_survey("Vaccination", compact = FALSE)
 
 ## Generating data
 
-The {msfdict} package has a function for generating data that’s called
+The {epidict} package has a function for generating data that’s called
 `gen_data()`, which takes three arguments: The dictionary, which column
 describes the variable names, and how many rows are needed in the
 output.

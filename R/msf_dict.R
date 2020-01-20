@@ -66,7 +66,7 @@ msf_dict <- function(disease, name = "MSF-outbreak-dict.xlsx", tibble = TRUE,
   }
 
   # get excel file path (need to specify the file name)
-  path <- system.file("extdata", name, package = "msfdict")
+  path <- system.file("extdata", name, package = "epidict")
 
   # read in categorical variable content options
   dat_opts <- readxl::read_xlsx(path, sheet = "OptionCodes")

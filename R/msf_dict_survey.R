@@ -16,7 +16,7 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
     stop("disease must be one of 'Mortality', 'Nutrition', 'Vaccination'", call. = FALSE)
   }
   # get excel file path (need to specify the file name)
-  path <- system.file("extdata", name, package = "msfdict")
+  path <- system.file("extdata", name, package = "epidict")
 
   # read in data set - pasting the disease name for sheet
   dat_dict <- readxl::read_xlsx(path, sheet = disease)
