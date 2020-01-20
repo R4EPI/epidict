@@ -48,16 +48,33 @@ tidy_labels <- function(x, sep = "_", #transformation = "Any-Latin; Latin-ASCII"
 #'
 #' @examples
 #' get_dictionary("MOrTality")
-get_dictionary <- function(dictionary) {
+get_dictionary <- function(dictionary, org = "MSF") {
 
   # define which ones are outbreaks and which ones are survey datasets
-  SURVEYS   <- c("Mortality", "Nutrition", "Vaccination")
-  OUTBREAKS <- c("Cholera", "Measles", "Meningitis", "AJS")
-  surv <- tolower(SURVEYS)   == tolower(dictionary)
-  outb <- tolower(OUTBREAKS) == tolower(dictionary)
+  if (toupper(org) == "MSF") {
+    SURVEYS   <- c("Mortality", "Nutrition", "Vaccination")
+    OUTBREAKS <- c("Cholera", "Measles", "Meningitis", "AJS")
+  # NOTE: For future collaborators, if you have other dictionaries you wish to
+  #       add to this project, then you should place the names of your valid
+  #       dictionaries here in SURVEYS and OUTBREAKS.
+  # } else if (toupper(org) == "WHO") {
+  #   SURVEYS <- c()
+  #   OUTBREAKS <- c()
+  } else {
+    # no dictionary available
+    msg <- sprintf("No dictionaries from '%s' available", org)
+    stop(msg, call. = FALSE)
+  }
+
+  cmpr <- function(a, b) tolower(a) == tolower(b)
+  surv <- cmpr(SURVEYS,   dictionary)
+  outb <- cmpr(OUTBREAKS, dictionary)
 
   if (!(any(surv) || any(outb))) {
-    stop("'dictionary' must be one of: 'Cholera', 'Measles', 'Meningitis', 'AJS', 'Mortality', 'Nutrition', 'Vaccination'", call. = FALSE)
+    msg <- "'dictionary' must be one of:"
+    dct <- paste(c(OUTBREAKS, SURVEYS), collapse = "', '")
+    msg <- sprintf("%s '%s'", msg, dct)
+    stop(msg, call. = FALSE)
   } 
 
   return(list(survey = SURVEYS[surv], outbreak = OUTBREAKS[outb]))

@@ -20,12 +20,7 @@
 #'   format with each option getting one row. If `FALSE`, then two data frames
 #'   are returned, one with variables and the other with content options.
 #'
-#' @importFrom readxl read_xlsx
-#' @importFrom tibble as_tibble
-#' @importFrom stats aggregate runif
-#' @importFrom utils read.csv
-#' @importFrom rlang !!
-#' @seealso [matchmaker::match_df()]
+#' @seealso [matchmaker::match_df()] [gen_data()]
 #' @export
 #' @examples
 #'
@@ -33,7 +28,7 @@
 #' # You will often want to use MSF dictionaries to translate codes to human-
 #' # readable variables. Here, we generate a data set of 20 cases:
 #' dat <- gen_data(dictionary = "Cholera", varnames = "data_element_shortname",
-#'                 numcases = 20)
+#'                 numcases = 20, org = "MSF")
 #' print(dat)
 #'
 #' # We want the expanded dictionary, so we will select `compact = FALSE`
@@ -59,14 +54,14 @@
 msf_dict <- function(disease, name = "MSF-outbreak-dict.xlsx", tibble = TRUE,
                      compact = TRUE, long = TRUE) {
 
-  disease <- get_dictionary(disease)$outbreak
+  disease <- get_dictionary(disease, org = "MSF")$outbreak
 
   if (length(disease) == 0) {
     stop("disease must be one of 'Cholera', 'Measles', 'Meningitis', or 'AJS'", call. = FALSE)
   }
 
   # get excel file path (need to specify the file name)
-  path <- system.file("extdata", name, package = "epidict")
+  path     <- system.file("extdata", name, package = "epidict")
 
   # read in categorical variable content options
   dat_opts <- readxl::read_xlsx(path, sheet = "OptionCodes")
@@ -118,10 +113,21 @@ msf_dict <- function(disease, name = "MSF-outbreak-dict.xlsx", tibble = TRUE,
   if (long) {
 
     outtie <- dplyr::left_join(dat_dict, dat_opts,
-                               by = c("used_optionset_uid" = "optionset_uid"))
+      by = c("used_optionset_uid" = "optionset_uid")
+    )
 
     outtie <- if (tibble) tibble::as_tibble(outtie) else outtie
 
+  # Return second option: a list with data dictionary and value options seperate
+  } else {
+    if (tibble) {
+      dat_dict <- tibble::as_tibble(dat_dict)
+      dat_opts <- tibble::as_tibble(dat_opts)
+    }
+    outtie <- list(
+      dictionary = dat_dict,
+      options    = dat_opts
+    )
   }
 
   # produce clean compact data dictionary for use in gen_data
@@ -137,25 +143,7 @@ msf_dict <- function(disease, name = "MSF-outbreak-dict.xlsx", tibble = TRUE,
       outtie   <- dplyr::distinct(outtie)
       squished <- dplyr::left_join(outtie, squished, by = "data_element_shortname")
     }
-
     return(dplyr::ungroup(squished))
-
-  }
-
-  # Return second option: a list with data dictionary and value options seperate
-  if (!long) {
-
-    if (tibble == TRUE) {
-      outtie <- list(dictionary = tibble::as_tibble(dat_dict),
-                     options = tibble::as_tibble(dat_opts)
-                     )
-    }
-
-    if (tibble == FALSE) {
-      outtie <- list(dictionary = dat_dict,
-                     options = dat_opts)
-    }
-
   }
 
   # return dictionary dataset
