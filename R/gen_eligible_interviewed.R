@@ -4,13 +4,12 @@
 #' @param household [character] the column specifying household
 #' @param cluster [character] the column specifying cluster
 #'
-#' @return dis_output with two additional columns: 
+#' @return dis_output with two additional columns:
 #'   - eligible: the number of individuals within each household and cluster
 #'   - interviewed: 75% of eligible
 #'
 #' @noRd
 gen_eligible_interviewed <- function(dis_output, household = "q14_hh_no", cluster = "q77_what_is_the_cluster_number") {
-
   dis_output[["eligible"]] <- NULL
   dis_output[["interviewed"]] <- NULL
 
@@ -25,6 +24,4 @@ gen_eligible_interviewed <- function(dis_output, household = "q14_hh_no", cluste
 
   # merge with dis_output and return
   dplyr::left_join(dis_output, hh_count, by = c(household, cluster))
-
 }
-

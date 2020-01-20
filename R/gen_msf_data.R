@@ -66,8 +66,8 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # pregnant
     NOT_CURRENTLY_PREGNANT <- dis_output$sex != "F" | dis_output$pregnant != "Y"
 
-    dis_output$foetus_alive_at_admission[NOT_CURRENTLY_PREGNANT]  <- NA
-    dis_output$trimester[NOT_CURRENTLY_PREGNANT]                  <- NA
+    dis_output$foetus_alive_at_admission[NOT_CURRENTLY_PREGNANT] <- NA
+    dis_output$trimester[NOT_CURRENTLY_PREGNANT] <- NA
     # delivery event is a TRUE only category, meaning that it either is a 1 or
     # NA kind of thing.
     dis_output$delivery_event[NOT_CURRENTLY_PREGNANT] <- "NA"
@@ -75,7 +75,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     NO_DELIVERY <- dis_output$delivery_event != "1"
 
     dis_output$pregnancy_outcome_at_exit[NOT_CURRENTLY_PREGNANT] <- NA
-    dis_output$pregnancy_outcome_at_exit[NO_DELIVERY]            <- NA
+    dis_output$pregnancy_outcome_at_exit[NO_DELIVERY] <- NA
   }
 
 
@@ -85,7 +85,6 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
   }
 
   if (dictionary == "Measles") {
-
     dis_output$baby_born_with_complications[NO_DELIVERY] <- NA
 
     # fix vaccine stuff among non vaccinated
@@ -93,7 +92,6 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
     dis_output$previous_vaccine_doses_received[NOTVACC] <- NA
     dis_output$date_of_last_vaccination[NOTVACC] <- NA
-
   }
 
   if (dictionary == "Meningitis") {
@@ -110,8 +108,8 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
     # fix vaccine stuff among not vaccinated
     NOTVACC <- which(
-      !dis_output$vaccinated_meningitis_routine %in% c("C", "V") & 
-      !dis_output$vaccinated_meningitis_mvc %in% c("C", "V")
+      !dis_output$vaccinated_meningitis_routine %in% c("C", "V") &
+        !dis_output$vaccinated_meningitis_mvc %in% c("C", "V")
     )
 
     dis_output$name_meningitis_vaccine[NOTVACC] <- NA
@@ -119,11 +117,9 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
   }
 
   if (dictionary == "Mortality") {
-
-
-    dis_output <- gen_hh_clusters(dis_output, 
+    dis_output <- gen_hh_clusters(dis_output,
       n = numcases,
-      cluster = "cluster_number", 
+      cluster = "cluster_number",
       household = "q65_iq4"
     )
 
@@ -143,19 +139,19 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output$q152_q7_pregnant[dis_output$q4_q6_sex == "Male"] <- NA
 
     # resample death yes/no to have lower death rates
-    dis_output$q136_q34_died <- sample(c("Yes", "No"), 
-      size = nrow(dis_output), 
-      prob = c(0.05, 0.95), 
+    dis_output$q136_q34_died <- sample(c("Yes", "No"),
+      size = nrow(dis_output),
+      prob = c(0.05, 0.95),
       replace = TRUE
     )
 
     # set columns that are relate to "death" as NA if "q136_q34_died" is "No"
     died <- dis_output$q136_q34_died == "No"
     dcols <- c(
-      "q137_q35_died_date", 
-      "q138_q36_died_cause", 
-      "q141_q37_died_violence", 
-      "q143_q41_died_place", 
+      "q137_q35_died_date",
+      "q138_q36_died_cause",
+      "q141_q37_died_violence",
+      "q143_q41_died_place",
       "q145_q43_died_country"
     )
     for (d in dcols) {
@@ -163,7 +159,8 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     }
 
     # pregnancy related cause of death n.a. for too old/young and for males
-    pregnancy_not_possible <- with(dis_output, 
+    pregnancy_not_possible <- with(
+      dis_output,
       q4_q6_sex == "Male" | q155_q5_age_year >= 50 | q155_q5_age_year < 12
     )
 
@@ -173,11 +170,12 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output[["q138_q36_died_cause"]][no_pregnancy] <- "Unknown"
 
     # fix arrival/leave dates
-    dis_output$q41_q25_hh_arrive_date <- with(dis_output,
+    dis_output$q41_q25_hh_arrive_date <- with(
+      dis_output,
       pmin(
-        q41_q25_hh_arrive_date, 
-        q45_q29_hh_leave_date, 
-        q88_q33_born_date, 
+        q41_q25_hh_arrive_date,
+        q45_q29_hh_leave_date,
+        q88_q33_born_date,
         na.rm = TRUE
       )
     )
@@ -186,7 +184,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output <- enforce_timing(dis_output,
       first  = "q41_q25_hh_arrive_date",
       second = "q45_q29_hh_leave_date",
-      5:30 
+      5:30
     )
     dis_output <- enforce_timing(dis_output,
       first  = "q88_q33_born_date",
@@ -214,10 +212,9 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
   }
 
   if (dictionary == "Nutrition") {
-
-    dis_output <- gen_hh_clusters(dis_output, 
-      n         = numcases,
-      cluster   = "cluster_number",
+    dis_output <- gen_hh_clusters(dis_output,
+      n = numcases,
+      cluster = "cluster_number",
       household = "household_id"
     )
 
@@ -245,13 +242,12 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
   }
 
   if (dictionary == "Vaccination") {
-
-    dis_output <- gen_hh_clusters(dis_output, 
+    dis_output <- gen_hh_clusters(dis_output,
       n = numcases,
-      cluster = "q77_what_is_the_cluster_number", 
+      cluster = "q77_what_is_the_cluster_number",
       household = "q14_hh_no"
     )
-    
+
 
     dis_output <- gen_eligible_interviewed(dis_output,
       household = "q14_hh_no",
@@ -268,16 +264,9 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # age in mth (0 to 11)
     zero_yrs <- dis_output$q10_age_yr < 1
     dis_output$q55_age_mth[zero_yrs] <- sample_age(11L, sum(zero_yrs))
-
   }
 
 
   # return dataset as a tibble
   dplyr::as_tibble(dis_output)
-
 }
-
-
-
-
-

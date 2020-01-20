@@ -9,7 +9,6 @@
 msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
                             tibble = TRUE,
                             compact = FALSE) {
-
   disease <- get_dictionary(disease)$survey
 
   if (length(disease) == 0) {
@@ -28,27 +27,29 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
   dat_dict <- tidyr::fill(dat_dict, colnames(dat_dict), .direction = "down")
   dat_dict <- dplyr::rename_at(dat_dict,
     .vars = dplyr::vars(dplyr::starts_with("choice_")),
-    .funs = ~gsub("choice", "option", .)
-  ) 
+    .funs = ~ gsub("choice", "option", .)
+  )
 
   # minor tidying, e.g.: create "CodeX" assignments
   dat_dict$option_code[dat_dict$option_code == "."] <- NA
   dat_dict$option_name[dat_dict$option_name == "."] <- NA
-  dat_dict$type <- gsub(pattern = "Question",
+  dat_dict$type <- gsub(
+    pattern = "Question",
     replacement = "",
     x = dat_dict$type
   )
 
   # transform dat_dict to wide format (like outbreak dictionary)
-  dat_dict <- dplyr::select(dat_dict, 
-    !! quote(level),
-    !! quote(column_name),
-    !! quote(description), 
-    !! quote(type),
+  dat_dict <- dplyr::select(
+    dat_dict,
+    !!quote(level),
+    !!quote(column_name),
+    !!quote(description),
+    !!quote(type),
     dplyr::starts_with("option_")
   )
 
-  dat_dict <- dplyr::group_by(dat_dict, !! quote(column_name))
+  dat_dict <- dplyr::group_by(dat_dict, !!quote(column_name))
 
   dat_dict <- dplyr::mutate(dat_dict, option_order_in_set = seq(dplyr::n()))
 
@@ -63,17 +64,17 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
     }
   }
   dat_dict <- dplyr::ungroup(dat_dict)
-  
+
 
   dat_dict$type <- dplyr::case_when(
-    dat_dict$type == "Integer"     ~ "INTEGER_POSITIVE",
-    dat_dict$type == "Binary"      ~ "TEXT",
+    dat_dict$type == "Integer" ~ "INTEGER_POSITIVE",
+    dat_dict$type == "Binary" ~ "TEXT",
     dat_dict$type == "ChoiceMulti" ~ "MULTI",
-    dat_dict$type == "Text"        ~ "LONG_TEXT",
-    dat_dict$type == "Geo"         ~ "LONG_TEXT",
-    dat_dict$type == "Date"        ~ "DATE",
-    dat_dict$type == "Choice"      ~ "TEXT",
-    dat_dict$type == "Number"      ~ "INTEGER_POSITIVE"
+    dat_dict$type == "Text" ~ "LONG_TEXT",
+    dat_dict$type == "Geo" ~ "LONG_TEXT",
+    dat_dict$type == "Date" ~ "DATE",
+    dat_dict$type == "Choice" ~ "TEXT",
+    dat_dict$type == "Number" ~ "INTEGER_POSITIVE"
   )
 
   dat_dict <- dplyr::rename(dat_dict, "data_element_valuetype" = "type")
@@ -92,5 +93,3 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
 
   dat_dict
 }
-
-
