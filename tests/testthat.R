@@ -1,4 +1,4 @@
 library(testthat)
-library(msfdict)
+library(epidict)
 
-test_check("msfdict")
+test_check("epidict")

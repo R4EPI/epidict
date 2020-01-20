@@ -11,10 +11,10 @@
 #'   of packages imported (and because it's not going to be on CRAN anytime soon)
 # Not needed because we don't deal with accents here: importFrom stringi stri_trans_general
 #' @noRd
-tidy_labels <- function(x, sep = "_", #transformation = "Any-Latin; Latin-ASCII",
+tidy_labels <- function(x, sep = "_", # transformation = "Any-Latin; Latin-ASCII",
                         protect = "") {
   x <- as.character(x)
-  
+
   ## On the processing of the input:
 
   ## - coercion to lower case
@@ -28,9 +28,9 @@ tidy_labels <- function(x, sep = "_", #transformation = "Any-Latin; Latin-ASCII"
   # Negative lookahead for alphanumeric and any protected symbols
   to_protect <- sprintf("(?![a-z0-9%s])", paste(protect, collapse = ""))
   # If the negative lookahead doesn't find what it's looking for, then do the
-  # replacement. 
+  # replacement.
   to_replace <- sprintf("%s[[:punct:][:space:]]+?", to_protect)
-  
+
   # workhorse
   out <- gsub(to_replace, sep, out, perl = TRUE)
   out <- gsub(paste0("(", sep, ")+"), sep, out, perl = TRUE)
@@ -48,20 +48,36 @@ tidy_labels <- function(x, sep = "_", #transformation = "Any-Latin; Latin-ASCII"
 #'
 #' @examples
 #' get_dictionary("MOrTality")
-get_dictionary <- function(dictionary) {
+get_dictionary <- function(dictionary, org = "MSF") {
 
   # define which ones are outbreaks and which ones are survey datasets
-  SURVEYS   <- c("Mortality", "Nutrition", "Vaccination")
-  OUTBREAKS <- c("Cholera", "Measles", "Meningitis", "AJS")
-  surv <- tolower(SURVEYS)   == tolower(dictionary)
-  outb <- tolower(OUTBREAKS) == tolower(dictionary)
+  if (toupper(org) == "MSF") {
+    SURVEYS <- c("Mortality", "Nutrition", "Vaccination")
+    OUTBREAKS <- c("Cholera", "Measles", "Meningitis", "AJS")
+    # NOTE: For future collaborators, if you have other dictionaries you wish to
+    #       add to this project, then you should place the names of your valid
+    #       dictionaries here in SURVEYS and OUTBREAKS.
+    # } else if (toupper(org) == "WHO") {
+    #   SURVEYS <- c()
+    #   OUTBREAKS <- c()
+  } else {
+    # no dictionary available
+    msg <- sprintf("No dictionaries from '%s' available", org)
+    stop(msg, call. = FALSE)
+  }
+
+  cmpr <- function(a, b) tolower(a) == tolower(b)
+  surv <- cmpr(SURVEYS, dictionary)
+  outb <- cmpr(OUTBREAKS, dictionary)
 
   if (!(any(surv) || any(outb))) {
-    stop("'dictionary' must be one of: 'Cholera', 'Measles', 'Meningitis', 'AJS', 'Mortality', 'Nutrition', 'Vaccination'", call. = FALSE)
-  } 
+    msg <- "'dictionary' must be one of:"
+    dct <- paste(c(OUTBREAKS, SURVEYS), collapse = "', '")
+    msg <- sprintf("%s '%s'", msg, dct)
+    stop(msg, call. = FALSE)
+  }
 
   return(list(survey = SURVEYS[surv], outbreak = OUTBREAKS[outb]))
-
 }
 
 # Equivalent of !is.na()
@@ -73,7 +89,6 @@ has_value <- Negate(is.na)
 # isn't correct, then force the timing to be correct by making the second column
 # bigger than the first by `add`.
 enforce_timing <- function(x, first, second, add = 2, inclusive = FALSE) {
-
   if (inclusive) {
     mistakes <- x[[second]] < x[[first]]
   } else {
@@ -84,15 +99,14 @@ enforce_timing <- function(x, first, second, add = 2, inclusive = FALSE) {
   days <- if (length(add) == 1) add else sample(add, sum(mistakes, na.rm = TRUE), replace = TRUE)
 
   x[[second]][mistakes] <- x[[first]][mistakes] + days
-  x 
-
+  x
 }
 
 fix_dates <- function(dis_output) {
-  
+
   # Fix DATES ----------------------------------------------------------------
-  # 
-  # The date sampling we did above 
+  #
+  # The date sampling we did above
   # exit dates before date of entry
   # just add 20 to admission.... (was easiest...)
   dis_output <- enforce_timing(dis_output,

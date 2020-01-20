@@ -1,4 +1,5 @@
 ---
+title: epidict
 output: github_document
 ---
 
@@ -13,31 +14,30 @@ knitr::opts_chunk$set(
 )
 ```
 
-# msfdict
-
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![CRAN status](https://www.r-pkg.org/badges/version/msfdict)](https://CRAN.R-project.org/package=msfdict)
-[![Travis build status](https://travis-ci.org/R4EPI/msfdict.svg?branch=master)](https://travis-ci.org/R4EPI/msfdict)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/R4EPI/msfdict?branch=master&svg=true)](https://ci.appveyor.com/project/R4EPI/msfdict)
-[![Codecov test coverage](https://codecov.io/gh/R4EPI/msfdict/branch/master/graph/badge.svg)](https://codecov.io/gh/R4EPI/msfdict?branch=master)
+[![CRAN status](https://www.r-pkg.org/badges/version/epidict)](https://CRAN.R-project.org/package=epidict)
+[![Travis build status](https://travis-ci.org/R4EPI/epidict.svg?branch=master)](https://travis-ci.org/R4EPI/epidict)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/R4EPI/epidict?branch=master&svg=true)](https://ci.appveyor.com/project/R4EPI/epidict)
+[![Codecov test coverage](https://codecov.io/gh/R4EPI/epidict/branch/master/graph/badge.svg)](https://codecov.io/gh/R4EPI/epidict?branch=master)
 <!-- badges: end -->
 
-The goal of {msfdict} is to provide standardized data dictionaries for the MSF 
+The goal of {epidict} is to provide standardized data dictionaries for the MSF 
 R4EPIs project. 
 
 ## Installation
 
-The {msfdict} package currently only lives on GitHub, but you can install it
-with the {remotes} package like so:
+To install a stable version of {epidict}, please use the R4epis repository:
 
-``` r
-remotes::install_github("R4EPI/msfdict")
+```r
+# install.packages("drat")
+drat::addRepo("R4EPI")
+install.packages("epidict")
 ```
 
 ## Accessing dictionaries
 
-There are four outbreak dictionaries available in {msfdict}:
+There are four MSF outbreak dictionaries available in {epidict}:
 
  - Cholera/Acute watery diarrhea ("cholera")
  - Meningitis
@@ -51,14 +51,14 @@ dictionary that describes recorded variables (`data_element_shortname`) in rows
 and their possible options (if categorical):
 
 ```{r outbreak}
-library("msfdict")
+library("epidict")
 msf_dict("Measles", compact = FALSE)
 msf_dict("AJS", compact = FALSE)
 msf_dict("Cholera", compact = FALSE)
 msf_dict("Meningitis", compact = FALSE)
 ```
 
-In addition, there are three survey dictionaries available:
+In addition, there are three MSF survey dictionaries available:
 
  - Retrospective mortality and access to care ("mortality")
  - Malnutrition ("nutrition") 
@@ -77,13 +77,13 @@ msf_dict_survey("Vaccination", compact = FALSE)
 
 ## Generating data
 
-The {msfdict} package has a function for generating data that's called
+The {epidict} package has a function for generating data that's called
 `gen_data()`, which takes three arguments: The dictionary, which column
 describes the variable names, and how many rows are needed in the output.
 
 ```{r gendata}
-gen_data("Measles", varnames = "data_element_shortname", numcases = 100)
-gen_data("Vaccination", varnames = "column_name", numcases = 100)
+gen_data("Measles", varnames = "data_element_shortname", numcases = 100, org = "MSF")
+gen_data("Vaccination", varnames = "column_name", numcases = 100, org = "MSF")
 ```
 
 ## Cleaning data with the dictionaries
@@ -97,7 +97,8 @@ library("dplyr")
 
 dat <- gen_data(dictionary = "Cholera", 
   varnames = "data_element_shortname",
-  numcases = 20
+  numcases = 20,
+  org = "MSF"
 )
 print(dat)
 
@@ -118,7 +119,7 @@ print(dict)
 #  - 4th column: order of options
 
 # Now we can use linelist to filter the data:
-dat_clean <- matchmaker::match_us(dat, dict, 
+dat_clean <- matchmaker::match_df(dat, dict, 
   from  = "option_code",
   to    = "option_name",
   by    = "data_element_shortname",

@@ -1,37 +1,39 @@
+epidict
+================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# msfdict
 
 <!-- badges: start -->
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
-status](https://www.r-pkg.org/badges/version/msfdict)](https://CRAN.R-project.org/package=msfdict)
+status](https://www.r-pkg.org/badges/version/epidict)](https://CRAN.R-project.org/package=epidict)
 [![Travis build
-status](https://travis-ci.org/R4EPI/msfdict.svg?branch=master)](https://travis-ci.org/R4EPI/msfdict)
+status](https://travis-ci.org/R4EPI/epidict.svg?branch=master)](https://travis-ci.org/R4EPI/epidict)
 [![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/R4EPI/msfdict?branch=master&svg=true)](https://ci.appveyor.com/project/R4EPI/msfdict)
+status](https://ci.appveyor.com/api/projects/status/github/R4EPI/epidict?branch=master&svg=true)](https://ci.appveyor.com/project/R4EPI/epidict)
 [![Codecov test
-coverage](https://codecov.io/gh/R4EPI/msfdict/branch/master/graph/badge.svg)](https://codecov.io/gh/R4EPI/msfdict?branch=master)
+coverage](https://codecov.io/gh/R4EPI/epidict/branch/master/graph/badge.svg)](https://codecov.io/gh/R4EPI/epidict?branch=master)
 <!-- badges: end -->
 
-The goal of {msfdict} is to provide standardized data dictionaries for
+The goal of {epidict} is to provide standardized data dictionaries for
 the MSF R4EPIs project.
 
 ## Installation
 
-The {msfdict} package currently only lives on GitHub, but you can
-install it with the {remotes} package like so:
+To install a stable version of {epidict}, please use the R4epis
+repository:
 
 ``` r
-remotes::install_github("R4EPI/msfdict")
+# install.packages("drat")
+drat::addRepo("R4EPI")
+install.packages("epidict")
 ```
 
 ## Accessing dictionaries
 
-There are four outbreak dictionaries available in {msfdict}:
+There are four MSF outbreak dictionaries available in {epidict}:
 
   - Cholera/Acute watery diarrhea (“cholera”)
   - Meningitis
@@ -47,7 +49,7 @@ specifies a dictionary that describes recorded variables
 categorical):
 
 ``` r
-library("msfdict")
+library("epidict")
 msf_dict("Measles", compact = FALSE)
 #> # A tibble: 176 x 11
 #>    data_element_uid data_element_na… data_element_sh… data_element_de…
@@ -122,7 +124,7 @@ msf_dict("Meningitis", compact = FALSE)
 #> #   option_uid <chr>, option_order_in_set <dbl>
 ```
 
-In addition, there are three survey dictionaries available:
+In addition, there are three MSF survey dictionaries available:
 
   - Retrospective mortality and access to care (“mortality”)
   - Malnutrition (“nutrition”)
@@ -184,29 +186,29 @@ msf_dict_survey("Vaccination", compact = FALSE)
 
 ## Generating data
 
-The {msfdict} package has a function for generating data that’s called
+The {epidict} package has a function for generating data that’s called
 `gen_data()`, which takes three arguments: The dictionary, which column
 describes the variable names, and how many rows are needed in the
 output.
 
 ``` r
-gen_data("Measles", varnames = "data_element_shortname", numcases = 100)
+gen_data("Measles", varnames = "data_element_shortname", numcases = 100, org = "MSF")
 #> # A tibble: 100 x 52
 #>    seizure_episodes trimester croup dehydration_lev… residential_sta…
 #>    <fct>            <fct>     <fct> <fct>            <fct>           
-#>  1 1                <NA>      0     UN               4               
-#>  2 0                <NA>      0     SO               3               
-#>  3 0                <NA>      1     SO               3               
-#>  4 1                <NA>      0     UN               3               
-#>  5 0                <NA>      0     SE               5               
-#>  6 1                <NA>      1     SE               1               
-#>  7 0                <NA>      0     SO               2               
-#>  8 1                <NA>      1     UN               3               
-#>  9 1                <NA>      0     NO               1               
-#> 10 0                <NA>      1     SO               3               
+#>  1 1                <NA>      0     SO               5               
+#>  2 0                <NA>      1     UN               2               
+#>  3 1                <NA>      1     SO               3               
+#>  4 1                <NA>      1     SE               4               
+#>  5 1                <NA>      0     SE               3               
+#>  6 1                <NA>      1     SO               2               
+#>  7 0                <NA>      1     UN               2               
+#>  8 0                1         0     UN               4               
+#>  9 1                <NA>      1     UN               5               
+#> 10 1                <NA>      0     SO               5               
 #> # … with 90 more rows, and 47 more variables:
 #> #   previously_vaccinated <fct>, patient_origin_free_text <chr>,
-#> #   age_days <lgl>, msf_involvement <fct>,
+#> #   age_days <int>, msf_involvement <fct>,
 #> #   nutrition_status_at_admission <fct>, fever <fct>, sex <fct>,
 #> #   patient_origin <chr>, pregnancy_outcome_at_exit <fct>,
 #> #   prescribed_vitamin_a <fct>, date_of_exit <date>,
@@ -226,20 +228,20 @@ gen_data("Measles", varnames = "data_element_shortname", numcases = 100)
 #> #   nasal_discharge <fct>, acute_otitis_media <fct>, pregnant <fct>,
 #> #   foetus_alive_at_admission <fct>, maculopapular_rash <fct>,
 #> #   pneumonia <fct>, late_complications <fct>
-gen_data("Vaccination", varnames = "column_name", numcases = 100)
+gen_data("Vaccination", varnames = "column_name", numcases = 100, org = "MSF")
 #> # A tibble: 100 x 41
 #>    q77_what_is_the… health_district village q14_hh_no q15_home
 #>               <dbl> <chr>           <chr>       <int> <fct>   
-#>  1                4 District B      Villag…         2 No      
-#>  2                3 District B      Villag…         5 No      
-#>  3                3 District B      Villag…         6 Yes     
-#>  4                4 District B      Villag…         4 Yes     
-#>  5                1 District A      Villag…         4 No      
-#>  6                2 District A      Villag…         1 No      
-#>  7                3 District B      Villag…         6 No      
-#>  8                4 District B      Villag…         6 No      
-#>  9                2 District A      Villag…         4 No      
-#> 10                1 District A      Villag…         3 Yes     
+#>  1                3 District B      Villag…         5 No      
+#>  2                1 District A      Villag…         4 Yes     
+#>  3                2 District A      Villag…         6 Yes     
+#>  4                3 District B      Villag…         4 No      
+#>  5                3 District B      Villag…         3 Yes     
+#>  6                2 District A      Villag…         2 No      
+#>  7                2 District A      Villag…         4 Yes     
+#>  8                1 District A      Villag…         3 Yes     
+#>  9                4 District B      Villag…         3 Yes     
+#> 10                4 District B      Villag…         5 No      
 #> # … with 90 more rows, and 36 more variables: q16_occupant_age <lgl>,
 #> #   q58_consent <fct>, q75_caretaker <fct>, q76_caretaker_other <lgl>,
 #> #   q65_consent_no_reason <fct>, q66_consent_no_reason_other <lgl>,
@@ -272,41 +274,42 @@ library("dplyr")
 
 dat <- gen_data(dictionary = "Cholera", 
   varnames = "data_element_shortname",
-  numcases = 20
+  numcases = 20,
+  org = "MSF"
 )
 print(dat)
 #> # A tibble: 20 x 45
 #>    trimester exit_status treatment_facil… dehydration_lev…
 #>    <fct>     <fct>       <lgl>            <fct>           
-#>  1 <NA>      LA          NA               UN              
-#>  2 <NA>      DH          NA               SE              
-#>  3 <NA>      DD          NA               NO              
-#>  4 <NA>      LA          NA               UN              
-#>  5 3         TR          NA               SO              
-#>  6 <NA>      DOA         NA               SO              
-#>  7 <NA>      DOA         NA               SE              
-#>  8 <NA>      DD          NA               NO              
-#>  9 <NA>      DH          NA               SO              
-#> 10 1         TR          NA               NO              
-#> 11 <NA>      AD          NA               NO              
-#> 12 <NA>      AD          NA               NO              
-#> 13 <NA>      AD          NA               SO              
+#>  1 <NA>      DH          NA               SE              
+#>  2 <NA>      TR          NA               SE              
+#>  3 <NA>      DH          NA               NO              
+#>  4 <NA>      DD          NA               UN              
+#>  5 <NA>      TR          NA               NO              
+#>  6 <NA>      TR          NA               NO              
+#>  7 <NA>      DOA         NA               NO              
+#>  8 <NA>      AD          NA               SO              
+#>  9 <NA>      AD          NA               NO              
+#> 10 <NA>      LA          NA               SO              
+#> 11 <NA>      TR          NA               NO              
+#> 12 <NA>      AD          NA               UN              
+#> 13 <NA>      DD          NA               SO              
 #> 14 <NA>      DOA         NA               UN              
-#> 15 <NA>      DOA         NA               UN              
+#> 15 <NA>      LA          NA               UN              
 #> 16 <NA>      DD          NA               SO              
-#> 17 <NA>      AD          NA               NO              
-#> 18 1         AD          NA               NO              
-#> 19 <NA>      LA          NA               UN              
-#> 20 <NA>      DD          NA               SE              
+#> 17 <NA>      DD          NA               SE              
+#> 18 <NA>      DD          NA               UN              
+#> 19 <NA>      AD          NA               SE              
+#> 20 1         LA          NA               SO              
 #> # … with 41 more variables: comments_on_lab_results <lgl>,
 #> #   fluids_treatment_plan <fct>, time_to_death <fct>,
 #> #   malaria_rdt_at_admission <fct>, previously_vaccinated <fct>,
 #> #   cholera_pcr_result <fct>, iv_fluids_received_litres <int>,
 #> #   patient_origin_free_text <chr>,
 #> #   previous_vaccine_doses_received <fct>, age_years <int>,
-#> #   arrival_date_in_area_if_3m <date>, age_days <lgl>,
+#> #   arrival_date_in_area_if_3m <date>, age_days <int>,
 #> #   msf_involvement <fct>, date_lab_sample_taken <date>,
-#> #   readmission <fct>, age_months <lgl>, date_of_last_vaccination <date>,
+#> #   readmission <fct>, age_months <int>, date_of_last_vaccination <date>,
 #> #   case_number <chr>, sex <fct>, patient_origin <chr>,
 #> #   prescribed_zinc_supplement <fct>, delivery_event <fct>,
 #> #   pregnancy_outcome_at_exit <fct>, date_of_exit <date>,
@@ -354,7 +357,7 @@ print(dict)
 #  - 4th column: order of options
 
 # Now we can use linelist to filter the data:
-dat_clean <- matchmaker::match_us(dat, dict, 
+dat_clean <- matchmaker::match_df(dat, dict, 
   from  = "option_code",
   to    = "option_name",
   by    = "data_element_shortname",
@@ -364,35 +367,35 @@ print(dat_clean)
 #> # A tibble: 20 x 45
 #>    trimester exit_status treatment_facil… dehydration_lev…
 #>    <fct>     <fct>       <lgl>            <fct>           
-#>  1 <NA>      Left again… NA               Unknown         
-#>  2 <NA>      Discharged… NA               Severe          
-#>  3 <NA>      Dead in fa… NA               None            
-#>  4 <NA>      Left again… NA               Unknown         
-#>  5 3rd trim… Transferre… NA               Some            
-#>  6 <NA>      Dead on ar… NA               Some            
-#>  7 <NA>      Dead on ar… NA               Severe          
-#>  8 <NA>      Dead in fa… NA               None            
-#>  9 <NA>      Discharged… NA               Some            
-#> 10 1st trim… Transferre… NA               None            
+#>  1 <NA>      Discharged… NA               Severe          
+#>  2 <NA>      Transferre… NA               Severe          
+#>  3 <NA>      Discharged… NA               None            
+#>  4 <NA>      Dead in fa… NA               Unknown         
+#>  5 <NA>      Transferre… NA               None            
+#>  6 <NA>      Transferre… NA               None            
+#>  7 <NA>      Dead on ar… NA               None            
+#>  8 <NA>      Transferre… NA               Some            
+#>  9 <NA>      Transferre… NA               None            
+#> 10 <NA>      Left again… NA               Some            
 #> 11 <NA>      Transferre… NA               None            
-#> 12 <NA>      Transferre… NA               None            
-#> 13 <NA>      Transferre… NA               Some            
+#> 12 <NA>      Transferre… NA               Unknown         
+#> 13 <NA>      Dead in fa… NA               Some            
 #> 14 <NA>      Dead on ar… NA               Unknown         
-#> 15 <NA>      Dead on ar… NA               Unknown         
+#> 15 <NA>      Left again… NA               Unknown         
 #> 16 <NA>      Dead in fa… NA               Some            
-#> 17 <NA>      Transferre… NA               None            
-#> 18 1st trim… Transferre… NA               None            
-#> 19 <NA>      Left again… NA               Unknown         
-#> 20 <NA>      Dead in fa… NA               Severe          
+#> 17 <NA>      Dead in fa… NA               Severe          
+#> 18 <NA>      Dead in fa… NA               Unknown         
+#> 19 <NA>      Transferre… NA               Severe          
+#> 20 1st trim… Left again… NA               Some            
 #> # … with 41 more variables: comments_on_lab_results <lgl>,
 #> #   fluids_treatment_plan <fct>, time_to_death <fct>,
 #> #   malaria_rdt_at_admission <fct>, previously_vaccinated <fct>,
 #> #   cholera_pcr_result <fct>, iv_fluids_received_litres <int>,
 #> #   patient_origin_free_text <chr>,
 #> #   previous_vaccine_doses_received <fct>, age_years <int>,
-#> #   arrival_date_in_area_if_3m <date>, age_days <lgl>,
+#> #   arrival_date_in_area_if_3m <date>, age_days <int>,
 #> #   msf_involvement <fct>, date_lab_sample_taken <date>,
-#> #   readmission <fct>, age_months <lgl>, date_of_last_vaccination <date>,
+#> #   readmission <fct>, age_months <int>, date_of_last_vaccination <date>,
 #> #   case_number <chr>, sex <fct>, patient_origin <chr>,
 #> #   prescribed_zinc_supplement <fct>, delivery_event <fct>,
 #> #   pregnancy_outcome_at_exit <fct>, date_of_exit <date>,

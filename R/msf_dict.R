@@ -20,53 +20,52 @@
 #'   format with each option getting one row. If `FALSE`, then two data frames
 #'   are returned, one with variables and the other with content options.
 #'
-#' @importFrom readxl read_xlsx
-#' @importFrom tibble as_tibble
-#' @importFrom stats aggregate runif
-#' @importFrom utils read.csv
-#' @importFrom rlang !!
-#' @seealso [matchmaker::match_df()]
+#' @seealso [matchmaker::match_df()] [gen_data()]
 #' @export
 #' @examples
 #'
-#' if (require('dplyr') & require('matchmaker')) { withAutoprint({
-#' # You will often want to use MSF dictionaries to translate codes to human-
-#' # readable variables. Here, we generate a data set of 20 cases:
-#' dat <- gen_data(dictionary = "Cholera", varnames = "data_element_shortname",
-#'                 numcases = 20)
-#' print(dat)
+#' if (require("dplyr") & require("matchmaker")) {
+#'   withAutoprint({
+#'     # You will often want to use MSF dictionaries to translate codes to human-
+#'     # readable variables. Here, we generate a data set of 20 cases:
+#'     dat <- gen_data(
+#'       dictionary = "Cholera", varnames = "data_element_shortname",
+#'       numcases = 20, org = "MSF"
+#'     )
+#'     print(dat)
 #'
-#' # We want the expanded dictionary, so we will select `compact = FALSE`
-#' dict <- msf_dict(disease = "Cholera", long = TRUE, compact = FALSE, tibble = TRUE)
-#' print(dict)
+#'     # We want the expanded dictionary, so we will select `compact = FALSE`
+#'     dict <- msf_dict(disease = "Cholera", long = TRUE, compact = FALSE, tibble = TRUE)
+#'     print(dict)
 #'
-#' # We can use linelist's clean_variable_spelling to translate the codes. First,
-#' # we want to reorder the columns of the dictionary like so:
-#' #
-#' #  - 1st column: option codes
-#' #  - 2nd column: translations
-#' #  - 3rd column: data column name
-#' #  - 4th column: order of options
+#'     # We can use linelist's clean_variable_spelling to translate the codes. First,
+#'     # we want to reorder the columns of the dictionary like so:
+#'     #
+#'     #  - 1st column: option codes
+#'     #  - 2nd column: translations
+#'     #  - 3rd column: data column name
+#'     #  - 4th column: order of options
 #'
-#' # Now we can use linelist to filter the data:
-#' dat_clean <- matchmaker::match_df(dat, dict, 
-#'                                   from = "option_code", 
-#'                                   to = "option_name",
-#'                                   by = "data_element_shortname",
-#'                                   order = "option_order_in_set")
-#' print(dat_clean)
-#' })}
+#'     # Now we can use linelist to filter the data:
+#'     dat_clean <- matchmaker::match_df(dat, dict,
+#'       from = "option_code",
+#'       to = "option_name",
+#'       by = "data_element_shortname",
+#'       order = "option_order_in_set"
+#'     )
+#'     print(dat_clean)
+#'   })
+#' }
 msf_dict <- function(disease, name = "MSF-outbreak-dict.xlsx", tibble = TRUE,
                      compact = TRUE, long = TRUE) {
-
-  disease <- get_dictionary(disease)$outbreak
+  disease <- get_dictionary(disease, org = "MSF")$outbreak
 
   if (length(disease) == 0) {
     stop("disease must be one of 'Cholera', 'Measles', 'Meningitis', or 'AJS'", call. = FALSE)
   }
 
   # get excel file path (need to specify the file name)
-  path <- system.file("extdata", name, package = "msfdict")
+  path <- system.file("extdata", name, package = "epidict")
 
   # read in categorical variable content options
   dat_opts <- readxl::read_xlsx(path, sheet = "OptionCodes")
@@ -82,24 +81,24 @@ msf_dict <- function(disease, name = "MSF-outbreak-dict.xlsx", tibble = TRUE,
   # excel names (data element shortname)
   # csv names (data_element_name)
   dat_dict$data_element_shortname <- tidy_labels(dat_dict$data_element_shortname)
-  dat_dict$data_element_name      <- tidy_labels(dat_dict$data_element_name)
+  dat_dict$data_element_name <- tidy_labels(dat_dict$data_element_name)
 
   # Adding hardcoded var types to options list
   # 2 types added to - BOOLEAN, TRUE_ONLY
   BOOLEAN <- data.frame(
-    option_code         = c("1"      , "0")      ,
-    option_name         = c("[1] Yes", "[0] No") ,
-    option_uid          = c(NA       , NA)       ,
-    option_order_in_set = c(1        , 2)        ,
-    optionset_uid       = c("BOOLEAN", "BOOLEAN")
+    option_code = c("1", "0"),
+    option_name = c("[1] Yes", "[0] No"),
+    option_uid = c(NA, NA),
+    option_order_in_set = c(1, 2),
+    optionset_uid = c("BOOLEAN", "BOOLEAN")
   )
 
   TRUE_ONLY <- data.frame(
-    option_code         = c("1"        , "NA")           ,
-    option_name         = c("[1] TRUE" , "[NA] Not TRUE"),
-    option_uid          = c(NA         , NA)             ,
-    option_order_in_set = c(1          , 2)              ,
-    optionset_uid       = c("TRUE_ONLY", "TRUE_ONLY")
+    option_code = c("1", "NA"),
+    option_name = c("[1] TRUE", "[NA] Not TRUE"),
+    option_uid = c(NA, NA),
+    option_order_in_set = c(1, 2),
+    optionset_uid = c("TRUE_ONLY", "TRUE_ONLY")
   )
 
   # bind these on to the bottom of dat_opts (option list) as rows
@@ -116,46 +115,37 @@ msf_dict <- function(disease, name = "MSF-outbreak-dict.xlsx", tibble = TRUE,
   dat_opts$option_name <- gsub("^\\[.*\\] ", "", dat_opts$option_name)
 
   if (long) {
-
     outtie <- dplyr::left_join(dat_dict, dat_opts,
-                               by = c("used_optionset_uid" = "optionset_uid"))
+      by = c("used_optionset_uid" = "optionset_uid")
+    )
 
     outtie <- if (tibble) tibble::as_tibble(outtie) else outtie
 
+    # Return second option: a list with data dictionary and value options seperate
+  } else {
+    if (tibble) {
+      dat_dict <- tibble::as_tibble(dat_dict)
+      dat_opts <- tibble::as_tibble(dat_opts)
+    }
+    outtie <- list(
+      dictionary = dat_dict,
+      options    = dat_opts
+    )
   }
 
   # produce clean compact data dictionary for use in gen_data
   if (long && compact == TRUE) {
-
-    squished <- dplyr::group_by(outtie, !! quote(data_element_shortname))
+    squished <- dplyr::group_by(outtie, !!quote(data_element_shortname))
 
     if (utils::packageVersion("tidyr") > "0.8.99") {
       squished <- tidyr::nest(squished, options = dplyr::starts_with("option_"))
     } else {
       squished <- tidyr::nest(squished, dplyr::starts_with("option_"), .key = "options")
-      outtie   <- dplyr::select(outtie, -dplyr::starts_with("option_"))
-      outtie   <- dplyr::distinct(outtie)
+      outtie <- dplyr::select(outtie, -dplyr::starts_with("option_"))
+      outtie <- dplyr::distinct(outtie)
       squished <- dplyr::left_join(outtie, squished, by = "data_element_shortname")
     }
-
     return(dplyr::ungroup(squished))
-
-  }
-
-  # Return second option: a list with data dictionary and value options seperate
-  if (!long) {
-
-    if (tibble == TRUE) {
-      outtie <- list(dictionary = tibble::as_tibble(dat_dict),
-                     options = tibble::as_tibble(dat_opts)
-                     )
-    }
-
-    if (tibble == FALSE) {
-      outtie <- list(dictionary = dat_dict,
-                     options = dat_opts)
-    }
-
   }
 
   # return dictionary dataset

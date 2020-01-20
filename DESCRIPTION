@@ -1,4 +1,4 @@
-Package: msfdict
+Package: epidict
 Title: Standardized Data Dictionaries for the 'R4EPIs' Project
 Version: 0.0.0.9000
 Authors@R: c(
@@ -23,7 +23,7 @@ Description: The 'R4EPIs' project <https://R4epis.netlify.com> seeks to provide
     Measles, Meningitis) and three surveys (Retrospective mortality and access
     to care, Malnutrition, and Vaccination coverage). In addition, a data
     generator from these dictionaries is provided. 
-URL: https://r4epis.netlify.com, https://github.com/R4EPI/msfdict
+URL: https://r4epis.netlify.com, https://github.com/R4EPI/epidict
 License: GPL-3
 Imports: 
     tibble,
