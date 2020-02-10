@@ -1,0 +1,132 @@
+The goal of {epidict} is to provide standardized data dictionaries for the MSF 
+R4EPIs project. Learn more about R4EPIs at <https://r4epis.netlify.com>
+
+## Installation
+
+You can install {epidict} from CRAN:
+
+``` r
+install.packages("epidict")
+```
+
+<details>
+<!--
+NOTE: everything inside the details tag will be collapsed and effectively
+hidden from the user
+-->
+<summary style='text-decoration: underline'>Click here for alternative installation options</summary>
+If there is a bugfix or feature that is not yet on CRAN, you can install it via
+the {drat} package:
+
+
+You can install {epidict} from the R4EPI repository:
+
+```{r eval = FALSE}
+# install.packages("drat")
+drat::addRepo("R4EPI")
+install.packages("epidict")
+```
+
+You can also install the in-development version from GitHub using the {remotes}
+package (but there's no guarantee that it will be stable):
+
+```{r eval = FALSE}
+# install.packages("remotes")
+remotes::install_github("R4EPI/epidict") 
+```
+
+<!-- </details> -->
+
+
+## Accessing dictionaries
+
+There are four MSF outbreak dictionaries available in {epidict}:
+
+ - Cholera/Acute watery diarrhea ("cholera")
+ - Meningitis
+ - Measles/Rubella ("measles")
+ - Acute Jaundice Syndrome (often suspected to be Hepatitis E) ("ajs")
+
+> You can read more about the outbreak dictionaries at <https://r4epis.netlify.com/outbreaks>
+
+The dictionary can be obtained via the `msf_dict()` function, which specifies a
+dictionary that describes recorded variables (`data_element_shortname`) in rows
+and their possible options (if categorical):
+
+```{r outbreak}
+library("epidict")
+msf_dict("Measles", compact = FALSE)
+msf_dict("AJS", compact = FALSE)
+msf_dict("Cholera", compact = FALSE)
+msf_dict("Meningitis", compact = FALSE)
+```
+
+In addition, there are three MSF survey dictionaries available:
+
+ - Retrospective mortality and access to care ("mortality")
+ - Malnutrition ("nutrition") 
+ - Vaccination Coverage ("vaccination")
+
+> You can read more about the survey dictionaries at <https://r4epis.netlify.com/surveys>
+
+These are accessible via `msf_dict_survey()` where the variables are in 
+`column_name` and are often labeled by question number. 
+
+```{r survey}
+msf_dict_survey("Mortality", compact = FALSE)
+msf_dict_survey("Nutrition", compact = FALSE)
+msf_dict_survey("Vaccination", compact = FALSE)
+```
+
+## Generating data
+
+The {epidict} package has a function for generating data that's called
+`gen_data()`, which takes three arguments: The dictionary, which column
+describes the variable names, and how many rows are needed in the output.
+
+```{r gendata}
+gen_data("Measles", varnames = "data_element_shortname", numcases = 100, org = "MSF")
+gen_data("Vaccination", varnames = "column_name", numcases = 100, org = "MSF")
+```
+
+## Cleaning data with the dictionaries
+
+You can use the dictionaries to clean the data via the [{matchmaker}](https://www.repidemicsconsortium.org/matchmaker) package:
+
+```{r lookup, message = FALSE}
+library("matchmaker")
+library("dplyr")
+
+dat <- gen_data(dictionary = "Cholera", 
+  varnames = "data_element_shortname",
+  numcases = 20,
+  org = "MSF"
+)
+print(dat)
+
+# We want the expanded dictionary, so we will select `compact = FALSE`
+dict <- msf_dict(disease = "Cholera", 
+  long = TRUE, 
+  compact = FALSE, 
+  tibble = TRUE
+)
+print(dict)
+
+# We can use linelist's clean_variable_spelling to translate the codes. First,
+# we want to reorder the columns of the dictionary like so:
+#
+#  - 1st column: option codes
+#  - 2nd column: translations
+#  - 3rd column: data column name
+#  - 4th column: order of options
+
+# Now we can use linelist to filter the data:
+dat_clean <- matchmaker::match_df(dat, dict, 
+  from  = "option_code",
+  to    = "option_name",
+  by    = "data_element_shortname",
+  order = "option_order_in_set"
+)
+print(dat_clean)
+```
+

@@ -19,6 +19,7 @@ Useful links:
 \itemize{
   \item \url{https://r4epis.netlify.com}
   \item \url{https://github.com/R4EPI/epidict}
+  \item \url{https://r4epi.github.io/epidict}
 }
 
 }

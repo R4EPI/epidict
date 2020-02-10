@@ -36,8 +36,12 @@ Imports:
 Suggests: 
     testthat (>= 2.1.0),
     matchmaker,
-    covr
+    covr,
+    knitr,
+    rmarkdown,
+    DT
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
+VignetteBuilder: knitr
