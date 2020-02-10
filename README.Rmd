@@ -44,7 +44,7 @@ There are four MSF outbreak dictionaries available in {epidict}:
  - Measles/Rubella ("measles")
  - Acute Jaundice Syndrome (often suspected to be Hepatitis E) ("ajs")
 
-> You can read more about the outbreak dictionaries at <https://r4epis.netilfy.com/outbreaks>
+> You can read more about the outbreak dictionaries at <https://r4epis.netlify.com/outbreaks>
 
 The dictionary can be obtained via the `msf_dict()` function, which specifies a
 dictionary that describes recorded variables (`data_element_shortname`) in rows
@@ -64,7 +64,7 @@ In addition, there are three MSF survey dictionaries available:
  - Malnutrition ("nutrition") 
  - Vaccination Coverage ("vaccination")
 
-> You can read more about the survey dictionaries at <https://r4epis.netilfy.com/surveys>
+> You can read more about the survey dictionaries at <https://r4epis.netlify.com/surveys>
 
 These are accessible via `msf_dict_survey()` where the variables are in 
 `column_name` and are often labeled by question number. 
@@ -88,10 +88,9 @@ gen_data("Vaccination", varnames = "column_name", numcases = 100, org = "MSF")
 
 ## Cleaning data with the dictionaries
 
-You can use the dictionaries to clean the data via the [{matchmaker}](https://repidemicsconsortium.org/matchmaker) package (currently on GitHub):
+You can use the dictionaries to clean the data via the [{matchmaker}](https://www.repidemicsconsortium.org/matchmaker) package:
 
 ```{r lookup, message = FALSE}
-# remotes::install_github("reconhub/matchmaker@*release")
 library("matchmaker")
 library("dplyr")
 

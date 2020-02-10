@@ -41,7 +41,7 @@ There are four MSF outbreak dictionaries available in {epidict}:
   - Acute Jaundice Syndrome (often suspected to be Hepatitis E) (“ajs”)
 
 > You can read more about the outbreak dictionaries at
-> <https://r4epis.netilfy.com/outbreaks>
+> <https://r4epis.netlify.com/outbreaks>
 
 The dictionary can be obtained via the `msf_dict()` function, which
 specifies a dictionary that describes recorded variables
@@ -131,7 +131,7 @@ In addition, there are three MSF survey dictionaries available:
   - Vaccination Coverage (“vaccination”)
 
 > You can read more about the survey dictionaries at
-> <https://r4epis.netilfy.com/surveys>
+> <https://r4epis.netlify.com/surveys>
 
 These are accessible via `msf_dict_survey()` where the variables are in
 `column_name` and are often labeled by question number.
@@ -196,16 +196,16 @@ gen_data("Measles", varnames = "data_element_shortname", numcases = 100, org = "
 #> # A tibble: 100 x 52
 #>    seizure_episodes trimester croup dehydration_lev… residential_sta…
 #>    <fct>            <fct>     <fct> <fct>            <fct>           
-#>  1 1                <NA>      0     SO               5               
-#>  2 0                <NA>      1     UN               2               
-#>  3 1                <NA>      1     SO               3               
-#>  4 1                <NA>      1     SE               4               
-#>  5 1                <NA>      0     SE               3               
-#>  6 1                <NA>      1     SO               2               
-#>  7 0                <NA>      1     UN               2               
-#>  8 0                1         0     UN               4               
-#>  9 1                <NA>      1     UN               5               
-#> 10 1                <NA>      0     SO               5               
+#>  1 0                <NA>      0     UN               3               
+#>  2 1                <NA>      0     NO               4               
+#>  3 1                <NA>      1     SO               1               
+#>  4 0                <NA>      1     SE               1               
+#>  5 1                3         1     NO               5               
+#>  6 1                <NA>      1     UN               4               
+#>  7 0                <NA>      0     SO               1               
+#>  8 0                <NA>      1     SO               5               
+#>  9 1                <NA>      0     SE               1               
+#> 10 0                <NA>      0     NO               3               
 #> # … with 90 more rows, and 47 more variables:
 #> #   previously_vaccinated <fct>, patient_origin_free_text <chr>,
 #> #   age_days <int>, msf_involvement <fct>,
@@ -232,16 +232,16 @@ gen_data("Vaccination", varnames = "column_name", numcases = 100, org = "MSF")
 #> # A tibble: 100 x 41
 #>    q77_what_is_the… health_district village q14_hh_no q15_home
 #>               <dbl> <chr>           <chr>       <int> <fct>   
-#>  1                3 District B      Villag…         5 No      
-#>  2                1 District A      Villag…         4 Yes     
-#>  3                2 District A      Villag…         6 Yes     
-#>  4                3 District B      Villag…         4 No      
-#>  5                3 District B      Villag…         3 Yes     
-#>  6                2 District A      Villag…         2 No      
-#>  7                2 District A      Villag…         4 Yes     
+#>  1                1 District A      Villag…         6 Yes     
+#>  2                3 District B      Villag…         2 No      
+#>  3                2 District A      Villag…         1 No      
+#>  4                2 District A      Villag…         1 No      
+#>  5                3 District B      Villag…         2 No      
+#>  6                4 District B      Villag…         4 No      
+#>  7                4 District B      Villag…         4 No      
 #>  8                1 District A      Villag…         3 Yes     
-#>  9                4 District B      Villag…         3 Yes     
-#> 10                4 District B      Villag…         5 No      
+#>  9                4 District B      Villag…         1 No      
+#> 10                4 District B      Villag…         2 Yes     
 #> # … with 90 more rows, and 36 more variables: q16_occupant_age <lgl>,
 #> #   q58_consent <fct>, q75_caretaker <fct>, q76_caretaker_other <lgl>,
 #> #   q65_consent_no_reason <fct>, q66_consent_no_reason_other <lgl>,
@@ -264,11 +264,9 @@ gen_data("Vaccination", varnames = "column_name", numcases = 100, org = "MSF")
 ## Cleaning data with the dictionaries
 
 You can use the dictionaries to clean the data via the
-[{matchmaker}](https://repidemicsconsortium.org/matchmaker) package
-(currently on GitHub):
+[{matchmaker}](https://www.repidemicsconsortium.org/matchmaker) package:
 
 ``` r
-# remotes::install_github("reconhub/matchmaker@*release")
 library("matchmaker")
 library("dplyr")
 
@@ -281,26 +279,26 @@ print(dat)
 #> # A tibble: 20 x 45
 #>    trimester exit_status treatment_facil… dehydration_lev…
 #>    <fct>     <fct>       <lgl>            <fct>           
-#>  1 <NA>      DH          NA               SE              
-#>  2 <NA>      TR          NA               SE              
-#>  3 <NA>      DH          NA               NO              
-#>  4 <NA>      DD          NA               UN              
-#>  5 <NA>      TR          NA               NO              
-#>  6 <NA>      TR          NA               NO              
-#>  7 <NA>      DOA         NA               NO              
-#>  8 <NA>      AD          NA               SO              
-#>  9 <NA>      AD          NA               NO              
-#> 10 <NA>      LA          NA               SO              
-#> 11 <NA>      TR          NA               NO              
-#> 12 <NA>      AD          NA               UN              
-#> 13 <NA>      DD          NA               SO              
-#> 14 <NA>      DOA         NA               UN              
-#> 15 <NA>      LA          NA               UN              
-#> 16 <NA>      DD          NA               SO              
-#> 17 <NA>      DD          NA               SE              
-#> 18 <NA>      DD          NA               UN              
-#> 19 <NA>      AD          NA               SE              
-#> 20 1         LA          NA               SO              
+#>  1 <NA>      AD          NA               NO              
+#>  2 <NA>      DOA         NA               SO              
+#>  3 <NA>      DOA         NA               SO              
+#>  4 <NA>      AD          NA               UN              
+#>  5 <NA>      DOA         NA               SO              
+#>  6 <NA>      AD          NA               SE              
+#>  7 <NA>      DD          NA               UN              
+#>  8 <NA>      DH          NA               UN              
+#>  9 <NA>      DH          NA               SE              
+#> 10 <NA>      DH          NA               SE              
+#> 11 <NA>      DH          NA               NO              
+#> 12 <NA>      DOA         NA               SO              
+#> 13 <NA>      DOA         NA               NO              
+#> 14 <NA>      DH          NA               SE              
+#> 15 <NA>      DOA         NA               NO              
+#> 16 <NA>      DOA         NA               NO              
+#> 17 <NA>      TR          NA               SE              
+#> 18 <NA>      LA          NA               UN              
+#> 19 <NA>      TR          NA               SO              
+#> 20 <NA>      DOA         NA               SE              
 #> # … with 41 more variables: comments_on_lab_results <lgl>,
 #> #   fluids_treatment_plan <fct>, time_to_death <fct>,
 #> #   malaria_rdt_at_admission <fct>, previously_vaccinated <fct>,
@@ -367,26 +365,26 @@ print(dat_clean)
 #> # A tibble: 20 x 45
 #>    trimester exit_status treatment_facil… dehydration_lev…
 #>    <fct>     <fct>       <lgl>            <fct>           
-#>  1 <NA>      Discharged… NA               Severe          
-#>  2 <NA>      Transferre… NA               Severe          
-#>  3 <NA>      Discharged… NA               None            
-#>  4 <NA>      Dead in fa… NA               Unknown         
-#>  5 <NA>      Transferre… NA               None            
-#>  6 <NA>      Transferre… NA               None            
-#>  7 <NA>      Dead on ar… NA               None            
-#>  8 <NA>      Transferre… NA               Some            
-#>  9 <NA>      Transferre… NA               None            
-#> 10 <NA>      Left again… NA               Some            
-#> 11 <NA>      Transferre… NA               None            
-#> 12 <NA>      Transferre… NA               Unknown         
-#> 13 <NA>      Dead in fa… NA               Some            
-#> 14 <NA>      Dead on ar… NA               Unknown         
-#> 15 <NA>      Left again… NA               Unknown         
-#> 16 <NA>      Dead in fa… NA               Some            
-#> 17 <NA>      Dead in fa… NA               Severe          
-#> 18 <NA>      Dead in fa… NA               Unknown         
-#> 19 <NA>      Transferre… NA               Severe          
-#> 20 1st trim… Left again… NA               Some            
+#>  1 <NA>      Transferre… NA               None            
+#>  2 <NA>      Dead on ar… NA               Some            
+#>  3 <NA>      Dead on ar… NA               Some            
+#>  4 <NA>      Transferre… NA               Unknown         
+#>  5 <NA>      Dead on ar… NA               Some            
+#>  6 <NA>      Transferre… NA               Severe          
+#>  7 <NA>      Dead in fa… NA               Unknown         
+#>  8 <NA>      Discharged… NA               Unknown         
+#>  9 <NA>      Discharged… NA               Severe          
+#> 10 <NA>      Discharged… NA               Severe          
+#> 11 <NA>      Discharged… NA               None            
+#> 12 <NA>      Dead on ar… NA               Some            
+#> 13 <NA>      Dead on ar… NA               None            
+#> 14 <NA>      Discharged… NA               Severe          
+#> 15 <NA>      Dead on ar… NA               None            
+#> 16 <NA>      Dead on ar… NA               None            
+#> 17 <NA>      Transferre… NA               Severe          
+#> 18 <NA>      Left again… NA               Unknown         
+#> 19 <NA>      Transferre… NA               Some            
+#> 20 <NA>      Dead on ar… NA               Severe          
 #> # … with 41 more variables: comments_on_lab_results <lgl>,
 #> #   fluids_treatment_plan <fct>, time_to_death <fct>,
 #> #   malaria_rdt_at_admission <fct>, previously_vaccinated <fct>,
