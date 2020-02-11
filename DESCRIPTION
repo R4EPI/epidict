@@ -15,7 +15,10 @@ Authors@R: c(
            role = c("aut")),
     person(given = "Patrick",
            family = "Keating",
-           role = c("aut")))
+           role = c("aut")),
+    person(given = "Annick",
+           family = "Lenglet",
+           role = c("ctb")))
 Description: The 'R4EPIs' project <https://R4epis.netlify.com> seeks to provide 
     a set of standardized tools for analysis of outbreak and survey data in
     humanitarian aid settings. This package provides standardized data
