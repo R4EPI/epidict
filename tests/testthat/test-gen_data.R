@@ -40,12 +40,24 @@ test_that("msf_dict works", {
 
     expect_is(nested, "tbl_df", label = disease)
     expect_is(long, "tbl_df", label = disease)
+
+    # neither compact nor long is a list of dictionaries and options
     expect_is(neither, "list", label = disease)
     expect_named(neither, c("dictionary", "options"), label = disease)
+
+    # None of the option names have bracketed arguments in front of them
     expect_false(all(grepl("^\\[", long$option_name)))
     expect_false(all(grepl("^\\[", neither$options$option_name)))
+
+    # rows in the dictionary should equal rows in the nested dictionary
     expect_equal(nrow(neither$dictionary), nrow(nested), label = disease)
+
+    # the number of columns in the long data should be equal to the sum of the
+    # columns minus 1 in the separated data sets
     expect_equal(ncol(long), sum(vapply(neither, ncol, integer(1))) - 1L, label = disease)
+
+    # the number of columns in the dictionary should be one less than the number
+    # of columns in the nested data.
     expect_equal(ncol(neither$dictionary) + 1L, ncol(nested), label = disease, info = disease)
   }
 
@@ -92,6 +104,10 @@ test_that("survey data can be generated", {
       expect_true(check_exclusive_ages(get_ages(data), 300), label = disease)
     }
     expect_true(check_age_integers(get_ages(data)))
+    expect_true(!is.na(sum(data$eligible)))
+    expect_true(sum(data$eligible) > 0)
+    expect_true(!is.na(sum(data$interviewed)))
+    expect_true(sum(data$interviewed) > 0)
     # skip("These tests need to be updated when we have a better idea of the expected number of columns")
     # TODO: these tests fail because we need better expectations regarding
     # the number of columns that the dictionaries provide

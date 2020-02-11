@@ -1,11 +1,14 @@
 #' Generate random linelist or survey data
+#' 
+#' Based on a dictionary generator like [msf_dict()] or [msf_dict_survey()],
+#' this function will generate a randomized data set based on values defined in
+#' the dictionaries. The randomized dataset produced should mimic an excel
+#' export from DHIS2 for outbreaks and a Kobo export for surveys.
 #'
 #' @param dictionary Specify which dictionary you would like to use.
 #'
-#' @param varnames Specify name of column that contains varnames. Currently
-#' default set to "Item".  (this can probably be deleted once dictionaries
-#' standardise) If `dictionary` is "Mortality", `varnames` needs to be
-#' "column_name"`.
+#' @param varnames Specify name of column that contains variable names.
+#'   If `dictionary` is a survey, `varnames` needs to be "column_name"`.
 #'
 #' @param numcases Specify the number of cases you want (default is 300)
 #'
@@ -21,11 +24,14 @@
 #'
 #' if (require("dplyr") & require("matchmaker")) {
 #'   withAutoprint({
+#'
 #'     # You will often want to use MSF dictionaries to translate codes to human-
 #'     # readable variables. Here, we generate a data set of 20 cases:
 #'     dat <- gen_data(
-#'       dictionary = "Cholera", varnames = "data_element_shortname",
-#'       numcases = 20, org = "MSF"
+#'       dictionary = "Cholera", 
+#'       varnames = "data_element_shortname",
+#'       numcases = 20, 
+#'       org = "MSF"
 #'     )
 #'     print(dat)
 #'
@@ -33,15 +39,7 @@
 #'     dict <- msf_dict(disease = "Cholera", long = TRUE, compact = FALSE, tibble = TRUE)
 #'     print(dict)
 #'
-#'     # We can use linelist's clean_variable_spelling to translate the codes. First,
-#'     # we want to reorder the columns of the dictionary like so:
-#'     #
-#'     #  - 1st column: option codes
-#'     #  - 2nd column: translations
-#'     #  - 3rd column: data column name
-#'     #  - 4th column: order of options
-#'
-#'     # Now we can use linelist to filter the data:
+#'     # Now we can use matchmaker to filter the data:
 #'     dat_clean <- matchmaker::match_df(dat, dict,
 #'       from = "option_code",
 #'       to = "option_name",
@@ -49,6 +47,7 @@
 #'       order = "option_order_in_set"
 #'     )
 #'     print(dat_clean)
+#'
 #'   })
 #' }
 gen_data <- function(dictionary, varnames = "data_element_shortname", numcases = 300, org = "MSF") {

@@ -248,12 +248,6 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
       household = "q14_hh_no"
     )
 
-
-    dis_output <- gen_eligible_interviewed(dis_output,
-      household = "q14_hh_no",
-      cluster = "q77_what_is_the_cluster_number"
-    )
-
     # use household num as a standin for fact_0_id for now
     dis_output$fact_0_id <- dis_output$q14_hh_no
 

@@ -9,6 +9,7 @@
 msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
                             tibble = TRUE,
                             compact = FALSE) {
+
   disease <- get_dictionary(disease)$survey
 
   if (length(disease) == 0) {

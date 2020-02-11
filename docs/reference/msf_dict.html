@@ -36,9 +36,9 @@
 
 
 <meta property="og:title" content="MSF data dictionaries and dummy datasets — msf_dict" />
-<meta property="og:description" content="These function reads in MSF data dictionaries and produces randomised
-datasets based on values defined in the dictionaries.  The randomised
-dataset produced should mimic an excel export from DHIS2." />
+<meta property="og:description" content="These function produces MSF OCA dictionaries based on DHIS2 data sets
+defining the data element name, code, short names, types, and key/value pairs
+for translating the codes into human-readable format." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -71,7 +71,7 @@ dataset produced should mimic an excel export from DHIS2." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">epidict</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -85,6 +85,24 @@ dataset produced should mimic an excel export from DHIS2." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Outbreaks.html">MSF Outbreak Dictionaries</a>
+    </li>
+    <li>
+      <a href="../articles/Surveys.html">MSF Survey Dictionaries</a>
+    </li>
+    <li>
+      <a href="../articles/intro.html">Introduction to epidict</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -116,9 +134,9 @@ dataset produced should mimic an excel export from DHIS2." />
     </div>
 
     <div class="ref-description">
-    <p>These function reads in MSF data dictionaries and produces randomised
-datasets based on values defined in the dictionaries.  The randomised
-dataset produced should mimic an excel export from DHIS2.</p>
+    <p>These function produces MSF OCA dictionaries based on DHIS2 data sets
+defining the data element name, code, short names, types, and key/value pairs
+for translating the codes into human-readable format.</p>
     </div>
 
     <pre class="usage"><span class='fu'>msf_dict</span>(
@@ -141,8 +159,10 @@ dataset produced should mimic an excel export from DHIS2.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>disease</th>
-      <td><p>Specify which disease you would like to use.
-Currently supports "Cholera", "Measles" and "Meningitis".</p></td>
+      <td><p>Specify which disease you would like to use.</p><ul>
+<li><p><code>msf_dict()</code> supports "AJS", "Cholera", "Measles", "Meningitis"</p></li>
+<li><p><code>msf_dict_survey()</code> supports "Mortality", "Nutrition", and "Vaccination"</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>name</th>
@@ -169,7 +189,7 @@ are returned, one with variables and the other with content options.</p></td>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/matchmaker/man/match_df.html'>matchmaker::match_df()</a></code> <code><a href='gen_data.html'>gen_data()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/matchmaker/man/match_df.html'>matchmaker::match_df()</a></code> <code><a href='gen_data.html'>gen_data()</a></code> <code>msf_dict_survey()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -178,8 +198,10 @@ are returned, one with variables and the other with content options.</p></td>
     <span class='co'># You will often want to use MSF dictionaries to translate codes to human-</span>
     <span class='co'># readable variables. Here, we generate a data set of 20 cases:</span>
     <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='gen_data.html'>gen_data</a></span>(
-      <span class='kw'>dictionary</span> <span class='kw'>=</span> <span class='st'>"Cholera"</span>, <span class='kw'>varnames</span> <span class='kw'>=</span> <span class='st'>"data_element_shortname"</span>,
-      <span class='kw'>numcases</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>org</span> <span class='kw'>=</span> <span class='st'>"MSF"</span>
+      <span class='kw'>dictionary</span> <span class='kw'>=</span> <span class='st'>"Cholera"</span>,
+      <span class='kw'>varnames</span> <span class='kw'>=</span> <span class='st'>"data_element_shortname"</span>,
+      <span class='kw'>numcases</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+      <span class='kw'>org</span> <span class='kw'>=</span> <span class='st'>"MSF"</span>
     )
     <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>dat</span>)
 
@@ -187,15 +209,7 @@ are returned, one with variables and the other with content options.</p></td>
     <span class='no'>dict</span> <span class='kw'>&lt;-</span> <span class='fu'>msf_dict</span>(<span class='kw'>disease</span> <span class='kw'>=</span> <span class='st'>"Cholera"</span>, <span class='kw'>long</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>compact</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
     <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>dict</span>)
 
-    <span class='co'># We can use linelist's clean_variable_spelling to translate the codes. First,</span>
-    <span class='co'># we want to reorder the columns of the dictionary like so:</span>
-    <span class='co'>#</span>
-    <span class='co'>#  - 1st column: option codes</span>
-    <span class='co'>#  - 2nd column: translations</span>
-    <span class='co'>#  - 3rd column: data column name</span>
-    <span class='co'>#  - 4th column: order of options</span>
-
-    <span class='co'># Now we can use linelist to filter the data:</span>
+    <span class='co'># Now we can use matchmaker to filter the data:</span>
     <span class='no'>dat_clean</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>matchmaker</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/matchmaker/man/match_df.html'>match_df</a></span>(<span class='no'>dat</span>, <span class='no'>dict</span>,
       <span class='kw'>from</span> <span class='kw'>=</span> <span class='st'>"option_code"</span>,
       <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"option_name"</span>,
