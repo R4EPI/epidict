@@ -36,7 +36,10 @@
 
 
 <meta property="og:title" content="Generate random linelist or survey data — gen_data" />
-<meta property="og:description" content="Generate random linelist or survey data" />
+<meta property="og:description" content="Based on a dictionary generator like msf_dict() or msf_dict_survey(),
+this function will generate a randomized data set based on values defined in
+the dictionaries. The randomized dataset produced should mimic an excel
+export from DHIS2 for outbreaks and a Kobo export for surveys." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -132,7 +135,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Generate random linelist or survey data</p>
+    <p>Based on a dictionary generator like <code><a href='msf_dict.html'>msf_dict()</a></code> or <code><a href='msf_dict.html'>msf_dict_survey()</a></code>,
+this function will generate a randomized data set based on values defined in
+the dictionaries. The randomized dataset produced should mimic an excel
+export from DHIS2 for outbreaks and a Kobo export for surveys.</p>
     </div>
 
     <pre class="usage"><span class='fu'>gen_data</span>(
@@ -151,10 +157,8 @@
     </tr>
     <tr>
       <th>varnames</th>
-      <td><p>Specify name of column that contains varnames. Currently
-default set to "Item".  (this can probably be deleted once dictionaries
-standardise) If <code>dictionary</code> is "Mortality", <code>varnames</code> needs to be
-"column_name"`.</p></td>
+      <td><p>Specify name of column that contains variable names.
+If <code>dictionary</code> is a survey, <code>varnames</code> needs to be "column_name"`.</p></td>
     </tr>
     <tr>
       <th>numcases</th>
@@ -178,11 +182,14 @@ dictionary functions to generate a corresponding dictionary.</p>
     <pre class="examples"><div class='input'>
 <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"dplyr"</span>) <span class='kw'>&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"matchmaker"</span>)) {
   <span class='fu'><a href='https://rdrr.io/r/base/source.html'>withAutoprint</a></span>({
+
     <span class='co'># You will often want to use MSF dictionaries to translate codes to human-</span>
     <span class='co'># readable variables. Here, we generate a data set of 20 cases:</span>
     <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>gen_data</span>(
-      <span class='kw'>dictionary</span> <span class='kw'>=</span> <span class='st'>"Cholera"</span>, <span class='kw'>varnames</span> <span class='kw'>=</span> <span class='st'>"data_element_shortname"</span>,
-      <span class='kw'>numcases</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>org</span> <span class='kw'>=</span> <span class='st'>"MSF"</span>
+      <span class='kw'>dictionary</span> <span class='kw'>=</span> <span class='st'>"Cholera"</span>,
+      <span class='kw'>varnames</span> <span class='kw'>=</span> <span class='st'>"data_element_shortname"</span>,
+      <span class='kw'>numcases</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+      <span class='kw'>org</span> <span class='kw'>=</span> <span class='st'>"MSF"</span>
     )
     <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>dat</span>)
 
@@ -190,15 +197,7 @@ dictionary functions to generate a corresponding dictionary.</p>
     <span class='no'>dict</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='msf_dict.html'>msf_dict</a></span>(<span class='kw'>disease</span> <span class='kw'>=</span> <span class='st'>"Cholera"</span>, <span class='kw'>long</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>compact</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
     <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>dict</span>)
 
-    <span class='co'># We can use linelist's clean_variable_spelling to translate the codes. First,</span>
-    <span class='co'># we want to reorder the columns of the dictionary like so:</span>
-    <span class='co'>#</span>
-    <span class='co'>#  - 1st column: option codes</span>
-    <span class='co'>#  - 2nd column: translations</span>
-    <span class='co'>#  - 3rd column: data column name</span>
-    <span class='co'>#  - 4th column: order of options</span>
-
-    <span class='co'># Now we can use linelist to filter the data:</span>
+    <span class='co'># Now we can use matchmaker to filter the data:</span>
     <span class='no'>dat_clean</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>matchmaker</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/matchmaker/man/match_df.html'>match_df</a></span>(<span class='no'>dat</span>, <span class='no'>dict</span>,
       <span class='kw'>from</span> <span class='kw'>=</span> <span class='st'>"option_code"</span>,
       <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"option_name"</span>,
@@ -206,6 +205,7 @@ dictionary functions to generate a corresponding dictionary.</p>
       <span class='kw'>order</span> <span class='kw'>=</span> <span class='st'>"option_order_in_set"</span>
     )
     <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>dat_clean</span>)
+
   })
 }</div><div class='output co'>#&gt; <span class='message'>Loading required package: dplyr</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>

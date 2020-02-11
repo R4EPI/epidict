@@ -115,13 +115,12 @@ hidden from the user
 <p>You can also install the in-development version from GitHub using the {remotes} package (but there’s no guarantee that it will be stable):</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># install.packages("remotes")</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">remotes<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"R4EPI/epidict"</span>) </a></code></pre></div>
-<!-- </details> -->
 </details>
 </div>
 <div id="accessing-dictionaries" class="section level2">
 <h2 class="hasAnchor">
 <a href="#accessing-dictionaries" class="anchor"></a>Accessing dictionaries</h2>
-<p>There are four MSF outbreak dictionaries available in {epidict}:</p>
+<p>There are four MSF outbreak dictionaries available in {epidict} based on DHIS2 exports:</p>
 <ul>
 <li>Cholera/Acute watery diarrhea (“cholera”)</li>
 <li>Meningitis</li>
@@ -261,16 +260,16 @@ hidden from the user
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">#&gt; # A tibble: 100 x 52</span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt;    seizure_episodes trimester croup dehydration_lev… residential_sta…</span></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt;    &lt;fct&gt;            &lt;fct&gt;     &lt;fct&gt; &lt;fct&gt;            &lt;fct&gt;           </span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt;  1 1                &lt;NA&gt;      1     SO               2               </span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt;  2 1                &lt;NA&gt;      1     UN               2               </span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt;  3 0                &lt;NA&gt;      1     SE               3               </span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt;  4 0                &lt;NA&gt;      0     SO               5               </span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt;  5 1                &lt;NA&gt;      0     SO               3               </span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;  6 0                &lt;NA&gt;      1     NO               4               </span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;  7 0                &lt;NA&gt;      1     NO               2               </span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt;  8 0                &lt;NA&gt;      0     NO               1               </span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt;  9 1                &lt;NA&gt;      1     NO               3               </span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt; 10 1                &lt;NA&gt;      0     SO               2               </span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt;  1 1                &lt;NA&gt;      0     SE               4               </span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt;  2 1                &lt;NA&gt;      1     SO               2               </span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt;  3 1                &lt;NA&gt;      1     UN               4               </span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt;  4 1                &lt;NA&gt;      0     SE               5               </span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt;  5 1                &lt;NA&gt;      1     UN               2               </span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;  6 0                &lt;NA&gt;      0     NO               2               </span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;  7 0                &lt;NA&gt;      0     SE               1               </span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt;  8 1                &lt;NA&gt;      0     NO               1               </span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt;  9 1                &lt;NA&gt;      1     UN               1               </span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt; 10 1                1         0     NO               2               </span></a>
 <a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt; # … with 90 more rows, and 47 more variables: previously_vaccinated &lt;fct&gt;,</span></a>
 <a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt; #   patient_origin_free_text &lt;chr&gt;, age_days &lt;int&gt;, msf_involvement &lt;fct&gt;,</span></a>
 <a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt; #   nutrition_status_at_admission &lt;fct&gt;, fever &lt;fct&gt;, sex &lt;fct&gt;,</span></a>
@@ -295,16 +294,16 @@ hidden from the user
 <a class="sourceLine" id="cb6-36" data-line-number="36"><span class="co">#&gt; # A tibble: 100 x 41</span></a>
 <a class="sourceLine" id="cb6-37" data-line-number="37"><span class="co">#&gt;    q77_what_is_the… health_district village q14_hh_no q15_home q16_occupant_age</span></a>
 <a class="sourceLine" id="cb6-38" data-line-number="38"><span class="co">#&gt;               &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;       &lt;int&gt; &lt;fct&gt;    &lt;lgl&gt;           </span></a>
-<a class="sourceLine" id="cb6-39" data-line-number="39"><span class="co">#&gt;  1                3 District B      Villag…         5 Yes      NA              </span></a>
-<a class="sourceLine" id="cb6-40" data-line-number="40"><span class="co">#&gt;  2                3 District B      Villag…         2 Yes      NA              </span></a>
-<a class="sourceLine" id="cb6-41" data-line-number="41"><span class="co">#&gt;  3                3 District B      Villag…         1 Yes      NA              </span></a>
-<a class="sourceLine" id="cb6-42" data-line-number="42"><span class="co">#&gt;  4                3 District B      Villag…         6 No       NA              </span></a>
-<a class="sourceLine" id="cb6-43" data-line-number="43"><span class="co">#&gt;  5                2 District A      Villag…         1 No       NA              </span></a>
-<a class="sourceLine" id="cb6-44" data-line-number="44"><span class="co">#&gt;  6                1 District A      Villag…         6 No       NA              </span></a>
-<a class="sourceLine" id="cb6-45" data-line-number="45"><span class="co">#&gt;  7                2 District A      Villag…         1 No       NA              </span></a>
-<a class="sourceLine" id="cb6-46" data-line-number="46"><span class="co">#&gt;  8                1 District A      Villag…         5 No       NA              </span></a>
-<a class="sourceLine" id="cb6-47" data-line-number="47"><span class="co">#&gt;  9                3 District B      Villag…         5 No       NA              </span></a>
-<a class="sourceLine" id="cb6-48" data-line-number="48"><span class="co">#&gt; 10                4 District B      Villag…         3 No       NA              </span></a>
+<a class="sourceLine" id="cb6-39" data-line-number="39"><span class="co">#&gt;  1                3 District B      Villag…         3 No       NA              </span></a>
+<a class="sourceLine" id="cb6-40" data-line-number="40"><span class="co">#&gt;  2                1 District A      Villag…         3 Yes      NA              </span></a>
+<a class="sourceLine" id="cb6-41" data-line-number="41"><span class="co">#&gt;  3                3 District B      Villag…         2 Yes      NA              </span></a>
+<a class="sourceLine" id="cb6-42" data-line-number="42"><span class="co">#&gt;  4                3 District B      Villag…         5 No       NA              </span></a>
+<a class="sourceLine" id="cb6-43" data-line-number="43"><span class="co">#&gt;  5                1 District A      Villag…         6 Yes      NA              </span></a>
+<a class="sourceLine" id="cb6-44" data-line-number="44"><span class="co">#&gt;  6                2 District A      Villag…         4 Yes      NA              </span></a>
+<a class="sourceLine" id="cb6-45" data-line-number="45"><span class="co">#&gt;  7                4 District B      Villag…         1 Yes      NA              </span></a>
+<a class="sourceLine" id="cb6-46" data-line-number="46"><span class="co">#&gt;  8                3 District B      Villag…         4 No       NA              </span></a>
+<a class="sourceLine" id="cb6-47" data-line-number="47"><span class="co">#&gt;  9                4 District B      Villag…         5 No       NA              </span></a>
+<a class="sourceLine" id="cb6-48" data-line-number="48"><span class="co">#&gt; 10                3 District B      Villag…         1 Yes      NA              </span></a>
 <a class="sourceLine" id="cb6-49" data-line-number="49"><span class="co">#&gt; # … with 90 more rows, and 35 more variables: q58_consent &lt;fct&gt;,</span></a>
 <a class="sourceLine" id="cb6-50" data-line-number="50"><span class="co">#&gt; #   q75_caretaker &lt;fct&gt;, q76_caretaker_other &lt;lgl&gt;,</span></a>
 <a class="sourceLine" id="cb6-51" data-line-number="51"><span class="co">#&gt; #   q65_consent_no_reason &lt;fct&gt;, q66_consent_no_reason_other &lt;lgl&gt;,</span></a>
@@ -339,26 +338,26 @@ hidden from the user
 <a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt; # A tibble: 20 x 45</span></a>
 <a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt;    trimester exit_status treatment_facil… dehydration_lev… comments_on_lab…</span></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt;    &lt;fct&gt;     &lt;fct&gt;       &lt;lgl&gt;            &lt;fct&gt;            &lt;lgl&gt;           </span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt;  1 &lt;NA&gt;      DOA         NA               NO               NA              </span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt;  2 &lt;NA&gt;      AD          NA               NO               NA              </span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt;  3 &lt;NA&gt;      TR          NA               UN               NA              </span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt;  4 &lt;NA&gt;      DD          NA               UN               NA              </span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt;  5 &lt;NA&gt;      AD          NA               NO               NA              </span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt;  6 1         AD          NA               NO               NA              </span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt;  7 &lt;NA&gt;      AD          NA               SE               NA              </span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt;  8 &lt;NA&gt;      DD          NA               SO               NA              </span></a>
-<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt;  9 &lt;NA&gt;      TR          NA               SO               NA              </span></a>
-<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt; 10 &lt;NA&gt;      DOA         NA               UN               NA              </span></a>
-<a class="sourceLine" id="cb7-23" data-line-number="23"><span class="co">#&gt; 11 &lt;NA&gt;      AD          NA               UN               NA              </span></a>
-<a class="sourceLine" id="cb7-24" data-line-number="24"><span class="co">#&gt; 12 &lt;NA&gt;      DD          NA               NO               NA              </span></a>
-<a class="sourceLine" id="cb7-25" data-line-number="25"><span class="co">#&gt; 13 &lt;NA&gt;      DD          NA               SO               NA              </span></a>
-<a class="sourceLine" id="cb7-26" data-line-number="26"><span class="co">#&gt; 14 &lt;NA&gt;      DOA         NA               SO               NA              </span></a>
-<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="co">#&gt; 15 &lt;NA&gt;      LA          NA               SE               NA              </span></a>
-<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co">#&gt; 16 &lt;NA&gt;      AD          NA               NO               NA              </span></a>
-<a class="sourceLine" id="cb7-29" data-line-number="29"><span class="co">#&gt; 17 2         DD          NA               SO               NA              </span></a>
-<a class="sourceLine" id="cb7-30" data-line-number="30"><span class="co">#&gt; 18 &lt;NA&gt;      LA          NA               SO               NA              </span></a>
-<a class="sourceLine" id="cb7-31" data-line-number="31"><span class="co">#&gt; 19 &lt;NA&gt;      DOA         NA               NO               NA              </span></a>
-<a class="sourceLine" id="cb7-32" data-line-number="32"><span class="co">#&gt; 20 &lt;NA&gt;      DH          NA               SE               NA              </span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt;  1 &lt;NA&gt;      TR          NA               UN               NA              </span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt;  2 &lt;NA&gt;      LA          NA               UN               NA              </span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt;  3 &lt;NA&gt;      DH          NA               SO               NA              </span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt;  4 &lt;NA&gt;      DD          NA               SE               NA              </span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt;  5 &lt;NA&gt;      DD          NA               SE               NA              </span></a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt;  6 &lt;NA&gt;      TR          NA               SO               NA              </span></a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt;  7 &lt;NA&gt;      DOA         NA               NO               NA              </span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt;  8 &lt;NA&gt;      DD          NA               UN               NA              </span></a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt;  9 2         LA          NA               UN               NA              </span></a>
+<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt; 10 &lt;NA&gt;      LA          NA               SO               NA              </span></a>
+<a class="sourceLine" id="cb7-23" data-line-number="23"><span class="co">#&gt; 11 &lt;NA&gt;      TR          NA               SE               NA              </span></a>
+<a class="sourceLine" id="cb7-24" data-line-number="24"><span class="co">#&gt; 12 &lt;NA&gt;      DD          NA               SE               NA              </span></a>
+<a class="sourceLine" id="cb7-25" data-line-number="25"><span class="co">#&gt; 13 &lt;NA&gt;      DOA         NA               UN               NA              </span></a>
+<a class="sourceLine" id="cb7-26" data-line-number="26"><span class="co">#&gt; 14 &lt;NA&gt;      LA          NA               SE               NA              </span></a>
+<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="co">#&gt; 15 &lt;NA&gt;      DD          NA               SE               NA              </span></a>
+<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co">#&gt; 16 &lt;NA&gt;      TR          NA               NO               NA              </span></a>
+<a class="sourceLine" id="cb7-29" data-line-number="29"><span class="co">#&gt; 17 &lt;NA&gt;      DOA         NA               SE               NA              </span></a>
+<a class="sourceLine" id="cb7-30" data-line-number="30"><span class="co">#&gt; 18 &lt;NA&gt;      DD          NA               NO               NA              </span></a>
+<a class="sourceLine" id="cb7-31" data-line-number="31"><span class="co">#&gt; 19 &lt;NA&gt;      AD          NA               UN               NA              </span></a>
+<a class="sourceLine" id="cb7-32" data-line-number="32"><span class="co">#&gt; 20 &lt;NA&gt;      DH          NA               UN               NA              </span></a>
 <a class="sourceLine" id="cb7-33" data-line-number="33"><span class="co">#&gt; # … with 40 more variables: fluids_treatment_plan &lt;fct&gt;, time_to_death &lt;fct&gt;,</span></a>
 <a class="sourceLine" id="cb7-34" data-line-number="34"><span class="co">#&gt; #   malaria_rdt_at_admission &lt;fct&gt;, previously_vaccinated &lt;fct&gt;,</span></a>
 <a class="sourceLine" id="cb7-35" data-line-number="35"><span class="co">#&gt; #   cholera_pcr_result &lt;fct&gt;, iv_fluids_received_litres &lt;int&gt;,</span></a>
@@ -379,9 +378,9 @@ hidden from the user
 <a class="sourceLine" id="cb7-50" data-line-number="50"></a>
 <a class="sourceLine" id="cb7-51" data-line-number="51"><span class="co"># We want the expanded dictionary, so we will select `compact = FALSE`</span></a>
 <a class="sourceLine" id="cb7-52" data-line-number="52">dict &lt;-<span class="st"> </span><span class="kw"><a href="../reference/msf_dict.html">msf_dict</a></span>(<span class="dt">disease =</span> <span class="st">"Cholera"</span>, </a>
-<a class="sourceLine" id="cb7-53" data-line-number="53">  <span class="dt">long =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb7-54" data-line-number="54">  <span class="dt">compact =</span> <span class="ot">FALSE</span>, </a>
-<a class="sourceLine" id="cb7-55" data-line-number="55">  <span class="dt">tibble =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb7-53" data-line-number="53">  <span class="dt">long    =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb7-54" data-line-number="54">  <span class="dt">compact =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb7-55" data-line-number="55">  <span class="dt">tibble  =</span> <span class="ot">TRUE</span></a>
 <a class="sourceLine" id="cb7-56" data-line-number="56">)</a>
 <a class="sourceLine" id="cb7-57" data-line-number="57"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(dict)</a>
 <a class="sourceLine" id="cb7-58" data-line-number="58"><span class="co">#&gt; # A tibble: 182 x 11</span></a>
@@ -401,62 +400,54 @@ hidden from the user
 <a class="sourceLine" id="cb7-72" data-line-number="72"><span class="co">#&gt; #   data_element_formname &lt;chr&gt;, used_optionset_uid &lt;chr&gt;, option_code &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb7-73" data-line-number="73"><span class="co">#&gt; #   option_name &lt;chr&gt;, option_uid &lt;chr&gt;, option_order_in_set &lt;dbl&gt;</span></a>
 <a class="sourceLine" id="cb7-74" data-line-number="74"></a>
-<a class="sourceLine" id="cb7-75" data-line-number="75"><span class="co"># We can use linelist's clean_variable_spelling to translate the codes. First,</span></a>
-<a class="sourceLine" id="cb7-76" data-line-number="76"><span class="co"># we want to reorder the columns of the dictionary like so:</span></a>
-<a class="sourceLine" id="cb7-77" data-line-number="77"><span class="co">#</span></a>
-<a class="sourceLine" id="cb7-78" data-line-number="78"><span class="co">#  - 1st column: option codes</span></a>
-<a class="sourceLine" id="cb7-79" data-line-number="79"><span class="co">#  - 2nd column: translations</span></a>
-<a class="sourceLine" id="cb7-80" data-line-number="80"><span class="co">#  - 3rd column: data column name</span></a>
-<a class="sourceLine" id="cb7-81" data-line-number="81"><span class="co">#  - 4th column: order of options</span></a>
-<a class="sourceLine" id="cb7-82" data-line-number="82"></a>
-<a class="sourceLine" id="cb7-83" data-line-number="83"><span class="co"># Now we can use linelist to filter the data:</span></a>
-<a class="sourceLine" id="cb7-84" data-line-number="84">dat_clean &lt;-<span class="st"> </span>matchmaker<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/matchmaker/man/match_df.html">match_df</a></span>(dat, dict, </a>
-<a class="sourceLine" id="cb7-85" data-line-number="85">  <span class="dt">from  =</span> <span class="st">"option_code"</span>,</a>
-<a class="sourceLine" id="cb7-86" data-line-number="86">  <span class="dt">to    =</span> <span class="st">"option_name"</span>,</a>
-<a class="sourceLine" id="cb7-87" data-line-number="87">  <span class="dt">by    =</span> <span class="st">"data_element_shortname"</span>,</a>
-<a class="sourceLine" id="cb7-88" data-line-number="88">  <span class="dt">order =</span> <span class="st">"option_order_in_set"</span></a>
-<a class="sourceLine" id="cb7-89" data-line-number="89">)</a>
-<a class="sourceLine" id="cb7-90" data-line-number="90"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(dat_clean)</a>
-<a class="sourceLine" id="cb7-91" data-line-number="91"><span class="co">#&gt; # A tibble: 20 x 45</span></a>
-<a class="sourceLine" id="cb7-92" data-line-number="92"><span class="co">#&gt;    trimester exit_status treatment_facil… dehydration_lev… comments_on_lab…</span></a>
-<a class="sourceLine" id="cb7-93" data-line-number="93"><span class="co">#&gt;    &lt;fct&gt;     &lt;fct&gt;       &lt;lgl&gt;            &lt;fct&gt;            &lt;lgl&gt;           </span></a>
-<a class="sourceLine" id="cb7-94" data-line-number="94"><span class="co">#&gt;  1 &lt;NA&gt;      Dead on ar… NA               None             NA              </span></a>
-<a class="sourceLine" id="cb7-95" data-line-number="95"><span class="co">#&gt;  2 &lt;NA&gt;      Transferre… NA               None             NA              </span></a>
-<a class="sourceLine" id="cb7-96" data-line-number="96"><span class="co">#&gt;  3 &lt;NA&gt;      Transferre… NA               Unknown          NA              </span></a>
-<a class="sourceLine" id="cb7-97" data-line-number="97"><span class="co">#&gt;  4 &lt;NA&gt;      Dead in fa… NA               Unknown          NA              </span></a>
-<a class="sourceLine" id="cb7-98" data-line-number="98"><span class="co">#&gt;  5 &lt;NA&gt;      Transferre… NA               None             NA              </span></a>
-<a class="sourceLine" id="cb7-99" data-line-number="99"><span class="co">#&gt;  6 1st trim… Transferre… NA               None             NA              </span></a>
-<a class="sourceLine" id="cb7-100" data-line-number="100"><span class="co">#&gt;  7 &lt;NA&gt;      Transferre… NA               Severe           NA              </span></a>
-<a class="sourceLine" id="cb7-101" data-line-number="101"><span class="co">#&gt;  8 &lt;NA&gt;      Dead in fa… NA               Some             NA              </span></a>
-<a class="sourceLine" id="cb7-102" data-line-number="102"><span class="co">#&gt;  9 &lt;NA&gt;      Transferre… NA               Some             NA              </span></a>
-<a class="sourceLine" id="cb7-103" data-line-number="103"><span class="co">#&gt; 10 &lt;NA&gt;      Dead on ar… NA               Unknown          NA              </span></a>
-<a class="sourceLine" id="cb7-104" data-line-number="104"><span class="co">#&gt; 11 &lt;NA&gt;      Transferre… NA               Unknown          NA              </span></a>
-<a class="sourceLine" id="cb7-105" data-line-number="105"><span class="co">#&gt; 12 &lt;NA&gt;      Dead in fa… NA               None             NA              </span></a>
-<a class="sourceLine" id="cb7-106" data-line-number="106"><span class="co">#&gt; 13 &lt;NA&gt;      Dead in fa… NA               Some             NA              </span></a>
-<a class="sourceLine" id="cb7-107" data-line-number="107"><span class="co">#&gt; 14 &lt;NA&gt;      Dead on ar… NA               Some             NA              </span></a>
-<a class="sourceLine" id="cb7-108" data-line-number="108"><span class="co">#&gt; 15 &lt;NA&gt;      Left again… NA               Severe           NA              </span></a>
-<a class="sourceLine" id="cb7-109" data-line-number="109"><span class="co">#&gt; 16 &lt;NA&gt;      Transferre… NA               None             NA              </span></a>
-<a class="sourceLine" id="cb7-110" data-line-number="110"><span class="co">#&gt; 17 2nd trim… Dead in fa… NA               Some             NA              </span></a>
-<a class="sourceLine" id="cb7-111" data-line-number="111"><span class="co">#&gt; 18 &lt;NA&gt;      Left again… NA               Some             NA              </span></a>
-<a class="sourceLine" id="cb7-112" data-line-number="112"><span class="co">#&gt; 19 &lt;NA&gt;      Dead on ar… NA               None             NA              </span></a>
-<a class="sourceLine" id="cb7-113" data-line-number="113"><span class="co">#&gt; 20 &lt;NA&gt;      Discharged… NA               Severe           NA              </span></a>
-<a class="sourceLine" id="cb7-114" data-line-number="114"><span class="co">#&gt; # … with 40 more variables: fluids_treatment_plan &lt;fct&gt;, time_to_death &lt;fct&gt;,</span></a>
-<a class="sourceLine" id="cb7-115" data-line-number="115"><span class="co">#&gt; #   malaria_rdt_at_admission &lt;fct&gt;, previously_vaccinated &lt;fct&gt;,</span></a>
-<a class="sourceLine" id="cb7-116" data-line-number="116"><span class="co">#&gt; #   cholera_pcr_result &lt;fct&gt;, iv_fluids_received_litres &lt;int&gt;,</span></a>
-<a class="sourceLine" id="cb7-117" data-line-number="117"><span class="co">#&gt; #   patient_origin_free_text &lt;chr&gt;, previous_vaccine_doses_received &lt;fct&gt;,</span></a>
-<a class="sourceLine" id="cb7-118" data-line-number="118"><span class="co">#&gt; #   age_years &lt;int&gt;, arrival_date_in_area_if_3m &lt;date&gt;, age_days &lt;int&gt;,</span></a>
-<a class="sourceLine" id="cb7-119" data-line-number="119"><span class="co">#&gt; #   msf_involvement &lt;fct&gt;, date_lab_sample_taken &lt;date&gt;, readmission &lt;fct&gt;,</span></a>
-<a class="sourceLine" id="cb7-120" data-line-number="120"><span class="co">#&gt; #   age_months &lt;int&gt;, date_of_last_vaccination &lt;date&gt;, case_number &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb7-121" data-line-number="121"><span class="co">#&gt; #   sex &lt;fct&gt;, patient_origin &lt;chr&gt;, prescribed_zinc_supplement &lt;fct&gt;,</span></a>
-<a class="sourceLine" id="cb7-122" data-line-number="122"><span class="co">#&gt; #   delivery_event &lt;fct&gt;, pregnancy_outcome_at_exit &lt;fct&gt;, date_of_exit &lt;date&gt;,</span></a>
-<a class="sourceLine" id="cb7-123" data-line-number="123"><span class="co">#&gt; #   date_of_consultation_admission &lt;date&gt;, oedema &lt;fct&gt;, event_file_type &lt;fct&gt;,</span></a>
-<a class="sourceLine" id="cb7-124" data-line-number="124"><span class="co">#&gt; #   residential_status_brief &lt;fct&gt;, pregnant &lt;fct&gt;, cholera_rdt_result &lt;fct&gt;,</span></a>
-<a class="sourceLine" id="cb7-125" data-line-number="125"><span class="co">#&gt; #   dehydration_severity_during_stay &lt;fct&gt;, cholera_culture_result &lt;fct&gt;,</span></a>
-<a class="sourceLine" id="cb7-126" data-line-number="126"><span class="co">#&gt; #   foetus_alive_at_admission &lt;fct&gt;, treatment_facility_site &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb7-127" data-line-number="127"><span class="co">#&gt; #   prescribed_antibiotics &lt;fct&gt;, cholera_referred_to &lt;fct&gt;,</span></a>
-<a class="sourceLine" id="cb7-128" data-line-number="128"><span class="co">#&gt; #   ors_consumed_litres &lt;int&gt;, treatment_location &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb7-129" data-line-number="129"><span class="co">#&gt; #   cholera_referred_from &lt;fct&gt;, cholera_treatment_facility_type &lt;fct&gt;,</span></a>
-<a class="sourceLine" id="cb7-130" data-line-number="130"><span class="co">#&gt; #   date_of_onset &lt;date&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-75" data-line-number="75"><span class="co"># Now we can use matchmaker to filter the data</span></a>
+<a class="sourceLine" id="cb7-76" data-line-number="76">dat_clean &lt;-<span class="st"> </span>matchmaker<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/matchmaker/man/match_df.html">match_df</a></span>(dat, dict, </a>
+<a class="sourceLine" id="cb7-77" data-line-number="77">  <span class="dt">from  =</span> <span class="st">"option_code"</span>,</a>
+<a class="sourceLine" id="cb7-78" data-line-number="78">  <span class="dt">to    =</span> <span class="st">"option_name"</span>,</a>
+<a class="sourceLine" id="cb7-79" data-line-number="79">  <span class="dt">by    =</span> <span class="st">"data_element_shortname"</span>,</a>
+<a class="sourceLine" id="cb7-80" data-line-number="80">  <span class="dt">order =</span> <span class="st">"option_order_in_set"</span></a>
+<a class="sourceLine" id="cb7-81" data-line-number="81">)</a>
+<a class="sourceLine" id="cb7-82" data-line-number="82"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(dat_clean)</a>
+<a class="sourceLine" id="cb7-83" data-line-number="83"><span class="co">#&gt; # A tibble: 20 x 45</span></a>
+<a class="sourceLine" id="cb7-84" data-line-number="84"><span class="co">#&gt;    trimester exit_status treatment_facil… dehydration_lev… comments_on_lab…</span></a>
+<a class="sourceLine" id="cb7-85" data-line-number="85"><span class="co">#&gt;    &lt;fct&gt;     &lt;fct&gt;       &lt;lgl&gt;            &lt;fct&gt;            &lt;lgl&gt;           </span></a>
+<a class="sourceLine" id="cb7-86" data-line-number="86"><span class="co">#&gt;  1 &lt;NA&gt;      Transferre… NA               Unknown          NA              </span></a>
+<a class="sourceLine" id="cb7-87" data-line-number="87"><span class="co">#&gt;  2 &lt;NA&gt;      Left again… NA               Unknown          NA              </span></a>
+<a class="sourceLine" id="cb7-88" data-line-number="88"><span class="co">#&gt;  3 &lt;NA&gt;      Discharged… NA               Some             NA              </span></a>
+<a class="sourceLine" id="cb7-89" data-line-number="89"><span class="co">#&gt;  4 &lt;NA&gt;      Dead in fa… NA               Severe           NA              </span></a>
+<a class="sourceLine" id="cb7-90" data-line-number="90"><span class="co">#&gt;  5 &lt;NA&gt;      Dead in fa… NA               Severe           NA              </span></a>
+<a class="sourceLine" id="cb7-91" data-line-number="91"><span class="co">#&gt;  6 &lt;NA&gt;      Transferre… NA               Some             NA              </span></a>
+<a class="sourceLine" id="cb7-92" data-line-number="92"><span class="co">#&gt;  7 &lt;NA&gt;      Dead on ar… NA               None             NA              </span></a>
+<a class="sourceLine" id="cb7-93" data-line-number="93"><span class="co">#&gt;  8 &lt;NA&gt;      Dead in fa… NA               Unknown          NA              </span></a>
+<a class="sourceLine" id="cb7-94" data-line-number="94"><span class="co">#&gt;  9 2nd trim… Left again… NA               Unknown          NA              </span></a>
+<a class="sourceLine" id="cb7-95" data-line-number="95"><span class="co">#&gt; 10 &lt;NA&gt;      Left again… NA               Some             NA              </span></a>
+<a class="sourceLine" id="cb7-96" data-line-number="96"><span class="co">#&gt; 11 &lt;NA&gt;      Transferre… NA               Severe           NA              </span></a>
+<a class="sourceLine" id="cb7-97" data-line-number="97"><span class="co">#&gt; 12 &lt;NA&gt;      Dead in fa… NA               Severe           NA              </span></a>
+<a class="sourceLine" id="cb7-98" data-line-number="98"><span class="co">#&gt; 13 &lt;NA&gt;      Dead on ar… NA               Unknown          NA              </span></a>
+<a class="sourceLine" id="cb7-99" data-line-number="99"><span class="co">#&gt; 14 &lt;NA&gt;      Left again… NA               Severe           NA              </span></a>
+<a class="sourceLine" id="cb7-100" data-line-number="100"><span class="co">#&gt; 15 &lt;NA&gt;      Dead in fa… NA               Severe           NA              </span></a>
+<a class="sourceLine" id="cb7-101" data-line-number="101"><span class="co">#&gt; 16 &lt;NA&gt;      Transferre… NA               None             NA              </span></a>
+<a class="sourceLine" id="cb7-102" data-line-number="102"><span class="co">#&gt; 17 &lt;NA&gt;      Dead on ar… NA               Severe           NA              </span></a>
+<a class="sourceLine" id="cb7-103" data-line-number="103"><span class="co">#&gt; 18 &lt;NA&gt;      Dead in fa… NA               None             NA              </span></a>
+<a class="sourceLine" id="cb7-104" data-line-number="104"><span class="co">#&gt; 19 &lt;NA&gt;      Transferre… NA               Unknown          NA              </span></a>
+<a class="sourceLine" id="cb7-105" data-line-number="105"><span class="co">#&gt; 20 &lt;NA&gt;      Discharged… NA               Unknown          NA              </span></a>
+<a class="sourceLine" id="cb7-106" data-line-number="106"><span class="co">#&gt; # … with 40 more variables: fluids_treatment_plan &lt;fct&gt;, time_to_death &lt;fct&gt;,</span></a>
+<a class="sourceLine" id="cb7-107" data-line-number="107"><span class="co">#&gt; #   malaria_rdt_at_admission &lt;fct&gt;, previously_vaccinated &lt;fct&gt;,</span></a>
+<a class="sourceLine" id="cb7-108" data-line-number="108"><span class="co">#&gt; #   cholera_pcr_result &lt;fct&gt;, iv_fluids_received_litres &lt;int&gt;,</span></a>
+<a class="sourceLine" id="cb7-109" data-line-number="109"><span class="co">#&gt; #   patient_origin_free_text &lt;chr&gt;, previous_vaccine_doses_received &lt;fct&gt;,</span></a>
+<a class="sourceLine" id="cb7-110" data-line-number="110"><span class="co">#&gt; #   age_years &lt;int&gt;, arrival_date_in_area_if_3m &lt;date&gt;, age_days &lt;int&gt;,</span></a>
+<a class="sourceLine" id="cb7-111" data-line-number="111"><span class="co">#&gt; #   msf_involvement &lt;fct&gt;, date_lab_sample_taken &lt;date&gt;, readmission &lt;fct&gt;,</span></a>
+<a class="sourceLine" id="cb7-112" data-line-number="112"><span class="co">#&gt; #   age_months &lt;int&gt;, date_of_last_vaccination &lt;date&gt;, case_number &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb7-113" data-line-number="113"><span class="co">#&gt; #   sex &lt;fct&gt;, patient_origin &lt;chr&gt;, prescribed_zinc_supplement &lt;fct&gt;,</span></a>
+<a class="sourceLine" id="cb7-114" data-line-number="114"><span class="co">#&gt; #   delivery_event &lt;fct&gt;, pregnancy_outcome_at_exit &lt;fct&gt;, date_of_exit &lt;date&gt;,</span></a>
+<a class="sourceLine" id="cb7-115" data-line-number="115"><span class="co">#&gt; #   date_of_consultation_admission &lt;date&gt;, oedema &lt;fct&gt;, event_file_type &lt;fct&gt;,</span></a>
+<a class="sourceLine" id="cb7-116" data-line-number="116"><span class="co">#&gt; #   residential_status_brief &lt;fct&gt;, pregnant &lt;fct&gt;, cholera_rdt_result &lt;fct&gt;,</span></a>
+<a class="sourceLine" id="cb7-117" data-line-number="117"><span class="co">#&gt; #   dehydration_severity_during_stay &lt;fct&gt;, cholera_culture_result &lt;fct&gt;,</span></a>
+<a class="sourceLine" id="cb7-118" data-line-number="118"><span class="co">#&gt; #   foetus_alive_at_admission &lt;fct&gt;, treatment_facility_site &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb7-119" data-line-number="119"><span class="co">#&gt; #   prescribed_antibiotics &lt;fct&gt;, cholera_referred_to &lt;fct&gt;,</span></a>
+<a class="sourceLine" id="cb7-120" data-line-number="120"><span class="co">#&gt; #   ors_consumed_litres &lt;int&gt;, treatment_location &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb7-121" data-line-number="121"><span class="co">#&gt; #   cholera_referred_from &lt;fct&gt;, cholera_treatment_facility_type &lt;fct&gt;,</span></a>
+<a class="sourceLine" id="cb7-122" data-line-number="122"><span class="co">#&gt; #   date_of_onset &lt;date&gt;</span></a></code></pre></div>
 </div>
   </div>
 
