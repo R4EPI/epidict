@@ -1,0 +1,126 @@
+---
+title: "MSF Outbreak Dictionaries"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{MSF outbreak dictionaries}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = FALSE
+)
+```
+
+There are four MSF outbreak dictionaries available:
+
+ - Cholera/Acute watery diarrhea ("cholera")
+ - Meningitis
+ - Measles/Rubella ("measles")
+ - Acute Jaundice Syndrome (often suspected to be Hepatitis E) ("ajs")
+
+> You can read more about the outbreak dictionaries at <https://r4epis.netlify.com/outbreaks>
+
+# Acute Jaundice Syndrome (AJS)
+
+## Variables in the dictionary
+
+The AJS dictionary contains definitions for `r nrow(epidict::msf_dict("AJS"))` variables:
+
+```{r ajs, results="asis"}
+library(epidict)
+ajs <- msf_dict("AJS")
+names_desc <- ajs[c("data_element_formname", "data_element_shortname", "data_element_description", "data_element_valuetype")]
+DT::datatable(names_desc)
+```
+
+## Option codes
+
+The dictionaries are exported using option codes that can be translated to
+human-readable format. This table shows how they are translated.
+
+```{r ajs_values, results = "asis"}
+ajs_codes <- tidyr::unnest(ajs, cols = options)[c("data_element_shortname", "data_element_valuetype", "option_code", "option_name", "option_order_in_set")]
+DT::datatable(ajs_codes)
+```
+
+# Cholera
+
+## Variables in the dictionary
+
+The Cholera dictionary contains definitions for `r nrow(epidict::msf_dict("Cholera"))` variables:
+
+```{r cholera, results="asis"}
+library(epidict)
+cholera <- msf_dict("Cholera")
+names_desc <- cholera[c("data_element_formname", "data_element_shortname", "data_element_description", "data_element_valuetype")]
+DT::datatable(names_desc)
+```
+
+## Option codes
+
+The dictionaries are exported using option codes that can be translated to
+human-readable format. This table shows how they are translated.
+
+```{r cholera_values, results = "asis"}
+cholera_codes <- tidyr::unnest(cholera, cols = options)[c("data_element_shortname", "data_element_valuetype", "option_code", "option_name", "option_order_in_set")]
+DT::datatable(cholera_codes)
+```
+
+
+# Measles
+
+## Variables in the dictionary
+
+The Measles dictionary contains definitions for `r nrow(epidict::msf_dict("Measles"))` variables:
+
+```{r measles, results="asis"}
+library(epidict)
+measles <- msf_dict("Measles")
+names_desc <- measles[c("data_element_formname", "data_element_shortname", "data_element_description", "data_element_valuetype")]
+DT::datatable(names_desc)
+```
+
+## Option codes
+
+The dictionaries are exported using option codes that can be translated to
+human-readable format. This table shows how they are translated.
+
+```{r measles_values, results = "asis"}
+measles_codes <- tidyr::unnest(measles, cols = options)[c("data_element_shortname", "data_element_valuetype", "option_code", "option_name", "option_order_in_set")]
+DT::datatable(measles_codes)
+```
+
+# Meningitis
+
+## Variables in the dictionary
+
+The Meningitis dictionary contains definitions for `r nrow(epidict::msf_dict("Meningitis"))` variables:
+
+```{r meningitis, results="asis"}
+library(epidict)
+meningitis <- msf_dict("Meningitis")
+names_desc <- meningitis[c("data_element_formname", "data_element_shortname", "data_element_description", "data_element_valuetype")]
+DT::datatable(names_desc)
+```
+
+## Option codes
+
+The dictionaries are exported using option codes that can be translated to
+human-readable format. This table shows how they are translated.
+
+```{r meningitis_values, results = "asis"}
+meningitis_codes <- tidyr::unnest(meningitis, cols = options)[c("data_element_shortname", "data_element_valuetype", "option_code", "option_name", "option_order_in_set")]
+DT::datatable(meningitis_codes)
+```
+
+
+# Exploring the dictionaries
+
+You can explore the excel-formatted dictionaries with `browseURL(system.file("extdata", "MSF-outbreak-dict.xlsx", package = "epidict"))`, but treat it as read-only.
+

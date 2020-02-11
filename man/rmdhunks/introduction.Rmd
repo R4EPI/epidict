@@ -55,10 +55,10 @@ and their possible options (if categorical):
 
 ```{r outbreak}
 library("epidict")
-msf_dict("Measles", compact = FALSE)
-msf_dict("AJS", compact = FALSE)
-msf_dict("Cholera", compact = FALSE)
-msf_dict("Meningitis", compact = FALSE)
+msf_dict("Measles")
+msf_dict("AJS")
+msf_dict("Cholera")
+msf_dict("Meningitis")
 ```
 
 In addition, there are three MSF survey dictionaries available:
@@ -73,9 +73,9 @@ These are accessible via `msf_dict_survey()` where the variables are in
 `column_name` and are often labeled by question number. 
 
 ```{r survey}
-msf_dict_survey("Mortality", compact = FALSE)
-msf_dict_survey("Nutrition", compact = FALSE)
-msf_dict_survey("Vaccination", compact = FALSE)
+msf_dict_survey("Mortality")
+msf_dict_survey("Nutrition")
+msf_dict_survey("Vaccination")
 ```
 
 ## Generating data

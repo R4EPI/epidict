@@ -18,18 +18,45 @@ coverage](https://codecov.io/gh/R4EPI/epidict/branch/master/graph/badge.svg)](ht
 <!-- badges: end -->
 
 The goal of {epidict} is to provide standardized data dictionaries for
-the MSF R4EPIs project.
+the MSF R4EPIs project. Learn more about R4EPIs at
+<https://r4epis.netlify.com>
 
 ## Installation
 
-To install a stable version of {epidict}, please use the R4epis
-repository:
+You can install {epidict} from CRAN:
+
+``` r
+install.packages("epidict")
+```
+
+<details>
+
+<!--
+NOTE: everything inside the details tag will be collapsed and effectively
+hidden from the user
+-->
+
+<summary style='text-decoration: underline'>Click here for alternative
+installation options</summary> If there is a bugfix or feature that is
+not yet on CRAN, you can install it via the {drat} package:
+
+You can install {epidict} from the R4EPI repository:
 
 ``` r
 # install.packages("drat")
 drat::addRepo("R4EPI")
 install.packages("epidict")
 ```
+
+You can also install the in-development version from GitHub using the
+{remotes} package (but there’s no guarantee that it will be stable):
+
+``` r
+# install.packages("remotes")
+remotes::install_github("R4EPI/epidict") 
+```
+
+<!-- </details> -->
 
 ## Accessing dictionaries
 
@@ -50,78 +77,74 @@ categorical):
 
 ``` r
 library("epidict")
-msf_dict("Measles", compact = FALSE)
-#> # A tibble: 176 x 11
+msf_dict("Measles")
+#> # A tibble: 52 x 8
 #>    data_element_uid data_element_na… data_element_sh… data_element_de…
 #>    <chr>            <chr>            <chr>            <chr>           
 #>  1 DE_ESYM_012      esym_012_seizur… seizure_episodes Complication (S…
-#>  2 DE_ESYM_012      esym_012_seizur… seizure_episodes Complication (S…
-#>  3 DE_EGEN_013      egen_013_pregna… trimester        If pregnant, tr…
-#>  4 DE_EGEN_013      egen_013_pregna… trimester        If pregnant, tr…
-#>  5 DE_EGEN_013      egen_013_pregna… trimester        If pregnant, tr…
-#>  6 DE_ESYM_014      esym_014_croup   croup            Complication (C…
-#>  7 DE_ESYM_014      esym_014_croup   croup            Complication (C…
-#>  8 DE_ESYM_002      esym_002_dehydr… dehydration_lev… Dehydration bas…
-#>  9 DE_ESYM_002      esym_002_dehydr… dehydration_lev… Dehydration bas…
-#> 10 DE_ESYM_002      esym_002_dehydr… dehydration_lev… Dehydration bas…
-#> # … with 166 more rows, and 7 more variables:
+#>  2 DE_EGEN_013      egen_013_pregna… trimester        If pregnant, tr…
+#>  3 DE_ESYM_014      esym_014_croup   croup            Complication (C…
+#>  4 DE_ESYM_002      esym_002_dehydr… dehydration_lev… Dehydration bas…
+#>  5 DE_EGEN_030      egen_030_reside… residential_sta… Whether the pat…
+#>  6 DE_EGEN_020      egen_020_previo… previously_vacc… Has the patient…
+#>  7 DE_EGEN_062      egen_062_patien… patient_origin_… Name of village…
+#>  8 DE_EGEN_010      egen_010_age_da… age_days         Age of patient …
+#>  9 DE_EGEN_029      egen_029_msf_in… msf_involvement  How extensive i…
+#> 10 DE_EGEN_053      egen_053_nutrit… nutrition_statu… What is the nut…
+#> # … with 42 more rows, and 4 more variables:
 #> #   data_element_valuetype <chr>, data_element_formname <chr>,
-#> #   used_optionset_uid <chr>, option_code <chr>, option_name <chr>,
-#> #   option_uid <chr>, option_order_in_set <dbl>
-msf_dict("AJS", compact = FALSE)
-#> # A tibble: 215 x 11
+#> #   used_optionset_uid <chr>, options <list>
+msf_dict("AJS")
+#> # A tibble: 68 x 8
 #>    data_element_uid data_element_na… data_element_sh… data_element_de…
 #>    <lgl>            <chr>            <chr>            <chr>           
 #>  1 NA               egen_044_event_… event_file_type  Is the event fi…
-#>  2 NA               egen_044_event_… event_file_type  Is the event fi…
-#>  3 NA               egen_044_event_… event_file_type  Is the event fi…
-#>  4 NA               egen_001_patien… case_number      Anonymised pati…
-#>  5 NA               egen_004_date_o… date_of_consult… Date patient pr…
-#>  6 NA               egen_022_detect… detected_by      How patient was…
-#>  7 NA               egen_022_detect… detected_by      How patient was…
-#>  8 NA               egen_022_detect… detected_by      How patient was…
-#>  9 NA               egen_022_detect… detected_by      How patient was…
-#> 10 NA               egen_005_patien… patient_facilit… Patient is pres…
-#> # … with 205 more rows, and 7 more variables:
+#>  2 NA               egen_001_patien… case_number      Anonymised pati…
+#>  3 NA               egen_004_date_o… date_of_consult… Date patient pr…
+#>  4 NA               egen_022_detect… detected_by      How patient was…
+#>  5 NA               egen_005_patien… patient_facilit… Patient is pres…
+#>  6 NA               egen_029_msf_in… msf_involvement  How extensive i…
+#>  7 NA               egen_008_age_ye… age_years        Age of patient …
+#>  8 NA               egen_009_age_mo… age_months       Age of patient …
+#>  9 NA               egen_010_age_da… age_days         Age of patient …
+#> 10 NA               egen_011_sex     sex              Sex of patient …
+#> # … with 58 more rows, and 4 more variables:
 #> #   data_element_valuetype <chr>, data_element_formname <chr>,
-#> #   used_optionset_uid <chr>, option_code <chr>, option_name <chr>,
-#> #   option_uid <chr>, option_order_in_set <dbl>
-msf_dict("Cholera", compact = FALSE)
-#> # A tibble: 182 x 11
+#> #   used_optionset_uid <chr>, options <list>
+msf_dict("Cholera")
+#> # A tibble: 45 x 8
 #>    data_element_uid data_element_na… data_element_sh… data_element_de…
 #>    <chr>            <chr>            <chr>            <chr>           
 #>  1 FF7d81Zy0yQ      egen_013_pregna… trimester        If pregnant, tr…
-#>  2 FF7d81Zy0yQ      egen_013_pregna… trimester        If pregnant, tr…
-#>  3 FF7d81Zy0yQ      egen_013_pregna… trimester        If pregnant, tr…
-#>  4 ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#>  5 ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#>  6 ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#>  7 ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#>  8 ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#>  9 ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#> 10 wjCDTwXmtix      egen_064_treatm… treatment_facil… Name of facilit…
-#> # … with 172 more rows, and 7 more variables:
+#>  2 ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
+#>  3 wjCDTwXmtix      egen_064_treatm… treatment_facil… Name of facilit…
+#>  4 UUVnMdaBY5T      esym_002_dehydr… dehydration_lev… Dehydration bas…
+#>  5 BTZdJKpS3S5      egen_059_commen… comments_on_lab… Any additional …
+#>  6 bpT8T341oQG      egen_054_fluids… fluids_treatmen… What was the fl…
+#>  7 FqPqIr5m0AQ      egen_017_time_b… time_to_death    Hours between p…
+#>  8 epbKb1GczaS      esym_003_malari… malaria_rdt_at_… Malaria rapid d…
+#>  9 F04TM58HHsd      egen_020_previo… previously_vacc… Has the patient…
+#> 10 CfRNuWWuTr5      egen_058_choler… cholera_pcr_res… Was a PCR test …
+#> # … with 35 more rows, and 4 more variables:
 #> #   data_element_valuetype <chr>, data_element_formname <chr>,
-#> #   used_optionset_uid <chr>, option_code <chr>, option_name <chr>,
-#> #   option_uid <chr>, option_order_in_set <dbl>
-msf_dict("Meningitis", compact = FALSE)
-#> # A tibble: 173 x 11
+#> #   used_optionset_uid <chr>, options <list>
+msf_dict("Meningitis")
+#> # A tibble: 53 x 8
 #>    data_element_uid data_element_na… data_element_sh… data_element_de…
 #>    <chr>            <chr>            <chr>            <chr>           
 #>  1 Ow8ss6T1tT5      esym_028_seizur… seizures_at_adm… Presenting symp…
-#>  2 Ow8ss6T1tT5      esym_028_seizur… seizures_at_adm… Presenting symp…
-#>  3 CEEr9lcwKVG      esym_036_kernig… kernigs_brudzin… Presenting symp…
-#>  4 CEEr9lcwKVG      esym_036_kernig… kernigs_brudzin… Presenting symp…
-#>  5 tIe59Htd2Ba      esym_012_seizur… seizure_episodes Complication (S…
-#>  6 tIe59Htd2Ba      esym_012_seizur… seizure_episodes Complication (S…
-#>  7 Sjms36Aj6bT      esym_023_febril… febrile_coma     Complication (F…
-#>  8 Sjms36Aj6bT      esym_023_febril… febrile_coma     Complication (F…
-#>  9 BTZdJKpS3S5      egen_059_commen… comments_on_lab… Any additional …
-#> 10 wHnNEMRrS5A      esym_025_chills… chills           Presenting symp…
-#> # … with 163 more rows, and 7 more variables:
+#>  2 CEEr9lcwKVG      esym_036_kernig… kernigs_brudzin… Presenting symp…
+#>  3 tIe59Htd2Ba      esym_012_seizur… seizure_episodes Complication (S…
+#>  4 Sjms36Aj6bT      esym_023_febril… febrile_coma     Complication (F…
+#>  5 BTZdJKpS3S5      egen_059_commen… comments_on_lab… Any additional …
+#>  6 wHnNEMRrS5A      esym_025_chills… chills           Presenting symp…
+#>  7 T3Gn8mTYu0c      esym_026_stiff_… stiff_neck       Presenting symp…
+#>  8 JCexRYsmjmS      eobr_006_ti_sam… ti_result_organ… TI sample resul…
+#>  9 myL5BYzy6zW      esym_034_coma_a… coma             Presenting symp…
+#> 10 AhllpMovCeu      egen_062_patien… patient_origin_… Name of village…
+#> # … with 43 more rows, and 4 more variables:
 #> #   data_element_valuetype <chr>, data_element_formname <chr>,
-#> #   used_optionset_uid <chr>, option_code <chr>, option_name <chr>,
-#> #   option_uid <chr>, option_order_in_set <dbl>
+#> #   used_optionset_uid <chr>, options <list>
 ```
 
 In addition, there are three MSF survey dictionaries available:
@@ -137,7 +160,7 @@ These are accessible via `msf_dict_survey()` where the variables are in
 `column_name` and are often labeled by question number.
 
 ``` r
-msf_dict_survey("Mortality", compact = FALSE)
+msf_dict_survey("Mortality")
 #> # A tibble: 128 x 7
 #>    level column_name description data_element_va… option_code option_name
 #>    <dbl> <chr>       <chr>       <chr>            <chr>       <chr>      
@@ -152,7 +175,7 @@ msf_dict_survey("Mortality", compact = FALSE)
 #>  9     0 q45_cq2     Head of Ho… TEXT             1           No         
 #> 10     0 q49_cq3     Head of Ho… TEXT             0           Yes        
 #> # … with 118 more rows, and 1 more variable: option_order_in_set <int>
-msf_dict_survey("Nutrition", compact = FALSE)
+msf_dict_survey("Nutrition")
 #> # A tibble: 29 x 7
 #>    level column_name description data_element_va… option_code option_name
 #>    <dbl> <chr>       <chr>       <chr>            <chr>       <chr>      
@@ -167,7 +190,7 @@ msf_dict_survey("Nutrition", compact = FALSE)
 #>  9     0 q49_cq3     Head of Ho… TEXT             0           Yes        
 #> 10     0 q49_cq3     Head of Ho… TEXT             1           No         
 #> # … with 19 more rows, and 1 more variable: option_order_in_set <int>
-msf_dict_survey("Vaccination", compact = FALSE)
+msf_dict_survey("Vaccination")
 #> # A tibble: 113 x 7
 #>    level column_name description data_element_va… option_code option_name
 #>    <dbl> <chr>       <chr>       <chr>            <chr>       <chr>      
@@ -196,16 +219,16 @@ gen_data("Measles", varnames = "data_element_shortname", numcases = 100, org = "
 #> # A tibble: 100 x 52
 #>    seizure_episodes trimester croup dehydration_lev… residential_sta…
 #>    <fct>            <fct>     <fct> <fct>            <fct>           
-#>  1 0                <NA>      0     UN               3               
-#>  2 1                <NA>      0     NO               4               
-#>  3 1                <NA>      1     SO               1               
-#>  4 0                <NA>      1     SE               1               
-#>  5 1                3         1     NO               5               
-#>  6 1                <NA>      1     UN               4               
-#>  7 0                <NA>      0     SO               1               
-#>  8 0                <NA>      1     SO               5               
-#>  9 1                <NA>      0     SE               1               
-#> 10 0                <NA>      0     NO               3               
+#>  1 1                2         0     SO               2               
+#>  2 0                <NA>      1     NO               5               
+#>  3 1                <NA>      0     UN               3               
+#>  4 1                <NA>      0     UN               3               
+#>  5 0                <NA>      1     UN               3               
+#>  6 1                <NA>      0     SE               1               
+#>  7 1                <NA>      0     UN               5               
+#>  8 1                <NA>      0     NO               3               
+#>  9 1                <NA>      1     SO               3               
+#> 10 0                3         1     SE               2               
 #> # … with 90 more rows, and 47 more variables:
 #> #   previously_vaccinated <fct>, patient_origin_free_text <chr>,
 #> #   age_days <int>, msf_involvement <fct>,
@@ -232,16 +255,16 @@ gen_data("Vaccination", varnames = "column_name", numcases = 100, org = "MSF")
 #> # A tibble: 100 x 41
 #>    q77_what_is_the… health_district village q14_hh_no q15_home
 #>               <dbl> <chr>           <chr>       <int> <fct>   
-#>  1                1 District A      Villag…         6 Yes     
-#>  2                3 District B      Villag…         2 No      
-#>  3                2 District A      Villag…         1 No      
-#>  4                2 District A      Villag…         1 No      
-#>  5                3 District B      Villag…         2 No      
-#>  6                4 District B      Villag…         4 No      
-#>  7                4 District B      Villag…         4 No      
-#>  8                1 District A      Villag…         3 Yes     
-#>  9                4 District B      Villag…         1 No      
-#> 10                4 District B      Villag…         2 Yes     
+#>  1                4 District B      Villag…         7 No      
+#>  2                4 District B      Villag…         4 Yes     
+#>  3                4 District B      Villag…         4 Yes     
+#>  4                4 District B      Villag…         1 Yes     
+#>  5                1 District A      Villag…         7 No      
+#>  6                1 District A      Villag…         3 Yes     
+#>  7                2 District A      Villag…         3 No      
+#>  8                1 District A      Villag…         6 No      
+#>  9                4 District B      Villag…         4 No      
+#> 10                2 District A      Villag…         1 Yes     
 #> # … with 90 more rows, and 36 more variables: q16_occupant_age <lgl>,
 #> #   q58_consent <fct>, q75_caretaker <fct>, q76_caretaker_other <lgl>,
 #> #   q65_consent_no_reason <fct>, q66_consent_no_reason_other <lgl>,
@@ -279,26 +302,26 @@ print(dat)
 #> # A tibble: 20 x 45
 #>    trimester exit_status treatment_facil… dehydration_lev…
 #>    <fct>     <fct>       <lgl>            <fct>           
-#>  1 <NA>      AD          NA               NO              
-#>  2 <NA>      DOA         NA               SO              
+#>  1 <NA>      DD          NA               SO              
+#>  2 <NA>      DD          NA               UN              
 #>  3 <NA>      DOA         NA               SO              
-#>  4 <NA>      AD          NA               UN              
-#>  5 <NA>      DOA         NA               SO              
-#>  6 <NA>      AD          NA               SE              
-#>  7 <NA>      DD          NA               UN              
-#>  8 <NA>      DH          NA               UN              
-#>  9 <NA>      DH          NA               SE              
+#>  4 <NA>      DH          NA               NO              
+#>  5 <NA>      DD          NA               UN              
+#>  6 <NA>      DOA         NA               SE              
+#>  7 <NA>      LA          NA               SO              
+#>  8 <NA>      DD          NA               SO              
+#>  9 <NA>      DH          NA               UN              
 #> 10 <NA>      DH          NA               SE              
-#> 11 <NA>      DH          NA               NO              
-#> 12 <NA>      DOA         NA               SO              
-#> 13 <NA>      DOA         NA               NO              
-#> 14 <NA>      DH          NA               SE              
-#> 15 <NA>      DOA         NA               NO              
-#> 16 <NA>      DOA         NA               NO              
-#> 17 <NA>      TR          NA               SE              
-#> 18 <NA>      LA          NA               UN              
-#> 19 <NA>      TR          NA               SO              
-#> 20 <NA>      DOA         NA               SE              
+#> 11 <NA>      DH          NA               SO              
+#> 12 <NA>      DD          NA               SO              
+#> 13 <NA>      DOA         NA               SO              
+#> 14 <NA>      DD          NA               SO              
+#> 15 <NA>      TR          NA               UN              
+#> 16 <NA>      TR          NA               UN              
+#> 17 <NA>      TR          NA               NO              
+#> 18 <NA>      DH          NA               SO              
+#> 19 <NA>      DH          NA               SO              
+#> 20 <NA>      AD          NA               SE              
 #> # … with 41 more variables: comments_on_lab_results <lgl>,
 #> #   fluids_treatment_plan <fct>, time_to_death <fct>,
 #> #   malaria_rdt_at_admission <fct>, previously_vaccinated <fct>,
@@ -365,26 +388,26 @@ print(dat_clean)
 #> # A tibble: 20 x 45
 #>    trimester exit_status treatment_facil… dehydration_lev…
 #>    <fct>     <fct>       <lgl>            <fct>           
-#>  1 <NA>      Transferre… NA               None            
-#>  2 <NA>      Dead on ar… NA               Some            
+#>  1 <NA>      Dead in fa… NA               Some            
+#>  2 <NA>      Dead in fa… NA               Unknown         
 #>  3 <NA>      Dead on ar… NA               Some            
-#>  4 <NA>      Transferre… NA               Unknown         
-#>  5 <NA>      Dead on ar… NA               Some            
-#>  6 <NA>      Transferre… NA               Severe          
-#>  7 <NA>      Dead in fa… NA               Unknown         
-#>  8 <NA>      Discharged… NA               Unknown         
-#>  9 <NA>      Discharged… NA               Severe          
+#>  4 <NA>      Discharged… NA               None            
+#>  5 <NA>      Dead in fa… NA               Unknown         
+#>  6 <NA>      Dead on ar… NA               Severe          
+#>  7 <NA>      Left again… NA               Some            
+#>  8 <NA>      Dead in fa… NA               Some            
+#>  9 <NA>      Discharged… NA               Unknown         
 #> 10 <NA>      Discharged… NA               Severe          
-#> 11 <NA>      Discharged… NA               None            
-#> 12 <NA>      Dead on ar… NA               Some            
-#> 13 <NA>      Dead on ar… NA               None            
-#> 14 <NA>      Discharged… NA               Severe          
-#> 15 <NA>      Dead on ar… NA               None            
-#> 16 <NA>      Dead on ar… NA               None            
-#> 17 <NA>      Transferre… NA               Severe          
-#> 18 <NA>      Left again… NA               Unknown         
-#> 19 <NA>      Transferre… NA               Some            
-#> 20 <NA>      Dead on ar… NA               Severe          
+#> 11 <NA>      Discharged… NA               Some            
+#> 12 <NA>      Dead in fa… NA               Some            
+#> 13 <NA>      Dead on ar… NA               Some            
+#> 14 <NA>      Dead in fa… NA               Some            
+#> 15 <NA>      Transferre… NA               Unknown         
+#> 16 <NA>      Transferre… NA               Unknown         
+#> 17 <NA>      Transferre… NA               None            
+#> 18 <NA>      Discharged… NA               Some            
+#> 19 <NA>      Discharged… NA               Some            
+#> 20 <NA>      Transferre… NA               Severe          
 #> # … with 41 more variables: comments_on_lab_results <lgl>,
 #> #   fluids_treatment_plan <fct>, time_to_death <fct>,
 #> #   malaria_rdt_at_admission <fct>, previously_vaccinated <fct>,
