@@ -1,8 +1,9 @@
-# epidict 0.1.0
+# epidict 0.0.0.9000
 
 * Fix broken URLs in README
 * Add vignettes and README describing the dictionaries
 * Release to CRAN
+* Fix bug in generating elegible and interviewed for Mortality and Nurition surveys
 
 # epidict 0.0.0.9000
 
