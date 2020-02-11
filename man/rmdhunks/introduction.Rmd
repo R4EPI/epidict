@@ -35,12 +35,13 @@ package (but there's no guarantee that it will be stable):
 remotes::install_github("R4EPI/epidict") 
 ```
 
-<!-- </details> -->
+</details>
 
 
 ## Accessing dictionaries
 
-There are four MSF outbreak dictionaries available in {epidict}:
+There are four MSF outbreak dictionaries available in {epidict} based on DHIS2
+exports:
 
  - Cholera/Acute watery diarrhea ("cholera")
  - Meningitis
@@ -106,21 +107,13 @@ print(dat)
 
 # We want the expanded dictionary, so we will select `compact = FALSE`
 dict <- msf_dict(disease = "Cholera", 
-  long = TRUE, 
-  compact = FALSE, 
-  tibble = TRUE
+  long    = TRUE,
+  compact = FALSE,
+  tibble  = TRUE
 )
 print(dict)
 
-# We can use linelist's clean_variable_spelling to translate the codes. First,
-# we want to reorder the columns of the dictionary like so:
-#
-#  - 1st column: option codes
-#  - 2nd column: translations
-#  - 3rd column: data column name
-#  - 4th column: order of options
-
-# Now we can use linelist to filter the data:
+# Now we can use matchmaker to filter the data
 dat_clean <- matchmaker::match_df(dat, dict, 
   from  = "option_code",
   to    = "option_name",

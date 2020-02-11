@@ -22,7 +22,10 @@ msf_dict_survey(
 }
 \arguments{
 \item{disease}{Specify which disease you would like to use.
-Currently supports "Cholera", "Measles" and "Meningitis".}
+\itemize{
+\item \code{msf_dict()} supports "AJS", "Cholera", "Measles", "Meningitis"
+\item \code{msf_dict_survey()} supports "Mortality", "Nutrition", and "Vaccination"
+}}
 
 \item{name}{the name of the dictionary stored in the package.}
 
@@ -38,9 +41,9 @@ format with each option getting one row. If \code{FALSE}, then two data frames
 are returned, one with variables and the other with content options.}
 }
 \description{
-These function reads in MSF data dictionaries and produces randomised
-datasets based on values defined in the dictionaries.  The randomised
-dataset produced should mimic an excel export from DHIS2.
+These function produces MSF OCA dictionaries based on DHIS2 data sets
+defining the data element name, code, short names, types, and key/value pairs
+for translating the codes into human-readable format.
 }
 \examples{
 
@@ -49,8 +52,10 @@ if (require("dplyr") & require("matchmaker")) {
     # You will often want to use MSF dictionaries to translate codes to human-
     # readable variables. Here, we generate a data set of 20 cases:
     dat <- gen_data(
-      dictionary = "Cholera", varnames = "data_element_shortname",
-      numcases = 20, org = "MSF"
+      dictionary = "Cholera", 
+      varnames = "data_element_shortname",
+      numcases = 20, 
+      org = "MSF"
     )
     print(dat)
 
@@ -58,15 +63,7 @@ if (require("dplyr") & require("matchmaker")) {
     dict <- msf_dict(disease = "Cholera", long = TRUE, compact = FALSE, tibble = TRUE)
     print(dict)
 
-    # We can use linelist's clean_variable_spelling to translate the codes. First,
-    # we want to reorder the columns of the dictionary like so:
-    #
-    #  - 1st column: option codes
-    #  - 2nd column: translations
-    #  - 3rd column: data column name
-    #  - 4th column: order of options
-
-    # Now we can use linelist to filter the data:
+    # Now we can use matchmaker to filter the data:
     dat_clean <- matchmaker::match_df(dat, dict,
       from = "option_code",
       to = "option_name",
@@ -78,5 +75,5 @@ if (require("dplyr") & require("matchmaker")) {
 }
 }
 \seealso{
-\code{\link[matchmaker:match_df]{matchmaker::match_df()}} \code{\link[=gen_data]{gen_data()}}
+\code{\link[matchmaker:match_df]{matchmaker::match_df()}} \code{\link[=gen_data]{gen_data()}} \code{\link[=msf_dict_survey]{msf_dict_survey()}}
 }

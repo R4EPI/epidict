@@ -2,17 +2,14 @@
 #'
 #' @param x a character vector
 #' @param sep a separator to use for non-alphabetical characters
-#' @param transformation passed to [stri::stri_trans_general()]
 #' @param protect any special characters that need to be protected
 #'
 #' @return a transformed character vector
 #' @keywords internal
 #' @note This was taken from the dev version of epitrix to reduce the number
 #'   of packages imported (and because it's not going to be on CRAN anytime soon)
-# Not needed because we don't deal with accents here: importFrom stringi stri_trans_general
 #' @noRd
-tidy_labels <- function(x, sep = "_", # transformation = "Any-Latin; Latin-ASCII",
-                        protect = "") {
+tidy_labels <- function(x, sep = "_", protect = "") {
   x <- as.character(x)
 
   ## On the processing of the input:
