@@ -104,6 +104,10 @@ test_that("survey data can be generated", {
       expect_true(check_exclusive_ages(get_ages(data), 300), label = disease)
     }
     expect_true(check_age_integers(get_ages(data)))
+    expect_true(!is.na(sum(data$eligible)))
+    expect_true(sum(data$eligible) > 0)
+    expect_true(!is.na(sum(data$interviewed)))
+    expect_true(sum(data$interviewed) > 0)
     # skip("These tests need to be updated when we have a better idea of the expected number of columns")
     # TODO: these tests fail because we need better expectations regarding
     # the number of columns that the dictionaries provide
