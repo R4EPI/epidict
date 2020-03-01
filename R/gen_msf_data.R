@@ -4,10 +4,10 @@
 #'   Currently supports "Cholera", "Measles", "Meningitis", "AJS" and "Mortality".
 #'
 #' @param varnames Specify name of column that contains varnames. Currently
-#'   default set to "Item".  (this can probably be deleted once dictionaries
-#'   standardise) If `dictionary` is "Mortality", `varnames` needs to be "column_name"`.
+#'   default set to "data_element_shortname".  (this can probably be deleted once dictionaries
+#'   standardise) If `dictionary` is in surveys then `varnames` needs to be "column_name"`.
 #'
-#' @param numcases For fake data, specify the number of cases you want (default is 300
+#' @param numcases For fake data, specify the number of cases you want (default is 300)
 #'
 #' @keywords internal
 gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_element_shortname", numcases = 300) {
