@@ -27,5 +27,85 @@ gen_who_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
   # sample between two dates
   posidates <- seq(as.Date("2018-01-01"), as.Date("2018-04-30"), by = "day")
 
+  # fill the date columns with dates
+  for (i in datevars) {
+    dis_output[[i]] <- sample(posidates, numcases, replace = TRUE)
+  }
+
+  if (!is_survey) {
+
+    # row number
+    dis_output$order_number <- 1:numcases
+
+    # Patient identifiers
+    dis_output$unique_identifier <- sprintf("A%d", seq(numcases))
+
+    # patient origin free text
+    dis_output$health_zone <- gen_freetext(numcases)
+  }
+
+  # GENERATE AGES --------------------------------------------------------------
+
+  dis_output$age[dis_output$age_unit == "Mn"] <- sample(0:12,
+                                                        sum(dis_output$age_unit == "Mn"),
+                                                        replace = TRUE)
+
+  dis_output$age[dis_output$age_unit == "Yr"] <- sample(1:65,
+                                                        sum(dis_output$age_unit == "Yr"),
+                                                        replace = TRUE)
+
+
+
+  # DISEASE-SPECIFIC GENERATORS ------------------------------------------------
+  if (dictionary == "Cholera") {
+    # date of reporting before symptom onset
+    # add five days
+    dis_output <- enforce_timing(dis_output,
+                                 first  = "date_arrived_at_treatment_facility",
+                                 second = "date_of_onset",
+                                 5
+    )
+
+    ## date of cholera treatment centre before facility
+    ## add 2 days
+    dis_output <- enforce_timing(dis_output,
+                                 first  = "date_arrived_at_treatment_facility",
+                                 second = "date_arrived_at_cholera_treatment_centre",
+                                 2
+    )
+
+    ## hour when symptoms started
+    dis_output$time_of_onset <- paste0(
+      sprintf("%02d", sample(0:23, numcases, replace = TRUE)),
+                                          ":00")
+    ## hour when arrived at facility
+    dis_output$hour_arrived_at_treatment_facility <- paste0(
+      sprintf("%02d", sample(0:23, numcases, replace = TRUE)),
+      ":00")
+
+    ## hour when arrived at centre
+    dis_output$hour_arrived_at_cholera_treatment_centre <- paste0(
+      sprintf("%02d", sample(0:23, numcases, replace = TRUE)),
+      ":00")
+
+    ## if no vaccine received then missing date of last vacc
+    dis_output$date_of_last_vaccination[dis_output$previously_vaccinated != "Y"] <- NA
+
+    ## if received vaccine then sample how many doses
+    dis_output$previous_vaccine_doses_received[
+      dis_output$previously_vaccinated == "Y"] <- sample(1:4,
+                                                         sum(dis_output$previously_vaccinated == "Y"),
+                                                         replace = TRUE)
+
+    ## if died on arrival then patient outcome is dead
+    dis_output$patient_outcome[dis_output$status_on_arrival_at_treatment_facility == "Dead"] <- "Died"
+
+    ## if no cholera rdt performed then results not done
+    dis_output$cholera_rdt_result[dis_output$cholera_rdt_performed != "Y"] <- "ND"
+
+  }
+
+  # return dataset as a tibble
+  dplyr::as_tibble(dis_output)
 }
 
