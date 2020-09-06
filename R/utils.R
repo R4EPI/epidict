@@ -101,7 +101,7 @@ enforce_timing <- function(x, first, second, add = 2, inclusive = FALSE) {
 
 fix_dates <- function(dis_output) {
 
-  # Fix DATES ----------------------------------------------------------------
+  # Fix DATES MSF --------------------------------------------------------------
   #
   # The date sampling we did above
   # exit dates before date of entry
