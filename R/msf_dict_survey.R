@@ -21,21 +21,25 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
   # read in data set - pasting the disease name for sheet
   dat_dict <- readxl::read_xlsx(path, sheet = disease)
 
+  # read in categorical variable content options
+  dat_opts <- readxl::read_xlsx(path, sheet = sprintf("%s_choices", disease))
+
   # clean col names
   colnames(dat_dict) <- tidy_labels(colnames(dat_dict))
+  colnames(dat_opts) <- tidy_labels(colnames(dat_opts))
 
-  # fill NA values with previous non-NA value, replace "." in codes and names
-  dat_dict <- tidyr::fill(dat_dict, colnames(dat_dict), .direction = "down")
+  # drop rows with grouping variables for repeats (not necessary for generating data)
+  dat_dict <- dat_dict[!dat_dict$type %in% c("begin_group", "end_group", "end_repeat"), ]
+
+
   dat_dict <- dplyr::rename_at(dat_dict,
     .vars = dplyr::vars(dplyr::starts_with("choice_")),
     .funs = ~ gsub("choice", "option", .)
   )
 
   # minor tidying, e.g.: create "CodeX" assignments
-  dat_dict$option_code[dat_dict$option_code == "."] <- NA
-  dat_dict$option_name[dat_dict$option_name == "."] <- NA
   dat_dict$type <- gsub(
-    pattern = "Question",
+    pattern = "select_one |select_multiple ",
     replacement = "",
     x = dat_dict$type
   )
