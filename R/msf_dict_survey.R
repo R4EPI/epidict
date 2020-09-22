@@ -21,7 +21,7 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
   dat_dict <- readxl::read_xlsx(path, sheet = disease)
 
   # read in categorical variable content options
-  dat_opts <- readxl::read_xlsx(path, sheet = sprintf("%s_choices", disease))
+  dat_opts <- readxl::read_xlsx(path, sheet = sprintf("%s_options", disease))
 
   # clean col names
   colnames(dat_dict) <- tidy_labels(colnames(dat_dict))
@@ -30,40 +30,35 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
   # clean future var names
   dat_dict$name <- tidy_labels(dat_dict$name)
 
-  # pre-pend "choices" to options dataset (otherwise duplicated column names on merge)
-  colnames(dat_opts) <- sprintf("choices_%s", colnames(dat_opts))
+  # pre-pend "option" to options dataset (otherwise duplicated column names on merge)
+  colnames(dat_opts) <- sprintf("option_%s", colnames(dat_opts))
 
   # drop rows with grouping variables for repeats (not necessary for generating data)
-  dat_dict <- dat_dict[!dat_dict$type %in% c("begin_group", "end_group", "end_repeat"), ]
+  dat_dict <- dat_dict[!dat_dict$type %in% c("begin_group", "end_group",
+                                             "begin_repeat", "end_repeat"), ]
+
+  ## create a value type column (for whether select one or multiple)
+  dat_dict$value_type <- NA
+  dat_dict$value_type[grep("select_one", dat_dict$type)] <- "select_one"
+  dat_dict$value_type[grep("select_multiple", dat_dict$type)] <- "select_multiple"
 
 
-  # minor tidying, make the type column useful as as unique ID for options
+  # make the type column useful as as unique ID for options
   dat_dict$type <- gsub(
     pattern = "select_one |select_multiple ",
     replacement = "",
     x = dat_dict$type
   )
 
-  # create counts for variable order (not entirely sure this is needed?)
-  # dat_dict <- dplyr::mutate(dat_dict, option_order_in_set = seq(dplyr::n()))
-
-  ## recode type to fit to DHIS2 (I dont think this is necessary?)
-  # dat_dict$type <- dplyr::case_when(
-  #   dat_dict$type == "Integer" ~ "INTEGER_POSITIVE",
-  #   dat_dict$type == "Binary" ~ "TEXT",
-  #   dat_dict$type == "ChoiceMulti" ~ "MULTI",
-  #   dat_dict$type == "Text" ~ "LONG_TEXT",
-  #   dat_dict$type == "Geo" ~ "LONG_TEXT",
-  #   dat_dict$type == "Date" ~ "DATE",
-  #   dat_dict$type == "Choice" ~ "TEXT",
-  #   dat_dict$type == "Number" ~ "INTEGER_POSITIVE"
-  # )
-
+  # create counts for option order
+  dat_opts <- dplyr::group_by(dat_opts, option_list_name)
+  dat_opts <- dplyr::mutate(dat_opts, option_order_in_set = seq(dplyr::n()))
+  dat_opts <- dplyr::ungroup(dat_opts)
 
 
   if (long) {
     outtie <- dplyr::left_join(dat_dict, dat_opts,
-                               by = c("type" = "choices_list_name")
+                               by = c("type" = "option_list_name")
     )
 
     outtie <- if (tibble) tibble::as_tibble(outtie) else outtie
@@ -85,13 +80,13 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
     squished <- dplyr::group_by(outtie, !!quote(name))
 
     if (utils::packageVersion("tidyr") > "0.8.99") {
-      squished <- tidyr::nest(squished, options = dplyr::starts_with("choices_"))
+      squished <- tidyr::nest(squished, options = dplyr::starts_with("option_"))
     } else {
       ## not sure this is going to be the case anymore?? can probably delete
-      squished <- tidyr::nest(squished, dplyr::starts_with("choices_"), .key = "options")
-      outtie <- dplyr::select(outtie, -dplyr::starts_with("choices_"))
+      squished <- tidyr::nest(squished, dplyr::starts_with("option_"), .key = "options")
+      outtie <- dplyr::select(outtie, -dplyr::starts_with("option_"))
       outtie <- dplyr::distinct(outtie)
-      squished <- dplyr::left_join(outtie, squished, by = c("type" = "choices_list_name"))
+      squished <- dplyr::left_join(outtie, squished, by = c("type" = "option_list_name"))
     }
     return(dplyr::ungroup(squished))
   }

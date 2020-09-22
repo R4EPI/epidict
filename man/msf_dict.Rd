@@ -17,7 +17,8 @@ msf_dict_survey(
   disease,
   name = "MSF-survey-dict.xlsx",
   tibble = TRUE,
-  compact = FALSE
+  compact = TRUE,
+  long = TRUE
 )
 }
 \arguments{

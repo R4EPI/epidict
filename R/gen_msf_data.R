@@ -1,7 +1,8 @@
 #' @noRd
 #'
 #' @param dictionary Specify which dictionary you would like to use.
-#'   Currently supports "Cholera", "Measles", "Meningitis", "AJS" and "Mortality".
+#'   Currently supports "Cholera", "Measles", "Meningitis", "AJS",
+#'    "Mortality" and "Vaccination" ("Nutrition" to be added)
 #'
 #' @param varnames Specify name of column that contains varnames. Currently
 #'   default set to "Item".  (this can probably be deleted once dictionaries
@@ -21,7 +22,12 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
   dis_output <- template_data_frame_categories(dat_dict, numcases, varnames, survey = is_survey)
 
   # Use data dictionary to define which vars are dates
-  datevars <- dat_dict[[varnames]][dat_dict$data_element_valuetype == "DATE"]
+  if(is_survey) {
+    datevars <- dat_dict[[varnames]][dat_dict$type == "date"]
+  } else {
+    datevars <- dat_dict[[varnames]][dat_dict$data_element_valuetype == "DATE"]
+  }
+
 
   # sample between two dates
   posidates <- seq(as.Date("2018-01-01"), as.Date("2018-04-30"), by = "day")
@@ -54,8 +60,25 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
   # GENERATE AGES --------------------------------------------------------------
 
-  dis_output <- gen_ages(dis_output, numcases, set_age_na = dictionary != "Mortality")
+  # think this is only relevant for outbreaks!
+  dis_output <- gen_ages(dis_output, numcases,
+                         set_age_na = ifelse(is_survey,
+                                             FALSE,
+                                             TRUE),
+                         year_cutoff = ifelse(is_survey,
+                                              0,
+                                              2))
 
+  # fix age variables for surveys
+  if(is_survey){
+    dis_output$age_months <- dis_output$age_months_calc
+
+    dis_output$age_months_calc[which(dis_output$age_years < 6 &
+                                 dis_output$age_years > 0)
+                               ] <- dis_output$age_years[which(
+                                 dis_output$age_years < 6 &
+                                   dis_output$age_years > 0)]  * 12
+  }
 
   # DISEASE-SPECIFIC GENERATORS ------------------------------------------------
   if (dictionary == "Cholera" | dictionary == "Measles" | dictionary == "AJS") {
@@ -117,98 +140,171 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
   }
 
   if (dictionary == "Mortality") {
+
+    # if consent is no then make everything else NA
+    dis_output[dis_output$consent == "no",
+               c(grep("no_consent_other",
+                      names(dis_output)):length(names(dis_output)))] <- NA
+
+    # no_consent_reason shoud be NA if consent is yes
+    dis_output$no_consent_reason[dis_output$consent == "yes"] <- NA
+
+    # create household numbers within cluster numbers
     dis_output <- gen_hh_clusters(dis_output,
       n = numcases,
       cluster = "cluster_number",
-      household = "q65_iq4"
+      household = "household_number"
     )
 
-    # use household num as a standin for fact_0_id for now
-    dis_output$fact_0_id <- dis_output$q65_iq4
+    # use household num as a standin for uid for now
+    dis_output$uid <- paste0(dis_output$cluster_number, "_",
+                             dis_output$household_number, "_",
+                             dis_output$date)
 
-    # q53_cq4a ("Why is no occupant agreeing to participate?") shoud be NA if
-    # Head of Household answers the questions (q49_cq3)
-    dis_output$q53_cq4a[dis_output$q49_cq3 == "Yes"] <- NA
+    # only read write if over fifteen years
+    dis_output$read_write[dis_output$age_years < 15] <- NA
+    dis_output$education_level[dis_output$age_years < 15 |
+                                 dis_output$read_write != "yes"] <- NA
+
+    # measles vaccination only for those between 5 and 60 months
+    dis_output$measles_vaccination[dis_output$age_months <=5 |
+                                     dis_output$age_months_calc >= 61] <- NA
+
+    # vaccination card only if answered yes to measles vaccination
+    dis_output$vaccination_card[dis_output$measles_vaccination != "yes"] <- NA
+
+    # fix pregnancy
+    # define rows that cant be pregnant
+    pregnancy_not_possible <- with(
+      dis_output,
+      sex == "male" | age_years >= 50 | age_years < 15
+    )
+
+    # set those who cant be pregnant to NA for pregnant variable
+    dis_output[["pregnant"]][pregnancy_not_possible] <- NA
+
+    # set pregnancy related cause of death for those who arent pregnant to be unknown
+    no_pregnancy <- dis_output$cause %in% c("during_pregnancy",
+                                            "during_after_delivery") &
+      pregnancy_not_possible
+
+
+    no_pregnancy[is.na(no_pregnancy)] <- FALSE # replace NAs
+
+    # pregnancy related cause of death n.a. for too old/young and for males
+    dis_output[["cause"]][no_pregnancy] <- "dont_know"
+
+    # malaria treatment only among pregnant people
+    dis_output$malaria_treatment[dis_output$pregnant != "yes"] <- NA
 
     # assume person is not born during study when age > 1
-    OVER_ONE <- dis_output$q155_q5_age_year > 1
-    dis_output$q87_q32_born[OVER_ONE] <- factor("No", levels(dis_output$q87_q32_born))
-    dis_output$q88_q33_born_date[OVER_ONE] <- NA
+    OVER_ONE <- dis_output$age_years > 1
+    dis_output$born[OVER_ONE] <- factor("No", levels(dis_output$born))
+    dis_output$remember_dob[OVER_ONE] <- NA
+    dis_output$birthday_date[OVER_ONE] <- NA
 
-    # pregnancy set to NA for males
-    dis_output$q152_q7_pregnant[dis_output$q4_q6_sex == "Male"] <- NA
+
 
     # resample death yes/no to have lower death rates
-    dis_output$q136_q34_died <- sample(c("Yes", "No"),
+    dis_output$died <- sample(c("yes", "no"),
       size = nrow(dis_output),
       prob = c(0.05, 0.95),
       replace = TRUE
     )
 
-    # set columns that are relate to "death" as NA if "q136_q34_died" is "No"
-    died <- dis_output$q136_q34_died == "No"
+    # set columns that are relate to "death" as NA if "died" is "no"
+    died <- dis_output$died == "no"
     dcols <- c(
-      "q137_q35_died_date",
-      "q138_q36_died_cause",
-      "q141_q37_died_violence",
-      "q143_q41_died_place",
-      "q145_q43_died_country"
+      "remember_death",
+      "death_date",
+      "cause"
     )
     for (d in dcols) {
       dis_output[[d]][died] <- NA
     }
 
-    # pregnancy related cause of death n.a. for too old/young and for males
-    pregnancy_not_possible <- with(
-      dis_output,
-      q4_q6_sex == "Male" | q155_q5_age_year >= 50 | q155_q5_age_year < 12
-    )
 
-    no_pregnancy <- dis_output$q138_q36_died_cause == "Pregnancy-related" & pregnancy_not_possible
-
-    no_pregnancy[is.na(no_pregnancy)] <- FALSE # replace NAs
-    dis_output[["q138_q36_died_cause"]][no_pregnancy] <- "Unknown"
 
     # fix arrival/leave dates
-    dis_output$q41_q25_hh_arrive_date <- with(
+
+    # cascaded of yeses dates and causes
+    # and if did not arrive during study period or dont know date then NA
+
+    dis_output$remember_arrival[dis_output$arrived != "yes"] <- NA
+
+    dis_output$arrived_date[dis_output$arrived != "yes" |
+                              dis_output$remember_arrival != "yes"] <- NA
+
+    dis_output$remember_departure[dis_output$left != "yes"] <- NA
+
+    dis_output$left_date[dis_output$left != "yes" |
+                           dis_output$remember_departure != "yes"] <- NA
+
+    dis_output$remember_dob[dis_output$born != "yes"] <- NA
+
+    dis_output$birthday_date[dis_output$born != "yes" |
+                               dis_output$remember_dob != "yes"] <- NA
+
+    dis_output$remember_death[dis_output$died != "yes"] <- NA
+
+    dis_output$death_date[dis_output$died != "yes" |
+                            dis_output$remember_death != "yes"] <- NA
+
+    dis_output$cause[dis_output$died != "yes"] <- NA
+
+
+    # set arrival date to the earliest date from those given
+    dis_output$arrived_date <- with(
       dis_output,
       pmin(
-        q41_q25_hh_arrive_date,
-        q45_q29_hh_leave_date,
-        q88_q33_born_date,
+        arrived_date,
+        left_date,
+        birthday_date,
         na.rm = TRUE
       )
     )
 
     # leave date
     dis_output <- enforce_timing(dis_output,
-      first  = "q41_q25_hh_arrive_date",
-      second = "q45_q29_hh_leave_date",
+      first  = "arrived_date",
+      second = "left_date",
       5:30
     )
     dis_output <- enforce_timing(dis_output,
-      first  = "q88_q33_born_date",
-      second = "q45_q29_hh_leave_date",
+      first  = "birthday_date",
+      second = "left_date",
       5:30,
       inclusive = TRUE
     )
 
     # died date
     dis_output <- enforce_timing(dis_output,
-      first  = "q41_q25_hh_arrive_date",
-      second = "q137_q35_died_date",
+      first  = "arrived_date",
+      second = "death_date",
       5:30
     )
     dis_output <- enforce_timing(dis_output,
-      first  = "q88_q33_born_date",
-      second = "q137_q35_died_date",
+      first  = "birthday_date",
+      second = "death_date",
       5:30,
       inclusive = TRUE
     )
 
-    dis_output$q45_q29_hh_leave_date[!is.na(dis_output$q137_q35_died_date)] <- NA
+    # fix cascade of violence
+    dis_output[which(dis_output$violent_episode != "yes"),
+                                       c("violent_episodes_number",
+                                         "violence_nature",
+                                         "violence_nature/beaten",
+                                         "violence_nature/sexual",
+                                         "violence_nature/shot",
+                                         "violence_nature/detained_kidnapped",
+                                         "violence_nature/other",
+                                         "violence_nature/no_response")] <- NA
 
-    # more plausibility checks of generated data might be implemented in the future
+    dis_output[which(dis_output$violence_nature == ""),
+               "violence_nature/no_response"] <- "1"
+    dis_output$violence_nature[dis_output$violence_nature == ""] <- "no_response"
+
   }
 
   if (dictionary == "Nutrition") {

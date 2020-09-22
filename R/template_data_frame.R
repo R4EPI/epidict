@@ -1,9 +1,12 @@
 template_data_frame_categories <- function(dat_dict, numcases, varnames, survey = FALSE) {
+
+  # only keep the variable name and corresponding options column from dictionary
   dat_output <- dat_dict[, c(varnames, "options"), drop = FALSE]
 
   # create a NEW empty dataframe with the names from the data dictionary
   dis_output <- data.frame(matrix(ncol = nrow(dat_output), nrow = numcases))
 
+  # set names of new dataframe according to dictionary names column
   colnames(dis_output) <- dat_dict[[varnames]]
 
 
@@ -25,7 +28,7 @@ template_data_frame_categories <- function(dat_dict, numcases, varnames, survey 
     dis_output[[i]] <- sample(vals, numcases, replace = TRUE)
   }
 
-  multivars <- dat_dict[[varnames]][dat_dict$data_element_valuetype == "MULTI"]
+  multivars <- dat_dict[[varnames]][which(dat_dict$value_type == "select_multiple")]
 
   if (length(multivars) > 0) {
     sample_multivars <- lapply(multivars, sample_cats,
@@ -53,14 +56,30 @@ sample_cats <- function(category, numcases, df, varnames) {
   dat <- df[df[[varnames]] == category, , drop = FALSE]
 
   lvls <- dat$option_name
-  # define suffixes for column names, e.g. 000, 001, 002, ...
-  suffixes <- formatC((seq_along(lvls)) - 1, width = 3, format = "d", flag = "0")
+
+  # define suffixes for column names
+  suffixes <- sprintf("%s/%s", category, lvls)
 
   # create columns with randomized lvls with randomized probability
   extra_cols <- vapply(lvls, sample_single,
     FUN.VALUE = character(numcases),
     size = numcases, prob = sample(5:15, 1) / 100
   )
-  colnames(extra_cols) <- paste0(category, "_", suffixes)
+
+  # fix the original variable so it is a combination of others
+  og_fix <- apply(extra_cols, 1, function(x) paste(x[!is.na(x)], collapse = " "))
+
+  # change from character to binary
+  extra_cols[!is.na(extra_cols)] <- 1
+  extra_cols[is.na(extra_cols)]  <- 0
+
+  # add in original column with combination
+  extra_cols <- cbind(og_fix, extra_cols)
+
+  # correct the names
+  colnames(extra_cols) <- c(category, suffixes)
+
+  ## change to a dataframe
   as.data.frame(extra_cols, stringsAsFactors = FALSE)
+
 }

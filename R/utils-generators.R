@@ -14,7 +14,8 @@ sample_age <- function(x, n) {
 #'
 #' @return a data frame with ages in the dis_output
 #' @noRd
-gen_ages <- function(dis_output, numcases, set_age_na = TRUE) {
+gen_ages <- function(dis_output, numcases, set_age_na = TRUE,
+                     year_cutoff = 2, month_cutoff = 2) {
 
   # GENERATE AGES --------------------------------------------------------------
 
@@ -32,7 +33,7 @@ gen_ages <- function(dis_output, numcases, set_age_na = TRUE) {
   if (has_value(age_year_var)) {
     # sample 0:120
     years <- sample_age(120L, numcases)
-    U2_YEARS <- which(years <= 2)
+    U2_YEARS <- which(years <= year_cutoff)
     if (set_age_na) {
       years[U2_YEARS] <- NA_integer_
     }
@@ -47,10 +48,10 @@ gen_ages <- function(dis_output, numcases, set_age_na = TRUE) {
 
   if (has_value(age_month_var) && length(U2_YEARS) > 0 && sum(U2_YEARS) > 0) {
     # age_month
-    months <- sample_age(24L, length(U2_YEARS))
+    months <- sample_age(year_cutoff + 1 * 12, length(U2_YEARS))
     damv <- dis_output[[age_month_var]]
     damv[U2_YEARS] <- months
-    U2_MONTHS <- which(damv <= 2)
+    U2_MONTHS <- which(damv <= month_cutoff)
     if (set_age_na) {
       damv[U2_MONTHS] <- NA_integer_
     }
@@ -65,7 +66,8 @@ gen_ages <- function(dis_output, numcases, set_age_na = TRUE) {
 
   if (has_value(age_day_var) && length(U2_MONTHS) > 0 && sum(U2_MONTHS) > 0) {
     # age_days
-    dis_output[[age_day_var]][U2_MONTHS] <- sample_age(60L, length(U2_MONTHS))
+    dis_output[[age_day_var]][U2_MONTHS] <- sample_age(month_cutoff + 1 * 20,
+                                                       length(U2_MONTHS))
   } else {
     if (has_value(age_day_var)) {
       dis_output[[age_day_var]] <- NA_integer_
@@ -127,8 +129,8 @@ gen_hh_clusters <- function(dis_output, n, cluster = "cluster_number", household
   }
 
   dis_output <- gen_eligible_interviewed(
-    dis_output, 
-    household = household, 
+    dis_output,
+    household = household,
     cluster = cluster
   )
 
