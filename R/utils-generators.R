@@ -103,21 +103,15 @@ gen_freetext <- function(n) {
 #' @param dis_output a data frame
 #' @param cluster the name of the cluster columns
 #' @param household the name of the household column
+#' @param eligible the name of the column counting the number to be interviewed
 #'
 #' @return a data frame with household and clusters
 #' @noRd
-gen_hh_clusters <- function(dis_output, n, cluster = "cluster_number", household = "household_id") {
-
-  # sample villages
-  dis_output$village <- gen_village(n)
-  # make two health districts
-  dis_output$health_district <- ifelse(grepl("[AB]", dis_output$village),
-    yes = "District A",
-    no = "District B"
-  )
+gen_hh_clusters <- function(dis_output, n, cluster = "cluster_number",
+                            household = "household_number", eligible = "member_number") {
 
   # cluster ID (based on village)
-  dis_output[[cluster]] <- as.numeric(factor(dis_output$village))
+  dis_output[[cluster]] <- as.numeric(factor(dis_output$village_name))
 
 
   # household ID (numbering starts again for each cluster)
@@ -128,41 +122,44 @@ gen_hh_clusters <- function(dis_output, n, cluster = "cluster_number", household
     dis_output[[household]][dis_output[[cluster]] == i] <- hhid
   }
 
-  dis_output <- gen_eligible_interviewed(
+  dis_output[[eligible]] <- gen_eligible_interviewed(
     dis_output,
     household = household,
-    cluster = cluster
+    cluster = cluster,
+    eligible = eligible
   )
 
   return(dis_output)
 }
 
-#' generate eligible and interviewed columns in a data frame
+#' generate appropriate "eligible" count columns in a data frame
 #'
 #' @param dis_output a data frame containing household and cluster
 #' @param household [character] the column specifying household
 #' @param cluster [character] the column specifying cluster
 #'
-#' @return dis_output with two additional columns:
-#'   - eligible: the number of individuals within each household and cluster
-#'   - interviewed: 75% of eligible
+#' @return vector of numbers with appropriate length for eligible column in dis_output
+#'   - eligible: the number of individuals within each household increased by 25%
 #'
 #' @noRd
-gen_eligible_interviewed <- function(dis_output, household = "q14_hh_no", cluster = "q77_what_is_the_cluster_number") {
+gen_eligible_interviewed <- function(dis_output, household = "household_number",
+                                     cluster = "cluster_number",
+                                     eligible = "member_number") {
 
-  dis_output[["eligible"]] <- NULL
-  dis_output[["interviewed"]] <- NULL
-
+  # make variables tidy-accessible
   hh <- rlang::sym(household)
   cl <- rlang::sym(cluster)
+  el <- rlang::sym(eligible)
 
   # get counts of people by household and cluster
   hh_count <- dplyr::count(dis_output, !!hh, !!cl, .drop = FALSE, name = "eligible")
 
-  # make interviewed 3/4s of those eligible
-  hh_count[["interviewed"]] <- round(hh_count[["eligible"]] * 0.75, digits = 0L)
+  # make the number of eligible 25% more than count of actually interviewed
+  hh_count$eligible <- round(hh_count$eligible * 1.25, digits = 0L)
 
-  # merge with dis_output and return
-  dplyr::left_join(dis_output, hh_count, by = c(household, cluster))
+  # merge with dis_output to get the correct number
+  intermed <- dplyr::left_join(dis_output, hh_count, by = c(household, cluster))
 
+  # return just the counts
+  intermed$eligible
 }
