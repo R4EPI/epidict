@@ -163,6 +163,10 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     #                          dis_output$household_number, "_",
     #                          dis_output$date)
 
+    # dis_output$unique_houses <- paste0(dis_output$cluster_number, "_",
+    #                                    dis_output$household_number)
+
+
     # only read write if over fifteen years
     dis_output$read_write[dis_output$age_years < 15] <- NA
     dis_output$education_level[dis_output$age_years < 15 |
@@ -371,6 +375,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # dis_output$uid <- paste0(dis_output$cluster_number, "_",
     #                          dis_output$household_number, "_",
     #                          dis_output$date)
+
 
 
     # add in age if routine vaccinated
