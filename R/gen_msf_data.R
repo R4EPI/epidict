@@ -158,10 +158,10 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # no_consent_reason shoud be NA if consent is yes
     dis_output$no_consent_reason[dis_output$consent == "yes"] <- NA
 
-    # use household num as a standin for uid for now
-    dis_output$uid <- paste0(dis_output$cluster_number, "_",
-                             dis_output$household_number, "_",
-                             dis_output$date)
+    # use household num as a standin for uid for now (need to create uid in template)
+    # dis_output$uid <- paste0(dis_output$cluster_number, "_",
+    #                          dis_output$household_number, "_",
+    #                          dis_output$date)
 
     # only read write if over fifteen years
     dis_output$read_write[dis_output$age_years < 15] <- NA
@@ -367,10 +367,10 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output$no_consent_reason[dis_output$consent == "yes"] <- NA
 
 
-    # use household num as a standin for uid for now
-    dis_output$uid <- paste0(dis_output$cluster_number, "_",
-                             dis_output$household_number, "_",
-                             dis_output$date)
+    # use household num as a standin for uid for now (need to create uid in template)
+    # dis_output$uid <- paste0(dis_output$cluster_number, "_",
+    #                          dis_output$household_number, "_",
+    #                          dis_output$date)
 
 
     # add in age if routine vaccinated
