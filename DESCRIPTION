@@ -30,7 +30,7 @@ URL: https://r4epis.netlify.com, https://github.com/R4EPI/epidict, https://r4epi
 License: GPL-3
 Imports: 
     tibble,
-    readxl,
+    rio,
     stats,
     utils,
     dplyr,

@@ -1,4 +1,7 @@
-# function to load MSF data dictionary for mortality surveys
+# Function to load MSF data dictionary for surveys based on Kobo collect.
+# The default settings read in a generic dictionary based on the MSF OCA ERB
+# pre-approved template. However you can also specify your own dictionary if this
+# differs substantially, by setting template = FALSE.
 
 #' @importFrom tibble as_tibble
 #' @importFrom tidyr fill spread
@@ -7,21 +10,36 @@
 #' @export
 #' @rdname msf_dict
 msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
-                            tibble = TRUE, compact = TRUE, long = TRUE) {
+                            tibble = TRUE, compact = TRUE, long = TRUE,
+                            template = TRUE) {
 
-  disease <- get_dictionary(disease)$survey
+  # if reading in the generic template
+  if (template) {
 
-  if (length(disease) == 0) {
-    stop("disease must be one of 'Mortality', 'Nutrition', 'Vaccination'", call. = FALSE)
+    disease <- get_dictionary(disease)$survey
+
+    if (length(disease) == 0) {
+      stop("disease must be one of 'Mortality', 'Nutrition', 'Vaccination'", call. = FALSE)
+    }
+    # get excel file path (need to specify the file name)
+    path <- system.file("extdata", name, package = "epidict")
+
+    # read in data set - pasting the disease name for sheet
+    dat_dict <- rio::import(path, which = disease)
+
+    # read in categorical variable content options
+    dat_opts <- rio::import(path, which = sprintf("%s_options", disease))
+
+  } else {
+    # otherwise if reading in own dictionary
+
+    # read in data set
+    dat_dict <- rio::import(name, which = "survey")
+
+    # read in categorical variable content options
+    dat_opts <- rio::import(name, which = "choices")
+
   }
-  # get excel file path (need to specify the file name)
-  path <- system.file("extdata", name, package = "epidict")
-
-  # read in data set - pasting the disease name for sheet
-  dat_dict <- readxl::read_xlsx(path, sheet = disease)
-
-  # read in categorical variable content options
-  dat_opts <- readxl::read_xlsx(path, sheet = sprintf("%s_options", disease))
 
   # clean col names
   colnames(dat_dict) <- tidy_labels(colnames(dat_dict))
