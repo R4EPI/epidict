@@ -163,3 +163,38 @@ gen_eligible_interviewed <- function(dis_output, household = "household_number",
   # return just the counts
   intermed$eligible
 }
+
+
+#' generate appropriate "eligible" count columns in a data frame
+#'
+#' @param dis_output a data frame containing household and cluster
+#' @param household [character] the column specifying household
+#' @param cluster [character] the column specifying cluster
+#' @param parent_index [character] name of a new column to be created with unique identifiers at the household level
+#' @param child_index [character] name of a new column to be created with unique identifiers of individuals
+#' @param uid_name [character] name of a new column to be created with unique identifiers
+#'
+#' @return a new variable in your dataframe which successively numbers individuals
+#' in unique households to create an identifier
+#'
+#' @noRd
+
+gen_survey_uid <- function(dis_output,
+                           cluster = "cluster_number",
+                           household = "household_number",
+                           parent_index = "index",
+                           child_index = "index_y",
+                           uid_name = "uid") {
+
+  dis_output <- dplyr::group_by(dis_output,
+                          .data[[cluster]],
+                          .data[[household]])
+
+  dis_output <- dplyr::mutate(dis_output,
+                       {{parent_index}} := cur_group_id(),
+                       {{child_index}} := rank(.data[[household]], ties = "first"),
+                       {{uid_name}} := sprintf("%s_%s", .data[[parent_index]], .data[[child_index]]))
+
+  ungroup(dis_output)
+
+}

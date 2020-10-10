@@ -6,7 +6,7 @@
 #'
 #' @param varnames Specify name of column that contains varnames. Currently
 #'   default set to "Item".  (this can probably be deleted once dictionaries
-#'   standardise) If `dictionary` is "Mortality", `varnames` needs to be "column_name"`.
+#'   standardise) If `dictionary` is a survey, `varnames` needs to be "name"`.
 #'
 #' @param numcases For fake data, specify the number of cases you want (default is 300
 #'
@@ -158,13 +158,11 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # no_consent_reason shoud be NA if consent is yes
     dis_output$no_consent_reason[dis_output$consent == "yes"] <- NA
 
-    # use household num as a standin for uid for now (need to create uid in template)
-    # dis_output$uid <- paste0(dis_output$cluster_number, "_",
-    #                          dis_output$household_number, "_",
-    #                          dis_output$date)
-
-    # dis_output$unique_houses <- paste0(dis_output$cluster_number, "_",
-    #                                    dis_output$household_number)
+    # create index numbers and unique IDs
+    # index is the unique household (the parent_index for kobo outputs)
+    # index_y is the unique individual within households (index for kobo outputs)
+    # uid combines these to produce a unique identifier for each individual
+    dis_output <- gen_survey_uid(dis_output)
 
 
     # only read write if over fifteen years
@@ -371,11 +369,11 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output$no_consent_reason[dis_output$consent == "yes"] <- NA
 
 
-    # use household num as a standin for uid for now (need to create uid in template)
-    # dis_output$uid <- paste0(dis_output$cluster_number, "_",
-    #                          dis_output$household_number, "_",
-    #                          dis_output$date)
-
+    # create index numbers and unique IDs
+    # index is the unique household (the parent_index for kobo outputs)
+    # index_y is the unique individual within households (index for kobo outputs)
+    # uid combines these to produce a unique identifier for each individual
+    dis_output <- gen_survey_uid(dis_output)
 
 
     # add in age if routine vaccinated
