@@ -421,6 +421,8 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
     # add in age for children with measles
     meas_diag <- dis_output$diagnosis_disease == "yes"
+    meas_diag[is.na(meas_diag)] <- FALSE
+
     # sample months
     dis_output$age_diagnosis[meas_diag] <- sample_age(11L, sum(meas_diag, na.rm = TRUE))
     # if age months not empty just use that (otherwise will have some in future)
