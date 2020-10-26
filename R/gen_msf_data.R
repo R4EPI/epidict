@@ -134,12 +134,9 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output$age_months <- dis_output$age_months_calc
 
     # calculated months based of year
-    dis_output$age_months_calc[
-      which(dis_output$age_years < 6 &
-              dis_output$age_years > 0)] <- dis_output$age_years[
-                which(
-                  dis_output$age_years < 6 &
-                    dis_output$age_years > 0)]  * 12
+    do_age_years <- dis_output$age_years
+    under_six_years <- do_age_years < 6 & do_age_years > 0
+    dis_output$age_months_calc[under_six_years] <- do_age_years[under_six_years] * 12
 
     # create household numbers within cluster numbers
     dis_output <- gen_hh_clusters(dis_output,
@@ -150,9 +147,14 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     )
 
     # if consent is no then make everything else NA
-    dis_output[dis_output$consent == "no",
-               c(grep("no_consent_other",
-                      names(dis_output)):length(names(dis_output)))] <- NA
+    # NOTE: ZNK 2020-10-26: This is not very clear, but it seems like there is
+    #  a column that _contains_ the value "no_consent_other", but may have extra
+    #  decoration associated, which is why you are using grep, if this is not
+    #  the case, you should just use which and equality:
+    consent_columns <- which(names(dis_output) == "no_consent_other")
+    consent_columns <- seq(consent_columns, ncol(dis_output))
+    no_consent <- dis_output$consent == "no"
+    dis_output[no_consent, consent_columns] <- NA
 
     # no_consent_reason shoud be NA if consent is yes
     dis_output$no_consent_reason[dis_output$consent == "yes"] <- NA
@@ -359,9 +361,17 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output$age_months[zero_yrs] <- sample_age(11L, sum(zero_yrs, na.rm = TRUE))
 
     # if consent is no then make everything else NA
-    dis_output[dis_output$consent == "no",
-               c(grep("no_consent_other",
-                      names(dis_output)):length(names(dis_output)))] <- NA
+    # dis_output[dis_output$consent == "no",
+    #            c(grep("no_consent_other",
+    #                   names(dis_output)):length(names(dis_output)))] <- NA
+    # NOTE: ZNK 2020-10-26: This is not very clear, but it seems like there is
+    #  a column that _contains_ the value "no_consent_other", but may have extra
+    #  decoration associated, which is why you are using grep, if this is not
+    #  the case, you should just use which and equality:
+    consent_columns <- which(names(dis_output) == "no_consent_other")
+    consent_columns <- seq(consent_columns, ncol(dis_output))
+    no_consent <- dis_output$consent == "no"
+    dis_output[no_consent, consent_columns] <- NA
 
 
     # no_consent_reason should be NA if consent is yes
