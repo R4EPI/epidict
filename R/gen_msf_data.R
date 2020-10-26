@@ -363,7 +363,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # if consent is no then make everything else NA
     # dis_output[dis_output$consent == "no",
     #            c(grep("no_consent_other",
-    #                   names(dis_output)):length(names(dis_output)))] <- NA
+    #                   ntames(dis_output)):length(names(dis_output)))] <- NA
     # NOTE: ZNK 2020-10-26: This is not very clear, but it seems like there is
     #  a column that _contains_ the value "no_consent_other", but may have extra
     #  decoration associated, which is why you are using grep, if this is not
