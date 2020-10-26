@@ -61,13 +61,12 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
   # GENERATE AGES --------------------------------------------------------------
 
   # think this is only relevant for outbreaks!
-  dis_output <- gen_ages(dis_output, numcases,
-                         set_age_na = ifelse(is_survey,
-                                             FALSE,
-                                             TRUE),
-                         year_cutoff = ifelse(is_survey,
-                                              0,
-                                              2))
+  dis_output <- gen_ages(
+    dis_output, 
+    numcases,
+    set_age_na = !is_survey,
+    year_cutoff = if (is_survey) 0 else 2
+  )
 
 
   # DISEASE-SPECIFIC GENERATORS ------------------------------------------------
