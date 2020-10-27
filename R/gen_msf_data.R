@@ -167,13 +167,14 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
 
     # only read write if over fifteen years
-    dis_output$read_write[dis_output$age_years < 15] <- NA
-    dis_output$education_level[dis_output$age_years < 15 |
-                                 dis_output$read_write != "yes"] <- NA
+    dis_under_15 <- dis_output$age_years < 15
+    dis_output$read_write[dis_under_15] <- NA
+    no_read_write <- dis_under_15 | dis_output$read_write != "yes"
+    dis_output$education_level[no_read_write] <- NA
 
     # measles vaccination only for those between 5 and 60 months
-    dis_output$measles_vaccination[dis_output$age_months <=5 |
-                                     dis_output$age_months_calc >= 61] <- NA
+    no_vaccine <- with(dis_output, age_months <= 5 | age_months_calc >= 61)
+    dis_output$measles_vaccination[no_vaccine] <- NA
 
     # vaccination card only if answered yes to measles vaccination
     dis_output$vaccination_card[dis_output$measles_vaccination != "yes"] <- NA
@@ -235,27 +236,32 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # cascaded of yeses dates and causes
     # and if did not arrive during study period or dont know date then NA
 
-    dis_output$remember_arrival[dis_output$arrived != "yes"] <- NA
+    not_arrived <- dis_output$arrived != "yes"
+    not_left     <- dis_output$left != "yes"
+    not_born     <- dis_output$born != "yes"
+    not_died     <- dis_output$died != "yes"
+    
+    dis_output$remember_arrival[not_arrived] <- NA
+    not_remember_arrival <- dis_output$remember_arrival != "yes"
 
-    dis_output$arrived_date[dis_output$arrived != "yes" |
-                              dis_output$remember_arrival != "yes"] <- NA
+    dis_output$arrived_date[not_arrived | not_remember_arrival] <- NA
 
-    dis_output$remember_departure[dis_output$left != "yes"] <- NA
+    dis_output$remember_departure[not_left] <- NA
+    not_remember_departure <- dis_output$remember_departure != "yes"
 
-    dis_output$left_date[dis_output$left != "yes" |
-                           dis_output$remember_departure != "yes"] <- NA
+    dis_output$left_date[not_left | not_remember_departure] <- NA
 
-    dis_output$remember_dob[dis_output$born != "yes"] <- NA
+    dis_output$remember_dob[not_born] <- NA
+    not_remember_dob <- dis_output$dob != "yes"
 
-    dis_output$birthday_date[dis_output$born != "yes" |
-                               dis_output$remember_dob != "yes"] <- NA
+    dis_output$birthday_date[not_born | not_remember_dob] <- NA
 
-    dis_output$remember_death[dis_output$died != "yes"] <- NA
+    dis_output$remember_death[not_died] <- NA
+    not_remember_death <- dis_output$remember_death != "yes"
 
-    dis_output$death_date[dis_output$died != "yes" |
-                            dis_output$remember_death != "yes"] <- NA
+    dis_output$death_date[not_died | not_remember_death] <- NA
 
-    dis_output$cause[dis_output$died != "yes"] <- NA
+    dis_output$cause[not_died] <- NA
 
 
     # set arrival date to the earliest date from those given
@@ -296,15 +302,17 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     )
 
     # fix cascade of violence
-    dis_output[which(dis_output$violent_episode != "yes"),
-                                       c("violent_episodes_number",
-                                         "violence_nature",
-                                         "violence_nature/beaten",
-                                         "violence_nature/sexual",
-                                         "violence_nature/shot",
-                                         "violence_nature/detained_kidnapped",
-                                         "violence_nature/other",
-                                         "violence_nature/no_response")] <- NA
+    vtype <- c(
+      "violent_episodes_number",
+      "violence_nature",
+      "violence_nature/beaten",
+      "violence_nature/sexual",
+      "violence_nature/shot",
+      "violence_nature/detained_kidnapped",
+      "violence_nature/other",
+      "violence_nature/no_response"
+    )
+    dis_output[which(dis_output$violent_episode != "yes"), vtype] <- NA
 
     dis_output[which(dis_output$violence_nature == ""),
                "violence_nature/no_response"] <- "1"
@@ -345,11 +353,12 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
   if (dictionary == "Vaccination") {
 
     # create household numbers within cluster numbers
-    dis_output <- gen_hh_clusters(dis_output,
-                                  n = numcases,
-                                  cluster = "cluster_number",
-                                  household = "household_number",
-                                  eligible = "children_count"
+    dis_output <- gen_hh_clusters(
+      dis_output,
+      n = numcases,
+      cluster = "cluster_number",
+      household = "household_number",
+      eligible = "children_count"
     )
 
 
@@ -384,15 +393,19 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # uid combines these to produce a unique identifier for each individual
     dis_output <- gen_survey_uid(dis_output)
 
+    # NOTE: ZNK 2020-10-26
+    # The vaccination routines here need to be turned into a function. There is
+    # a lot of repetition here that needs to be contained and evaluated properly
 
     # add in age if routine vaccinated
     rout_vaccinated <- dis_output$routine_vacc %in% c("verbal", "card")
+    non_empty_months <- has_value(dis_output$age_months)
+    vaccinated_months <- rout_vaccinated & non_empty_months
     # sample months
     dis_output$age_routine_vacc[rout_vaccinated] <- sample_age(11L, sum(rout_vaccinated, na.rm = TRUE))
     # if age in months not empty just use that (otherwise will have some in future)
-    dis_output$age_routine_vacc[rout_vaccinated &
-                                  has_value(dis_output$age_months)] <- dis_output$age_months[rout_vaccinated &
-                                                                                               has_value(dis_output$age_months)]
+    vac_ages <- dis_output$age_months[vaccinated_months]
+    dis_output$age_routine_vacc[vaccinated_months] <- vac_ages 
     # only fill in place of vaccination if vaccinated
     dis_output$place_routine_vacc[!rout_vaccinated] <- NA
     # only fill in reason no vaccination if not vaccinated
@@ -402,12 +415,12 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
     # add in age if msf vaccinated
     msf_vaccinated <- dis_output$msf_vacc %in% c("verbal", "card")
+    vaccinated_months <- msf_vaccinated & non_empty_months
     # sample months
     dis_output$age_msf_vacc[msf_vaccinated] <- sample_age(11L, sum(msf_vaccinated, na.rm = TRUE))
     # if age in months not empty just use that (otherwise will have some in future)
-    dis_output$age_msf_vacc[msf_vaccinated &
-                                  has_value(dis_output$age_months)] <- dis_output$age_months[msf_vaccinated &
-                                                                                               has_value(dis_output$age_months)]
+    msf_ages <- dis_output$age_months[vaccinated_months]
+    dis_output$age_msf_vacc[vaccinated_months] <- msf_ages
     # only fill in place of vaccination if vaccinated
     dis_output$place_msf_vacc[!msf_vaccinated] <- NA
     # only fill in reason no vaccination if not vaccinated
@@ -416,12 +429,12 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
     # add in age if sia vaccinated
     sia_vaccinated <- dis_output$sia_vacc %in% c("verbal", "card")
+    vaccinated_months <- sia_vaccinated & non_empty_months
     # sample months
     dis_output$age_sia_vacc[sia_vaccinated] <- sample_age(11L, sum(sia_vaccinated, na.rm = TRUE))
     # if age in months not empty just use that (otherwise will have some in future)
-    dis_output$age_sia_vacc[sia_vaccinated &
-                              has_value(dis_output$age_months)] <- dis_output$age_months[sia_vaccinated &
-                                                                                           has_value(dis_output$age_months)]
+    sia_ages <- dis_output$age_months[vaccinated_months]
+    dis_output$age_sia_vacc[vaccinated_months] <- sia_ages
     # only fill in place of vaccination if vaccinated
     dis_output$place_sia_vacc[!sia_vaccinated] <- NA
     # only fill in reason no vaccination if not vaccinated
@@ -431,13 +444,13 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # add in age for children with measles
     meas_diag <- dis_output$diagnosis_disease == "yes"
     meas_diag[is.na(meas_diag)] <- FALSE
+    vaccinated_months <- sia_vaccinated & non_empty_months
 
     # sample months
     dis_output$age_diagnosis[meas_diag] <- sample_age(11L, sum(meas_diag, na.rm = TRUE))
     # if age months not empty just use that (otherwise will have some in future)
-    dis_output$age_diagnosis[meas_diag &
-                               has_value(dis_output$age_months)] <- dis_output$age_months[meas_diag &
-                                                                                            has_value(dis_output$age_months)]
+    meas_ages <- dis_output$age_months[vaccinated_months]
+    dis_output$age_diagnosis[vaccinated_months] <- meas_ages
 
   }
 
