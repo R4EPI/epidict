@@ -48,7 +48,7 @@ gen_ages <- function(dis_output, numcases, set_age_na = TRUE,
 
   if (has_value(age_month_var) && length(U2_YEARS) > 0 && sum(U2_YEARS) > 0) {
     # age_month
-    months <- sample_age(year_cutoff + 1 * 12, length(U2_YEARS))
+    months <- sample_age((year_cutoff + 1) * 12, length(U2_YEARS))
     damv <- dis_output[[age_month_var]]
     damv[U2_YEARS] <- months
     U2_MONTHS <- which(damv <= month_cutoff)
@@ -66,7 +66,7 @@ gen_ages <- function(dis_output, numcases, set_age_na = TRUE,
 
   if (has_value(age_day_var) && length(U2_MONTHS) > 0 && sum(U2_MONTHS) > 0) {
     # age_days
-    dis_output[[age_day_var]][U2_MONTHS] <- sample_age(month_cutoff + 1 * 20,
+    dis_output[[age_day_var]][U2_MONTHS] <- sample_age((month_cutoff + 1) * 20,
                                                        length(U2_MONTHS))
   } else {
     if (has_value(age_day_var)) {
