@@ -1,6 +1,8 @@
 
 outbreaks <- c("MeAsles", "CHolera", "AjS", "meningitis")
-surveys   <- c("MOrtality", "NutritIon", "VaCcination")
+# TODO: Alex, re-add nutrition here when you have successfully updated the
+#       dictionary. Love, Zhian.
+surveys   <- c("MOrtality", "VaCcination") #, "NutritIon")
 
 # Functions for checking age columns
 get_ages <- function(x) x[grepl("age_(year|month|day)", names(x), perl = TRUE)]
@@ -96,7 +98,7 @@ test_that("survey data can be generated", {
 
   for (disease in surveys) {
     dictionary <- msf_dict_survey(disease)
-    data       <- gen_data(disease, varnames = "column_name", numcases = 300)
+    data       <- gen_data(disease, varnames = "name", numcases = 300)
 
     expect_is(data, "tbl_df", label = disease)
     `%NIN%` <- Negate(`%in%`)
