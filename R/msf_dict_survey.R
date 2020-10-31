@@ -1,8 +1,10 @@
 # Function to load MSF data dictionary for surveys based on Kobo collect.
-# The default settings read in a generic dictionary based on the MSF OCA ERB
-# pre-approved template. However you can also specify your own dictionary if this
-# differs substantially, by setting template = FALSE.
+# The default settings 
 
+#' @param template (for survey dictionaries): if `TRUE` read in a generic
+#' dictionary based on the MSF OCA ERB pre-approved template. However you can
+#' also specify your own dictionary if this differs substantially, by setting
+#' `template = FALSE`.
 #' @importFrom tibble as_tibble
 #' @importFrom tidyr fill spread
 #' @importFrom dplyr mutate group_by row_number ungroup
@@ -10,13 +12,13 @@
 #' @export
 #' @rdname msf_dict
 msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
-                            tibble = TRUE, compact = TRUE, long = TRUE,
-                            template = TRUE) {
+  tibble = TRUE, compact = TRUE, long = TRUE,
+  template = TRUE) {
 
   # if reading in the generic template
   if (template) {
 
-    disease <- get_dictionary(disease)$survey
+    disease <- get_dictionary(disease, org = "MSF")$survey
 
     if (length(disease) == 0) {
       stop("disease must be one of 'Mortality', 'Nutrition', 'Vaccination'", call. = FALSE)
@@ -25,19 +27,19 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
     path <- system.file("extdata", name, package = "epidict")
 
     # read in data set - pasting the disease name for sheet
-    dat_dict <- rio::import(path, which = disease)
+    dat_dict <- readxl::read_excel(path, sheet = disease)
 
     # read in categorical variable content options
-    dat_opts <- rio::import(path, which = sprintf("%s_options", disease))
+    dat_opts <- readxl::read_excel(path, sheet = sprintf("%s_options", disease))
 
   } else {
     # otherwise if reading in own dictionary
 
     # read in data set
-    dat_dict <- rio::import(name, which = "survey")
+    dat_dict <- readxl::read_excel(name, sheet = "survey")
 
     # read in categorical variable content options
-    dat_opts <- rio::import(name, which = "choices")
+    dat_opts <- readxl::read_excel(name, sheet = "choices")
 
   }
 
@@ -48,14 +50,16 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
   # clean future var names
   dat_dict$name <- tidy_labels(dat_dict$name)
 
-  # pre-pend "option" to options dataset (otherwise duplicated column names on merge)
+  # prepend "option" to options dataset (otherwise duplicated column names on merge)
   colnames(dat_opts) <- sprintf("option_%s", colnames(dat_opts))
 
   # drop rows with grouping variables for repeats (not necessary for generating data)
-  dat_dict <- dat_dict[!dat_dict$type %in% c("begin_group", "end_group",
-                                             "begin_repeat", "end_repeat"), ]
+  grps <- dat_dict$type %in% c("begin_group", "end_group", "begin_repeat", "end_repeat") 
+  dat_dict <- dat_dict[!grps, , drop = FALSE]
 
-  ## create a value type column (for whether select one or multiple)
+  # create a value type column (for whether select one or multiple)
+  # these are usually in the format "select_one THING" where thing is
+  # the data being selected, but not standard data types (e.g. yn, village, etc)
   dat_dict$value_type <- NA
   dat_dict$value_type[grep("select_one", dat_dict$type)] <- "select_one"
   dat_dict$value_type[grep("select_multiple", dat_dict$type)] <- "select_multiple"
@@ -63,20 +67,20 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
 
   # make the type column useful as as unique ID for options
   dat_dict$type <- gsub(
-    pattern = "select_one |select_multiple ",
+    pattern = "select_one |select_multiple ", # n.b. space significant here
     replacement = "",
     x = dat_dict$type
   )
 
   # create counts for option order
-  dat_opts <- dplyr::group_by(dat_opts, option_list_name)
+  dat_opts <- dplyr::group_by(dat_opts, .data$option_list_name)
   dat_opts <- dplyr::mutate(dat_opts, option_order_in_set = seq(dplyr::n()))
   dat_opts <- dplyr::ungroup(dat_opts)
 
 
   if (long) {
     outtie <- dplyr::left_join(dat_dict, dat_opts,
-                               by = c("type" = "option_list_name")
+      by = c("type" = "option_list_name")
     )
 
     outtie <- if (tibble) tibble::as_tibble(outtie) else outtie

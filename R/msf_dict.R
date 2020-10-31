@@ -72,10 +72,10 @@ msf_dict <- function(disease, name = "MSF-outbreak-dict.xlsx", tibble = TRUE,
   path <- system.file("extdata", name, package = "epidict")
 
   # read in categorical variable content options
-  dat_opts <- rio::import(path, which = "OptionCodes")
+  dat_opts <- readxl::read_excel(path, sheet = "OptionCodes")
 
   # read in data set - pasting the disease name for sheet
-  dat_dict <- rio::import(path, which = disease)
+  dat_dict <- readxl::read_excel(path, sheet = disease)
 
   # clean col names
   colnames(dat_dict) <- tidy_labels(colnames(dat_dict))

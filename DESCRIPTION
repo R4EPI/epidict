@@ -30,7 +30,7 @@ URL: https://r4epis.netlify.com, https://github.com/R4EPI/epidict, https://r4epi
 License: GPL-3
 Imports: 
     tibble,
-    rio,
+    readxl,
     stats,
     utils,
     dplyr,
@@ -46,5 +46,5 @@ Suggests:
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr

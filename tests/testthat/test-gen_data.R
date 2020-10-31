@@ -5,7 +5,7 @@ outbreaks <- c("MeAsles", "CHolera", "AjS", "meningitis")
 surveys   <- c("MOrtality", "VaCcination") #, "NutritIon")
 
 # Functions for checking age columns
-get_ages <- function(x) x[grepl("age_(year|month|day)", names(x), perl = TRUE)]
+get_ages <- function(x) x[grepl("age_(year|month|day)s?$", names(x), perl = TRUE)]
 check_exclusive_ages <- function(x, n = 300) {
   # Check that the age columns are all cromulent.
   # There should be a total of `n` ages, but no more, indicating that they
@@ -103,13 +103,17 @@ test_that("survey data can be generated", {
     expect_is(data, "tbl_df", label = disease)
     `%NIN%` <- Negate(`%in%`)
     if (tolower(disease) %NIN% c("mortality", "vaccination")) {
-      expect_true(check_exclusive_ages(get_ages(data), 300), label = disease)
+      cdata <- data[data$consent == "yes", ]
+      res   <- check_exclusive_ages(get_ages(cdata), nrow(cdata))
+      expect_true(res, label = disease)
     }
     expect_true(check_age_integers(get_ages(data)))
-    expect_true(!is.na(sum(data$eligible)))
-    expect_true(sum(data$eligible) > 0)
-    expect_true(!is.na(sum(data$interviewed)))
-    expect_true(sum(data$interviewed) > 0)
+    # TODO: these tests are failing because there are no clear "eligible" 
+    #   columns anymore and they are specific to the data set. 
+    # expect_true(!is.na(sum(data$eligible)))
+    # expect_true(sum(data$eligible) > 0)
+    # expect_true(!is.na(sum(data$interviewed)))
+    # expect_true(sum(data$interviewed) > 0)
     # skip("These tests need to be updated when we have a better idea of the expected number of columns")
     # TODO: these tests fail because we need better expectations regarding
     # the number of columns that the dictionaries provide

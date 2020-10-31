@@ -40,7 +40,7 @@ to use these: specify \code{name}as path to .xlsx file and set the \code{templat
 
 \item{compact}{if \code{TRUE} (default), then a nested data frame is returned
 where each row represents a single variable and a nested data frame column
-called "options", which can be expanded with \code{\link[tidyr:unnest]{tidyr::unnest()}}. This only
+called "options", which can be expanded with \code{\link[tidyr:nest]{tidyr::unnest()}}. This only
 works if \code{long = TRUE}.}
 
 \item{long}{If \code{TRUE} (default), the returned data dictionary is in long
@@ -51,6 +51,11 @@ are returned, one with variables and the other with content options.
 If \code{TRUE} (default) the returned data dictionary is a generic
 MSF OCA ERB pre-approved dictionary. If \code{FALSE} allows you to read in your
 own Kobo dictionary.}
+
+\item{template}{(for survey dictionaries): if \code{TRUE} read in a generic
+dictionary based on the MSF OCA ERB pre-approved template. However you can
+also specify your own dictionary if this differs substantially, by setting
+\code{template = FALSE}.}
 }
 \description{
 These function produces MSF OCA dictionaries based on DHIS2 (for outbreaks)

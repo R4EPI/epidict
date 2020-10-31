@@ -71,11 +71,11 @@ In addition, there are three MSF survey dictionaries available:
 > You can read more about the survey dictionaries at <https://r4epis.netlify.com/surveys>
 
 These are accessible via `msf_dict_survey()` where the variables are in 
-`column_name` and are often labeled by question number. 
+`name`.
 
 ```{r survey}
 msf_dict_survey("Mortality")
-msf_dict_survey("Nutrition")
+# msf_dict_survey("Nutrition")
 msf_dict_survey("Vaccination")
 ```
 
@@ -87,7 +87,7 @@ describes the variable names, and how many rows are needed in the output.
 
 ```{r gendata}
 gen_data("Measles", varnames = "data_element_shortname", numcases = 100, org = "MSF")
-gen_data("Vaccination", varnames = "column_name", numcases = 100, org = "MSF")
+gen_data("Vaccination", varnames = "name", numcases = 100, org = "MSF")
 ```
 
 ## Cleaning data with the dictionaries

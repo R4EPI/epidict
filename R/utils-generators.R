@@ -175,6 +175,7 @@ gen_eligible_interviewed <- function(dis_output, household = "household_number",
 #' @param uid_name [character] name of a new column to be created with unique identifiers
 #'
 #' @importFrom dplyr group_by mutate cur_group_id ungroup
+#' @importFrom rlang .data :=
 #'
 #' @return a new variable in your dataframe which successively numbers individuals
 #' in unique households to create an identifier
@@ -194,7 +195,7 @@ gen_survey_uid <- function(dis_output,
 
   dis_output <- dplyr::mutate(dis_output,
                        {{parent_index}} := dplyr::cur_group_id(),
-                       {{child_index}} := rank(.data[[household]], ties = "first"),
+                       {{child_index}} := rank(.data[[household]], ties.method = "first"),
                        {{uid_name}} := sprintf("%s_%s", .data[[parent_index]], .data[[child_index]]))
 
   dplyr::ungroup(dis_output)

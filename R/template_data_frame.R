@@ -28,14 +28,20 @@ template_data_frame_categories <- function(dat_dict, numcases, varnames, survey 
     dis_output[[i]] <- sample(vals, numcases, replace = TRUE)
   }
 
-  multivars <- dat_dict[[varnames]][which(dat_dict$value_type == "select_multiple")]
+  if ("data_element_valuetype" %in% names(dat_dict)) {
+    # Old Dharma-based dictionaries
+    predicate <- dat_dict$data_element_valuetype == "MULTI"
+  } else {
+    predicate <- dat_dict$value_type == "select_multiple"
+  }
+  # We use which here to indicate that NA is FALSE.
+  multivars <- dat_dict[[varnames]][which(predicate)]
 
   if (length(multivars) > 0) {
     sample_multivars <- lapply(multivars, sample_cats,
       numcases = numcases,
       df = categories, varnames = varnames
     )
-
     dis_output[, multivars] <- NULL
     dis_output <- dplyr::bind_cols(dis_output, sample_multivars)
   }

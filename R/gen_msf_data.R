@@ -229,8 +229,6 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
       dis_output[[d]][died] <- NA
     }
 
-
-
     # fix arrival/leave dates
 
     # cascaded of yeses dates and causes
@@ -252,7 +250,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output$left_date[not_left | not_remember_departure] <- NA
 
     dis_output$remember_dob[not_born] <- NA
-    not_remember_dob <- dis_output$dob != "yes"
+    not_remember_dob <- dis_output$remember_dob != "yes"
 
     dis_output$birthday_date[not_born | not_remember_dob] <- NA
 
@@ -318,6 +316,8 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                "violence_nature/no_response"] <- "1"
     dis_output$violence_nature[dis_output$violence_nature == ""] <- "no_response"
 
+    # make sure ages are exclusive
+    dis_output$age_years[dis_output$age_years == 0] <- NA_integer_
   }
 
   if (dictionary == "Nutrition") {
@@ -364,10 +364,12 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
     # age in yr (0 to 15) - assuming doing vaccination coverage among those aged less than 15 yrs
     dis_output$age_years <- sample_age(15L, numcases)
+    dis_output$age_months <- NA_integer_
 
     # age in mth (0 to 11)
     zero_yrs <- dis_output$age_years < 1
     dis_output$age_months[zero_yrs] <- sample_age(11L, sum(zero_yrs, na.rm = TRUE))
+    dis_output$age_years[zero_yrs] <- NA_integer_
 
     # if consent is no then make everything else NA
     # dis_output[dis_output$consent == "no",
