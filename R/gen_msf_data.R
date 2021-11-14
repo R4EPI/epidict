@@ -2,11 +2,11 @@
 #'
 #' @param dictionary Specify which dictionary you would like to use.
 #'   Currently supports "Cholera", "Measles", "Meningitis", "AJS",
-#'    "Mortality" and "Vaccination" ("Nutrition" to be added)
+#'    "Mortality", "Vaccination" and "Nutrition"
 #'
-#' @param varnames Specify name of column that contains varnames. Currently
-#'   default set to "Item".  (this can probably be deleted once dictionaries
-#'   standardise) If `dictionary` is a survey, `varnames` needs to be "name".
+#' @param varnames Specify name of column that contains variable names. Currently
+#'   default set to "data_element_shortname". If `dictionary` is a survey,
+#'   `varnames` needs to be "name".
 #'
 #' @param numcases For fake data, specify the number of cases you want (default is 300)
 #'
@@ -18,7 +18,12 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
   # 2) dat_output = formatting of data dictionary to make use for sampling
   # 3) dis_output = dictionary dataset generated from sampling (exported)
 
-  # # drop extra columns (keep varnames and code options)
+  ## drop notes from survey kobo dictionaries (dont want them as variables)
+  if(is_survey) {
+    dat_dict <- dat_dict[dat_dict$type != "note", ]
+  }
+
+  ## drop extra columns (keep varnames and code options)
   dis_output <- template_data_frame_categories(dat_dict, numcases, varnames, survey = is_survey)
 
   # Use data dictionary to define which vars are dates
@@ -60,9 +65,9 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
   # GENERATE AGES --------------------------------------------------------------
 
-  # think this is only relevant for outbreaks!
+  # works for both outbreaks and surveys
   dis_output <- gen_ages(
-    dis_output, 
+    dis_output,
     numcases,
     set_age_na = !is_survey,
     year_cutoff = if (is_survey) 0 else 2
@@ -130,14 +135,6 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
   if (dictionary == "Mortality") {
 
-    # fix age in months variables
-    dis_output$age_months <- dis_output$age_months_calc
-
-    # calculated months based of year
-    do_age_years <- dis_output$age_years
-    under_six_years <- do_age_years < 6 & do_age_years > 0
-    dis_output$age_months_calc[under_six_years] <- do_age_years[under_six_years] * 12
-
     # create household numbers within cluster numbers
     dis_output <- gen_hh_clusters(dis_output,
       n = numcases,
@@ -147,10 +144,6 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     )
 
     # if consent is no then make everything else NA
-    # NOTE: ZNK 2020-10-26: This is not very clear, but it seems like there is
-    #  a column that _contains_ the value "no_consent_other", but may have extra
-    #  decoration associated, which is why you are using grep, if this is not
-    #  the case, you should just use which and equality:
     consent_columns <- which(names(dis_output) == "no_consent_other")
     consent_columns <- seq(consent_columns, ncol(dis_output))
     no_consent <- dis_output$consent == "no"
@@ -238,7 +231,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     not_left     <- dis_output$left != "yes"
     not_born     <- dis_output$born != "yes"
     not_died     <- dis_output$died != "yes"
-    
+
     dis_output$remember_arrival[not_arrived] <- NA
     not_remember_arrival <- dis_output$remember_arrival != "yes"
 
@@ -407,7 +400,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output$age_routine_vacc[rout_vaccinated] <- sample_age(11L, sum(rout_vaccinated, na.rm = TRUE))
     # if age in months not empty just use that (otherwise will have some in future)
     vac_ages <- dis_output$age_months[vaccinated_months]
-    dis_output$age_routine_vacc[vaccinated_months] <- vac_ages 
+    dis_output$age_routine_vacc[vaccinated_months] <- vac_ages
     # only fill in place of vaccination if vaccinated
     dis_output$place_routine_vacc[!rout_vaccinated] <- NA
     # only fill in reason no vaccination if not vaccinated
