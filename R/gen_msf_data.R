@@ -260,6 +260,40 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                                 is.na(dis_output$care_fever)] <- NA
 
 
+    # baseline malaria
+
+    # only among children below 5 yrs
+    dis_output[dis_output$age_years >= 5 |
+                 is.na(dis_output$age_years),
+               c("thick_smear",
+                 "thin_smear",
+                 "rdt",
+                 "oedema_mal")] <- NA
+
+    # select children under five
+    UNDER_FIVE <- which(dis_output$age_years < 5)
+
+    # temperature in celsius
+    dis_output$axiliary_temp[UNDER_FIVE] <- gen_eral(36.5:39.5,
+                                                     length(UNDER_FIVE))
+
+    # clinical staging of spleen
+    dis_output$spleen[UNDER_FIVE] <- gen_eral(0:4,
+                                              length(UNDER_FIVE))
+
+    # anthropometric measurements for malaria module
+    dis_output <- gen_anthro(dis_output,
+                             weight_var = "weight_mal",
+                             height_var = "height_mal",
+                             muac_var   = "muac_mal",
+                             age_var    = "age_years")
+
+    # number of previous malaria episodes
+    dis_output$malaria_episodes[UNDER_FIVE] <- gen_eral(0:9,
+                                                        length(UNDER_FIVE))
+
+
+
 
 
     # assume person is not born during study when age > 1
