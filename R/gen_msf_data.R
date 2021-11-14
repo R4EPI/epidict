@@ -140,7 +140,17 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
       n = numcases,
       cluster = "cluster_number",
       household = "household_number",
-      eligible = "member_number"
+      eligible = "member_number",
+      inc_building = TRUE,
+      building = "households_building",
+      select_household = "random_hh"
+    )
+
+    # resample consent to have a 10% non-response rate
+    dis_output$died <- sample(c("yes", "no"),
+                              size = nrow(dis_output),
+                              prob = c(0.1, 0.9),
+                              replace = TRUE
     )
 
     # if consent is no then make everything else NA
@@ -149,7 +159,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     no_consent <- dis_output$consent == "no"
     dis_output[no_consent, consent_columns] <- NA
 
-    # no_consent_reason shoud be NA if consent is yes
+    # no_consent_reason should be NA if consent is yes
     dis_output$no_consent_reason[dis_output$consent == "yes"] <- NA
 
     # create index numbers and unique IDs
@@ -159,6 +169,19 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output <- gen_survey_uid(dis_output)
 
 
+    # number of people ill in household
+    dis_output <- gen_ill_hh(dis_output)
+
+    # anthropometric measurements for nutrition module
+    dis_output <- gen_anthro(dis_output,
+                             weight_var = "weight",
+                             height_var = "height",
+                             muac_var   = "muac",
+                             age_var    = "age_years")
+    # make oedema na for those over 5
+    dis_output$oedema[dis_output$age_years >= 5] <- NA
+
+
     # only read write if over fifteen years
     dis_under_15 <- dis_output$age_years < 15
     dis_output$read_write[dis_under_15] <- NA
@@ -166,11 +189,13 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output$education_level[no_read_write] <- NA
 
     # measles vaccination only for those between 5 and 60 months
-    no_vaccine <- with(dis_output, age_months <= 5 | age_months_calc >= 61)
+    no_vaccine <- with(dis_output, age_months <= 5 | age_months >= 61 |
+                         age_years >= 5)
     dis_output$measles_vaccination[no_vaccine] <- NA
 
     # vaccination card only if answered yes to measles vaccination
-    dis_output$vaccination_card[dis_output$measles_vaccination != "yes"] <- NA
+    dis_output$vaccination_card[dis_output$measles_vaccination != "yes" |
+                                  is.na(dis_output$measles_vaccination)] <- NA
 
     # fix pregnancy
     # define rows that cant be pregnant
@@ -184,7 +209,8 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
     # set pregnancy related cause of death for those who arent pregnant to be unknown
     no_pregnancy <- dis_output$cause %in% c("during_pregnancy",
-                                            "during_after_delivery") &
+                                            "during_delivery",
+                                            "post_partum") &
       pregnancy_not_possible
 
 
@@ -193,8 +219,48 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # pregnancy related cause of death n.a. for too old/young and for males
     dis_output[["cause"]][no_pregnancy] <- "dont_know"
 
+
+    # malaria in pregnancies
+
     # malaria treatment only among pregnant people
-    dis_output$malaria_treatment[dis_output$pregnant != "yes"] <- NA
+    dis_output$malaria_treatment_preg[dis_output$pregnant != "yes" |
+                                   is.na(dis_output$pregnant)] <- NA
+
+    # antenatal care bed net (among those with appropriate malaria doses)
+    dis_output$anc_bednet[dis_output$pregnant != "yes" |
+                            is.na(dis_output$pregnant) |
+                            !dis_output$malaria_treatment_preg %in%
+                              c("three_doses", "less_three_doses")] <- NA
+
+    # prevention of malaria in infants
+    dis_output$malaria_treatment_infant[dis_output$age_years >= 1] <- NA
+
+    # health seeking behaviour in children being sick with malaria
+
+    # only among children below 5 yrs
+    dis_output[dis_output$age_years >= 5,
+               c("fever_past_weeks",
+                 "fever_now",
+                 "care_fever")] <- NA
+
+    # places of health care among those who sought it (care_fever == "yes")
+    dis_output[dis_output$care_fever != "yes" |
+                 is.na(dis_output$care_fever),
+               c("place_healthcare",
+                 "herbal_medicines",
+                 "malaria_test",
+                 "anti_malarials")] <- NA
+
+    # antimalarials among those who received
+    dis_output$anti_malarials_listed[dis_output$anti_malarials != "yes" |
+                                       is.na(dis_output$anti_malarials)] <- NA
+
+    # reason no healthcare
+    dis_output$reason_no_care[!dis_output$care_fever %in% c("no", "dont_know") |
+                                is.na(dis_output$care_fever)] <- NA
+
+
+
 
     # assume person is not born during study when age > 1
     OVER_ONE <- dis_output$age_years > 1
