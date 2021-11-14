@@ -104,11 +104,24 @@ gen_freetext <- function(n) {
 #' @param cluster the name of the cluster columns
 #' @param household the name of the household column
 #' @param eligible the name of the column counting the number to be interviewed
+#' @param inc_building whether to include variables for buildings with multiple
+#' households (i.e. count num hh and select a random one) - default is TRUE
+#' @param building the name of the column counting the number of households in a
+#' building (only used if inc_building == TRUE)
+#' @param select_household = the name of the column selecting a random household
+#' in a building (only used if inc_building == TRUE)
 #'
 #' @return a data frame with household and clusters
 #' @noRd
-gen_hh_clusters <- function(dis_output, n, cluster = "cluster_number",
-                            household = "household_number", eligible = "member_number") {
+gen_hh_clusters <- function(dis_output,
+                            n,
+                            cluster = "cluster_number",
+                            household = "household_number",
+                            eligible = "member_number",
+                            inc_building = TRUE,
+                            building = "households_building",
+                            select_household = "random_hh"
+                            ) {
 
   # cluster ID (based on village)
   dis_output[[cluster]] <- as.numeric(factor(dis_output$village_name))
@@ -128,6 +141,20 @@ gen_hh_clusters <- function(dis_output, n, cluster = "cluster_number",
     cluster = cluster,
     eligible = eligible
   )
+
+  # add if there are multiple households in one building
+  if (building) {
+    # add variable of how many households per building
+    dis_output[[building]] <- gen_eral(1:3,
+                                       nrow(dis_output))
+
+    # add variable of which household selected
+    multi_building <- which(dis_output[[building]] > 1)
+    dis_output[multi_building,
+               select_household] <- gen_eral(1:3,
+                                             length(multi_building))
+
+  }
 
   return(dis_output)
 }
