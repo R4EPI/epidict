@@ -1,7 +1,7 @@
 
 sample_age <- function(x, n) {
   # Sample the value of x n times
-  v <- sample(0:x, size = n, replace = TRUE)
+  v <- sample(0:x, size = n, replace = TRUE, prob = (x+1):1)
   return(v)
 }
 
@@ -31,8 +31,8 @@ gen_ages <- function(dis_output, numcases, set_age_na = TRUE,
 
 
   if (has_value(age_year_var)) {
-    # sample 0:120
-    years <- sample_age(120L, numcases)
+    # sample 0:100
+    years <- sample_age(100L, numcases)
     U2_YEARS <- which(years <= year_cutoff)
     if (set_age_na) {
       years[U2_YEARS] <- NA_integer_
@@ -228,3 +228,59 @@ gen_survey_uid <- function(dis_output,
   dplyr::ungroup(dis_output)
 
 }
+
+
+#' generate appropriate ill people count ("ill_hh_number") column in a data frame
+#'
+#' @param dis_output a data frame containing household and cluster
+#' @param parent_index [character] name of column with unique identifiers at the household level
+#' @param eligible name of column with number of individuals within each household
+#' @param ill_count name of column where counts should be added to
+#'
+#' @importFrom dplyr relocate
+#'
+#' @return a variable in your dataframe which gives the number of ill people
+#' in a household (appropriately repeated for unique households)
+#'
+#' @noRd
+
+gen_ill_hh <- function(dis_output,
+                       parent_index = "index",
+                       eligible = "member_number",
+                       ill_count = "ill_hh_number") {
+
+  # get individual households (parent_index unique incl for clusters)
+  hhs <- unique(dis_output[[parent_index]])
+
+  # get random proportions to multiply by
+  ill_member_mult <- gen_eral(seq(0, 0.5, by = 0.1),
+                              length(hhs))
+
+  # create a dataframe for households with multiplier
+  mrgr <- data.frame(hhs, ill_member_mult)
+
+  # rename appropriately
+  names(mrgr) <- c(parent_index, "ill_member_mult")
+
+  # combine with original dataset
+  dis_output <- merge(dis_output, mrgr, by = parent_index)
+
+  # move parent_index variable back to original position
+  dis_output <- dplyr::relocate(dis_output,
+                                {{parent_index}},
+                                .before = paste0(parent_index, "_y"),
+                                )
+
+  # create ill variable by multiplying household count by multiplier
+  dis_output[[ill_count]] <- ceiling(
+    dis_output[[eligible]] * dis_output[["ill_member_mult"]]
+  )
+
+  # remove multiplier variable
+  dis_output$ill_member_mult <- NULL
+
+  # return dataset
+  return(dis_output)
+}
+
+
