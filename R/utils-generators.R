@@ -283,4 +283,44 @@ gen_ill_hh <- function(dis_output,
   return(dis_output)
 }
 
+#' generate appropriate anthropometric variables for mortality and nutrition
+#'
+#' @param dis_output a data frame containing household and cluster
+#' @param weight_var name of variable for weight in kilograms
+#' @param height_var name of variable for height in centimetres
+#' @param muac_var   name of variable for mid-upper arm circumference (MUAC) in milimetres
+#' @param age_var    name of a variable for age in years (used for filtering)
+#'
+#' @return three variables in your dataframe with the appropriate measures
+#'
+#' @noRd
+
+gen_anthro <- function(dis_output,
+                       weight_var,
+                       height_var,
+                       muac_var,
+                       age_var) {
+
+  age_filter <- which(dis_output[[age_var]] < 5)
+  nums <- length(age_filter)
+
+  # weight in kg
+  dis_output[age_filter, weight_var] <- round(
+    runif(nums, 2, 30),
+    digits = 1
+  )
+
+  # height in cm
+  dis_output[age_filter, height_var] <- round(
+    runif(nums, 40, 120),
+    digits = 1
+  )
+
+  # MUAC in mm
+  dis_output[age_filter, muac_var] <- sample(80:190, nums, replace = TRUE)
+
+  # return dataset
+  return(dis_output)
+
+}
 
