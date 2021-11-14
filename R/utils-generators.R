@@ -143,7 +143,7 @@ gen_hh_clusters <- function(dis_output,
   )
 
   # add if there are multiple households in one building
-  if (building) {
+  if (inc_building) {
     # add variable of how many households per building
     dis_output[[building]] <- gen_eral(1:3,
                                        nrow(dis_output))
