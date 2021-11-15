@@ -147,7 +147,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     )
 
     # resample consent to have a 10% non-response rate
-    dis_output$died <- sample(c("yes", "no"),
+    dis_output$consent <- sample(c("yes", "no"),
                               size = nrow(dis_output),
                               prob = c(0.1, 0.9),
                               replace = TRUE
@@ -171,6 +171,9 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
     # number of people ill in household
     dis_output <- gen_ill_hh(dis_output)
+
+    ## TODO: Move UNDER_FIVE up to here so can be used for all child filtering
+
 
     # anthropometric measurements for nutrition module
     dis_output <- gen_anthro(dis_output,
@@ -213,7 +216,6 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                                             "post_partum") &
       pregnancy_not_possible
 
-
     no_pregnancy[is.na(no_pregnancy)] <- FALSE # replace NAs
 
     # pregnancy related cause of death n.a. for too old/young and for males
@@ -242,7 +244,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # health seeking behaviour in children being sick with malaria
 
     # only among children below 5 yrs
-    dis_output[dis_output$age_years >= 5,
+    dis_output[which(dis_output$age_years >= 5),
                c("fever_past_weeks",
                  "fever_now",
                  "care_fever")] <- NA
@@ -317,7 +319,21 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dcols <- c(
       "remember_death",
       "date_death",
-      "cause"
+      "cause",
+      "place_death",
+      # HSB module
+      "source_death_hsb",
+      "source_date_death_hsb",
+      "period_illness_hsb",
+      "place_death_hsb",
+      "care_dying",
+      "place_care_dying",
+      "reason_no_care_hsb",
+      # Violence module
+      "source_death_viol",
+      "source_date_death_viol",
+      "period_illness_viol",
+      "place_death_viol"
     )
     for (d in dcols) {
       dis_output[[d]][died] <- NA
@@ -393,6 +409,23 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
       inclusive = TRUE
     )
 
+    # HSB module - death
+    # note that NAs have already been set in the death section above
+
+    dis_output$source_date_death_hsb[dis_output$source_death_hsb != "written" |
+                                       is.na(dis_output$source_date_death_hsb)] <- NA
+
+    dis_output$place_care_dying[dis_output$care_dying != "yes" |
+                                  is.na(dis_output$care_dying)] <- NA
+
+    dis_output$reason_no_care_hsb[!dis_output$place_care_dying %in% c("home",
+                                                                      "other") |
+                                    is.na(dis_output$place_care_dying)] <- NA
+
+
+
+
+
 
 
 
@@ -415,8 +448,6 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                "violence_nature/no_response"] <- "1"
     dis_output$violence_nature[dis_output$violence_nature == ""] <- "no_response"
 
-    # make sure ages are exclusive
-    dis_output$age_years[dis_output$age_years == 0] <- NA_integer_
   }
 
   if (dictionary == "Nutrition") {
