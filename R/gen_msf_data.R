@@ -226,6 +226,10 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output$malaria_treatment_preg[dis_output$pregnant != "yes" |
                                    is.na(dis_output$pregnant)] <- NA
 
+    # duplicated malaria pregnancy variable from standard Questions (?pat remove)
+    dis_output$malaria_treatment[dis_output$pregnant != "yes" |
+                                        is.na(dis_output$pregnant)] <- NA
+
     # antenatal care bed net (among those with appropriate malaria doses)
     dis_output$anc_bednet[dis_output$pregnant != "yes" |
                             is.na(dis_output$pregnant) |
@@ -293,14 +297,11 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                                                         length(UNDER_FIVE))
 
 
-
-
-
     # assume person is not born during study when age > 1
     OVER_ONE <- dis_output$age_years > 1
     dis_output$born[OVER_ONE] <- factor("No", levels(dis_output$born))
     dis_output$remember_dob[OVER_ONE] <- NA
-    dis_output$birthday_date[OVER_ONE] <- NA
+    dis_output$date_birth[OVER_ONE] <- NA
 
 
 
@@ -315,7 +316,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     died <- dis_output$died == "no"
     dcols <- c(
       "remember_death",
-      "death_date",
+      "date_death",
       "cause"
     )
     for (d in dcols) {
@@ -335,62 +336,67 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output$remember_arrival[not_arrived] <- NA
     not_remember_arrival <- dis_output$remember_arrival != "yes"
 
-    dis_output$arrived_date[not_arrived | not_remember_arrival] <- NA
+    dis_output$date_arrived[not_arrived | not_remember_arrival] <- NA
 
     dis_output$remember_departure[not_left] <- NA
     not_remember_departure <- dis_output$remember_departure != "yes"
 
-    dis_output$left_date[not_left | not_remember_departure] <- NA
+    dis_output$date_left[not_left | not_remember_departure] <- NA
 
     dis_output$remember_dob[not_born] <- NA
     not_remember_dob <- dis_output$remember_dob != "yes"
 
-    dis_output$birthday_date[not_born | not_remember_dob] <- NA
+    dis_output$date_birth[not_born | not_remember_dob] <- NA
 
     dis_output$remember_death[not_died] <- NA
     not_remember_death <- dis_output$remember_death != "yes"
 
-    dis_output$death_date[not_died | not_remember_death] <- NA
+    dis_output$date_death[not_died | not_remember_death] <- NA
 
     dis_output$cause[not_died] <- NA
 
 
     # set arrival date to the earliest date from those given
-    dis_output$arrived_date <- with(
+    dis_output$date_arrived <- with(
       dis_output,
       pmin(
-        arrived_date,
-        left_date,
-        birthday_date,
+        date_arrived,
+        date_left,
+        date_birth,
         na.rm = TRUE
       )
     )
 
     # leave date
     dis_output <- enforce_timing(dis_output,
-      first  = "arrived_date",
-      second = "left_date",
+      first  = "date_arrived",
+      second = "date_left",
       5:30
     )
     dis_output <- enforce_timing(dis_output,
-      first  = "birthday_date",
-      second = "left_date",
+      first  = "date_birth",
+      second = "date_left",
       5:30,
       inclusive = TRUE
     )
 
     # died date
     dis_output <- enforce_timing(dis_output,
-      first  = "arrived_date",
-      second = "death_date",
+      first  = "date_arrived",
+      second = "date_death",
       5:30
     )
     dis_output <- enforce_timing(dis_output,
-      first  = "birthday_date",
-      second = "death_date",
+      first  = "date_birth",
+      second = "date_death",
       5:30,
       inclusive = TRUE
     )
+
+
+
+
+
 
     # fix cascade of violence
     vtype <- c(
