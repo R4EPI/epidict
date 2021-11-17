@@ -137,7 +137,6 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
     # create household numbers within cluster numbers
     dis_output <- gen_hh_clusters(dis_output,
-      n = numcases,
       cluster = "cluster_number",
       household = "household_number",
       eligible = "member_number",
@@ -146,21 +145,6 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
       select_household = "random_hh"
     )
 
-    # resample consent to have a 10% non-response rate
-    dis_output$consent <- sample(c("yes", "no"),
-                              size = nrow(dis_output),
-                              prob = c(0.1, 0.9),
-                              replace = TRUE
-    )
-
-    # if consent is no then make everything else NA
-    consent_columns <- which(names(dis_output) == "no_consent_other")
-    consent_columns <- seq(consent_columns, ncol(dis_output))
-    no_consent <- dis_output$consent == "no"
-    dis_output[no_consent, consent_columns] <- NA
-
-    # no_consent_reason should be NA if consent is yes
-    dis_output$no_consent_reason[dis_output$consent == "yes"] <- NA
 
     # create index numbers and unique IDs
     # index is the unique household (the parent_index for kobo outputs)
@@ -172,7 +156,12 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # number of people ill in household
     dis_output <- gen_ill_hh(dis_output)
 
+    # fix consent
+    dis_output <- gen_consent(dis_output)
+
+
     ## TODO: Move UNDER_FIVE up to here so can be used for all child filtering
+    ## and make it true/false
 
 
     # anthropometric measurements for nutrition module
@@ -421,6 +410,49 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output$reason_no_care_hsb[!dis_output$place_care_dying %in% c("home",
                                                                       "other") |
                                     is.na(dis_output$place_care_dying)] <- NA
+
+    # HSB module - last person ill
+
+    # generate if this was the last person ill for each household (one each)
+    dis_output <- gen_last_ill_hh(dis_output)
+
+    # fix responses according to dictionary restrictions
+
+    # set all illness questions to NA if not last person ill
+    dis_output[dis_output$last_person_ill != "yes" |
+                 is.na(dis_output$last_person_ill),
+               c("cause_illness_last",
+                 "current_status",
+                 "start_illness",
+                 "care_illness_last",
+                 "treatment_delay",
+                 "place_first_hf",
+                 "reason_first_hf_selected",
+                 "visit_second_hf",
+                 "place_second_hf",
+                 "reason_second_hf_selected",
+                 "source_money_last",
+                 grep("source_money_last", names(dis_output))
+                    )] <- NA
+
+    # reason for not seeking care only among those who did not
+    dis_output$no_care_illness_last[dis_output$care_illness_last != "no" |
+                                      is.na(dis_output$care_illness_last)] <- NA
+
+    # set questions regarding type of healthcare saught to missing if did not seek
+    dis_output[dis_output$care_illness_last != "yes" |
+                 is.na(dis_output$care_illness_last),
+               c("place_first_hf",
+                 "reason_first_hf_selected",
+                 "place_second_hf",
+                 "reason_second_hf_selected",
+                 "source_money_last"
+                 )] <- NA
+
+
+
+
+
 
 
 
