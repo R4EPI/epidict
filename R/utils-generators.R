@@ -114,7 +114,6 @@ gen_freetext <- function(n) {
 #' @return a data frame with household and clusters
 #' @noRd
 gen_hh_clusters <- function(dis_output,
-                            n,
                             cluster = "cluster_number",
                             household = "household_number",
                             eligible = "member_number",
@@ -144,16 +143,11 @@ gen_hh_clusters <- function(dis_output,
 
   # add if there are multiple households in one building
   if (inc_building) {
-    # add variable of how many households per building
-    dis_output[[building]] <- gen_eral(1:3,
-                                       nrow(dis_output))
-
-    # add variable of which household selected
-    multi_building <- which(dis_output[[building]] > 1)
-    dis_output[multi_building,
-               select_household] <- gen_eral(1:3,
-                                             length(multi_building))
-
+    dis_output <- gen_hh_rand(dis_output,
+                              cluster,
+                              household,
+                              building,
+                              select_household)
   }
 
   return(dis_output)
@@ -169,7 +163,8 @@ gen_hh_clusters <- function(dis_output,
 #'   - eligible: the number of individuals within each household increased by 25%
 #'
 #' @noRd
-gen_eligible_interviewed <- function(dis_output, household = "household_number",
+gen_eligible_interviewed <- function(dis_output,
+                                     household = "household_number",
                                      cluster = "cluster_number",
                                      eligible = "member_number") {
 
@@ -192,7 +187,70 @@ gen_eligible_interviewed <- function(dis_output, household = "household_number",
 }
 
 
-#' generate appropriate "eligible" count columns in a data frame
+#' generate appropriate random household selection columns in a data frame
+#'
+#' @param dis_output a data frame containing household and cluster
+#' @param household [character] the column specifying household
+#' @param cluster [character] the column specifying cluster
+#' @param building the name of the column counting the number of households in a
+#' building
+#' @param select_household = the name of the column selecting a random household
+#' in a building
+#'
+#' @importFrom dplyr distinct mutate left_join
+#' @importFrom rlang .data :=
+#'
+#' @return vector of numbers with appropriate length for columns in dis_output that
+#' show how many households are in a building and which household was selecteds
+#'
+#' @noRd
+gen_hh_rand <- function(dis_output,
+                        cluster = "cluster_number",
+                        household = "household_number",
+                        building = "households_building",
+                        select_household = "random_hh") {
+
+  # unique households (buildings)
+  multi_building <- dplyr::distinct(dis_output,
+                         .data[[{{cluster}}]],
+                         .data[[{{household}}]])
+
+  building_intermed <- paste0(building, "_new")
+  select_household_intermed <- paste0(select_household, "_new")
+
+  # how many households per building
+  multi_building <- dplyr::mutate(multi_building,
+                                  {{building_intermed}} := gen_eral(1:3,
+                                                          nrow(multi_building))
+                                  )
+
+  # add which household selected if more than one in building
+  multiples <- which(multi_building[[building_intermed]] > 1)
+
+  multi_building[[select_household_intermed]] <- NA_integer_
+
+  for (i in multiples) {
+    max_num <- multi_building[[building_intermed]][i]
+    multi_building[i, select_household_intermed] <- gen_eral(1:max_num, 1)
+  }
+
+  # create an intermediate dataframe (so we can overwrite individual cols later)
+  intermed <- dplyr::left_join(dis_output, multi_building, by = c({{cluster}},
+                                                                  {{household}}))
+
+  # overwrite original variables in dataframe
+  dis_output[[{{building}}]] <- intermed[[building_intermed]]
+  dis_output[[{{select_household}}]] <- intermed[[select_household_intermed]]
+
+  # return dataframe
+  return(dis_output)
+
+}
+
+
+
+
+#' generate unique identifiers for individuals in a data frame
 #'
 #' @param dis_output a data frame containing household and cluster
 #' @param household [character] the column specifying household
@@ -282,6 +340,92 @@ gen_ill_hh <- function(dis_output,
   # return dataset
   return(dis_output)
 }
+
+
+
+
+#' generate appropriate consent column and set non-responders to empty
+#'
+#' @param dis_output a data frame containing household and cluster
+#' @param parent_index [character] name of column with unique identifiers at the household level
+#' @param consent name of a column where consent (y/n) should be added
+#'
+#' @importFrom dplyr distinct
+#'
+#' @return a variable in your dataframe which gives consent (y/n), with the same
+#' response for all individuals of a household
+#'
+#' @noRd
+
+gen_consent <- function(dis_output,
+                        parent_index = "index",
+                        consent = "consent",
+                        no_consent_reason = "no_consent_reason") {
+
+
+  # get individual households (parent_index unique incl for clusters)
+  hhs <- dplyr::distinct(dis_output, .data[[parent_index]])
+
+  # resample consent to have a 10% non-response rate
+  hhs[[paste0(consent, "_new")]] <- sample(c("yes", "no"),
+                               size = nrow(hhs),
+                               prob = c(0.9, 0.1),
+                               replace = TRUE
+                           )
+
+  # create an intermediate dataframe (so we can overwrite individual cols later)
+  intermed <- dplyr::left_join(dis_output, hhs, by = {{parent_index}})
+
+  # overwrite original variables in dataframe
+  dis_output[[{{consent}}]] <- intermed[[paste0(consent, "_new")]]
+
+  # if consent is no then make everything else NA
+  consent_columns <- which(names(dis_output) == consent) + 2
+  consent_columns <- seq(consent_columns, ncol(dis_output))
+  no_consent <- dis_output[[consent]] == "no"
+  dis_output[no_consent, consent_columns] <- NA
+
+  # no_consent_reason should be NA if consent is yes
+  dis_output[[no_consent_reason]][!no_consent] <- NA
+
+  return(dis_output)
+}
+
+
+
+#' generate appropriate last person ill column in a data frame
+#'
+#' @param dis_output a data frame containing household and cluster
+#' @param parent_index [character] name of column with unique identifiers at the household level
+#' @param eligible name of column with number of individuals within each household
+#' @param ill_count name of column where counts should be added to
+#'
+#' @importFrom dplyr group_by mutate
+#'
+#' @return a variable in your dataframe which gives only one person being the
+#' last one ill in a household in a household
+#'
+#' @noRd
+
+gen_last_ill_hh <- function(dis_output,
+                       parent_index = "index",
+                       last_ill = "last_person_ill") {
+
+  # group by household identifier
+  dis_output <- dplyr::group_by(dis_output, .data[[parent_index]])
+
+  # create var to count the number of in a household
+  dis_output <- dplyr::mutate(dis_output,
+                              counter = cumsum(.data[[last_ill]] == "yes"))
+
+  # if last_person_ill is yes and the yes_count > 1 then set to "no"
+  dis_output[[last_ill]][dis_output$counter > 1] <- "no"
+
+  dis_output$counter <- NULL
+
+  return(dis_output)
+}
+
 
 #' generate appropriate anthropometric variables for mortality and nutrition
 #'
