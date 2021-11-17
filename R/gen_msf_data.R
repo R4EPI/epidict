@@ -483,19 +483,14 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                  "source_money_last_df"
                )] <- NA
 
+    # Violence - death
+    ## note that death variables have been dealt with higher up already
+
+    dis_output$source_date_death_hviol[dis_output$source_death_viol != "written" |
+                                       is.na(dis_output$source_date_death_hsb)] <- NA
 
 
-
-
-
-
-
-
-
-
-
-
-
+    # Violence - generic questions
 
     # fix cascade of violence
     vtype <- c(
@@ -506,9 +501,20 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
       "violence_nature/shot",
       "violence_nature/detained_kidnapped",
       "violence_nature/other",
-      "violence_nature/no_response"
+      "violence_nature/no_response",
+      "uniform",
+      "remember_violence_date",
+      "date_violence",
+      "place_violence"
     )
     dis_output[which(dis_output$violent_episode != "yes"), vtype] <- NA
+
+
+    # add random number of violent episodes
+    dis_output$violent_episodes_number <- as.numeric(dis_output$violent_episodes_number)
+    dis_output[which(dis_output$violent_episode == "yes"),
+               "violent_episodes_number"] <- gen_eral(1:5,
+                                                      nrow(dis_output[which(dis_output$violent_episode == "yes"),]))
 
     dis_output[which(dis_output$violence_nature == ""),
                "violence_nature/no_response"] <- "1"
