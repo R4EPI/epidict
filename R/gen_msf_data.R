@@ -450,6 +450,40 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                  )] <- NA
 
 
+    # HSB module - diarrhoea
+
+    # set all diarrhoea questions to NA if not diarrhoea
+    dis_output[dis_output$diarrhoea_fever_2weeks != "yes" |
+                 is.na(dis_output$diarrhoea_fever_2weeks),
+               c("cause_illness_df",
+                 "status_df",
+                 "care_illness_df",
+                 "no_care_illness_df",
+                 "treatment_delay_df",
+                 "place_first_hf_df",
+                 "reason_first_hf_selected_df",
+                 "visit_second_hf_df",
+                 "place_second_hf_df",
+                 "reason_second_hf_selected_df",
+                 "source_money_df",
+                 grep("source_money_df", names(dis_output))
+                 )] <- NA
+
+    # reason for not seeking care only among those who did not
+    dis_output$no_care_illness_df[dis_output$care_illness_df != "no" |
+                                      is.na(dis_output$care_illness_df)] <- NA
+
+    # set questions regarding type of healthcare saught to missing if did not seek
+    dis_output[dis_output$care_illness_df != "yes" |
+                 is.na(dis_output$care_illness_df),
+               c("place_first_hf_df",
+                 "reason_first_hf_selected_df",
+                 "place_second_hf_df",
+                 "reason_second_hf_selected_df",
+                 "source_money_last_df"
+               )] <- NA
+
+
 
 
 
