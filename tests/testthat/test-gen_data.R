@@ -1,8 +1,6 @@
 
 outbreaks <- c("MeAsles", "CHolera", "AjS", "meningitis")
-# TODO: Alex, re-add nutrition here when you have successfully updated the
-#       dictionary. Love, Zhian.
-surveys   <- c("MOrtality", "VaCcination") #, "NutritIon")
+surveys   <- c("MOrtality", "VaCcination", "NutritIon")
 
 # Functions for checking age columns
 get_ages <- function(x) x[grepl("age_(year|month|day)s?$", names(x), perl = TRUE)]
@@ -18,11 +16,11 @@ check_age_integers <- function(x) {
 
 test_that("errors are thrown if the wrong dicts are used", {
 
-  expect_error(msf_dict("Mortality"), 
+  expect_error(msf_dict("Mortality"),
     "disease must be one of 'Cholera', 'Measles', 'Meningitis', or 'AJS'",
     fixed = TRUE
   )
-  expect_error(msf_dict_survey("Measles"), 
+  expect_error(msf_dict_survey("Measles"),
     "disease must be one of 'Mortality', 'Nutrition', 'Vaccination'",
     fixed = TRUE
   )
@@ -31,7 +29,7 @@ test_that("errors are thrown if the wrong dicts are used", {
     fixed = TRUE
   )
 
-}) 
+})
 
 test_that("msf_dict works", {
 
@@ -75,9 +73,9 @@ test_that("msf_survey_dict works", {
     expect_is(long, "tbl_df", label = type)
     expect_gt(nrow(long), nrow(nested), label = type)
     expect_gt(ncol(long), ncol(nested), label = type)
-  
+
   }
- 
+
 })
 
 test_that("outbreak data can be generated", {
@@ -108,15 +106,23 @@ test_that("survey data can be generated", {
       expect_true(res, label = disease)
     }
     expect_true(check_age_integers(get_ages(data)))
-    # TODO: these tests are failing because there are no clear "eligible" 
-    #   columns anymore and they are specific to the data set. 
+    # TODO: these tests are failing because there are no clear "eligible"
+    #   columns anymore and they are specific to the data set.
+    #   Alex: these tests will fail - we need to swap var names
+    #      for mortality and vacc = member_number,
+    #      for nutrition = number_children and vacc = children_count (pat should standardise)
+    #      in addition, the below will fail because we now have NAs due to adding in
+    #      non-response (i.e. those who dont consent dont get filled in)
     # expect_true(!is.na(sum(data$eligible)))
     # expect_true(sum(data$eligible) > 0)
     # expect_true(!is.na(sum(data$interviewed)))
     # expect_true(sum(data$interviewed) > 0)
+
+
     # skip("These tests need to be updated when we have a better idea of the expected number of columns")
     # TODO: these tests fail because we need better expectations regarding
     # the number of columns that the dictionaries provide
+    #   Alex: these tests will fail because of variables which are "select_multiple" type
     # expect_equal(nrow(dictionary), ncol(data), label = disease)
   }
 })
