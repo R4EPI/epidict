@@ -523,33 +523,55 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
   }
 
   if (dictionary == "Nutrition") {
+
+    # create household numbers within cluster numbers
     dis_output <- gen_hh_clusters(dis_output,
-      n = numcases,
-      cluster = "cluster_number",
-      household = "household_id"
+                                  cluster = "cluster_number",
+                                  household = "household_number",
+                                  eligible = "number_children",
+                                  inc_building = TRUE,
+                                  building = "households_building",
+                                  select_household = "random_hh"
     )
 
-    # use household num as a standin for fact_0_id for now
-    dis_output$fact_0_id <- dis_output$household_id
+
+    # create index numbers and unique IDs
+    # index is the unique household (the parent_index for kobo outputs)
+    # index_y is the unique individual within households (index for kobo outputs)
+    # uid combines these to produce a unique identifier for each individual
+    dis_output <- gen_survey_uid(dis_output)
+
+    # fix consent
+    dis_output <- gen_consent(dis_output)
+
+    # age in yr (0 to 5) - assuming doing nutrition in under 5 year olds
+    dis_output$age_years <- sample_age(5L, numcases)
+    dis_output$age_months <- NA_integer_
+
+    # age in mth (0 to 11)
+    zero_yrs <- dis_output$age_years < 1
+    dis_output$age_months[zero_yrs] <- sample_age(11L, sum(zero_yrs, na.rm = TRUE))
 
 
-    # age in months (1 to 60 - i.e. under 5 years)
-    dis_output$age_month <- sample(1:60L, numcases, replace = TRUE)
+    # set vars to numeric
+    anthro_vars <- c("weight",
+                     "height",
+                     "muac",
+                     "whz")
 
-    # height in cm
-    dis_output$height <- round(
-      runif(numcases, 40, 120),
-      digits = 1
-    )
+    for (i in anthro_vars) {
+      dis_output[[i]] <- as.numeric(dis_output[[i]])
+    }
 
-    # weight in kg
-    dis_output$weight <- round(
-      runif(numcases, 2, 30),
-      digits = 1
-    )
+    # anthropometric measurements for nutrition module
+    dis_output <- gen_anthro(dis_output,
+                             weight_var = "weight",
+                             height_var = "height",
+                             muac_var   = "muac",
+                             age_var    = "age_years")
+    # make oedema na for those over 5
+    dis_output$oedema[dis_output$age_years >= 5] <- NA
 
-    # MUAC in mm
-    dis_output$muac_mm_left_arm <- sample(80:190, numcases, replace = TRUE)
   }
 
   if (dictionary == "Vaccination") {
