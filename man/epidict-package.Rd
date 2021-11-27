@@ -4,7 +4,7 @@
 \name{epidict-package}
 \alias{epidict}
 \alias{epidict-package}
-\title{epidict: Standardized Data Dictionaries for the 'R4EPIs' Project}
+\title{epidict: Epidemiology data dictionaries and random data generators}
 \description{
 The 'R4EPIs' project <https://R4epis.netlify.com> seeks to provide 
     a set of standardized tools for analysis of outbreak and survey data in
@@ -28,7 +28,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Alex Spina
+  \item Alexander Spina \email{alexfspina@gmail.com} (\href{https://orcid.org/0000-0001-8425-1867}{ORCID})
   \item Lukas Richter
   \item Patrick Keating
 }
