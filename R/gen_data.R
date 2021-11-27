@@ -1,5 +1,5 @@
 #' Generate random linelist or survey data
-#' 
+#'
 #' Based on a dictionary generator like [msf_dict()] or [msf_dict_survey()],
 #' this function will generate a randomized data set based on values defined in
 #' the dictionaries. The randomized dataset produced should mimic an excel
@@ -8,7 +8,7 @@
 #' @param dictionary Specify which dictionary you would like to use.
 #'
 #' @param varnames Specify name of column that contains variable names.
-#'   If `dictionary` is a survey, `varnames` needs to be "column_name"`.
+#'   If `dictionary` is a survey, `varnames` needs to be "name"`.
 #'
 #' @param numcases Specify the number of cases you want (default is 300)
 #'
@@ -16,8 +16,8 @@
 #'   exists. In the future, dictionaries from WHO and other organizations may
 #'   become available.
 #'
-#' @return a data frame with cases in rows and varaibles in columns. The number
-#'   of columns will vary from dictionary to ditctionary, so please use the
+#' @return a data frame with cases in rows and variables in columns. The number
+#'   of columns will vary from dictionary to dictionary, so please use the
 #'   dictionary functions to generate a corresponding dictionary.
 #' @export
 #' @examples
@@ -28,9 +28,9 @@
 #'     # You will often want to use MSF dictionaries to translate codes to human-
 #'     # readable variables. Here, we generate a data set of 20 cases:
 #'     dat <- gen_data(
-#'       dictionary = "Cholera", 
+#'       dictionary = "Cholera",
 #'       varnames = "data_element_shortname",
-#'       numcases = 20, 
+#'       numcases = 20,
 #'       org = "MSF"
 #'     )
 #'     print(dat)

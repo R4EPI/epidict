@@ -15,7 +15,7 @@ gen_data(
 \item{dictionary}{Specify which dictionary you would like to use.}
 
 \item{varnames}{Specify name of column that contains variable names.
-If \code{dictionary} is a survey, \code{varnames} needs to be "column_name"`.}
+If \code{dictionary} is a survey, \code{varnames} needs to be "name"`.}
 
 \item{numcases}{Specify the number of cases you want (default is 300)}
 
@@ -24,8 +24,8 @@ exists. In the future, dictionaries from WHO and other organizations may
 become available.}
 }
 \value{
-a data frame with cases in rows and varaibles in columns. The number
-of columns will vary from dictionary to ditctionary, so please use the
+a data frame with cases in rows and variables in columns. The number
+of columns will vary from dictionary to dictionary, so please use the
 dictionary functions to generate a corresponding dictionary.
 }
 \description{
@@ -42,9 +42,9 @@ if (require("dplyr") & require("matchmaker")) {
     # You will often want to use MSF dictionaries to translate codes to human-
     # readable variables. Here, we generate a data set of 20 cases:
     dat <- gen_data(
-      dictionary = "Cholera", 
+      dictionary = "Cholera",
       varnames = "data_element_shortname",
-      numcases = 20, 
+      numcases = 20,
       org = "MSF"
     )
     print(dat)

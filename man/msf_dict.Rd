@@ -17,7 +17,9 @@ msf_dict_survey(
   disease,
   name = "MSF-survey-dict.xlsx",
   tibble = TRUE,
-  compact = FALSE
+  compact = TRUE,
+  long = TRUE,
+  template = TRUE
 )
 }
 \arguments{
@@ -25,25 +27,41 @@ msf_dict_survey(
 \itemize{
 \item \code{msf_dict()} supports "AJS", "Cholera", "Measles", "Meningitis"
 \item \code{msf_dict_survey()} supports "Mortality", "Nutrition", and "Vaccination"
+(only used in surveys if \code{template = TRUE})
 }}
 
-\item{name}{the name of the dictionary stored in the package.}
+\item{name}{the name of the dictionary stored in the package.
+\itemize{
+\item \code{msf_dict_survey()} supports Kobo dictionaries not stored within this package,
+to use these: specify \code{name}as path to .xlsx file and set the \code{template = False}
+}}
 
 \item{tibble}{Return data dictionary as a tidyverse tibble (default is TRUE)}
 
 \item{compact}{if \code{TRUE} (default), then a nested data frame is returned
 where each row represents a single variable and a nested data frame column
-called "options", which can be expanded with \code{\link[tidyr:unnest]{tidyr::unnest()}}. This only
+called "options", which can be expanded with \code{\link[tidyr:nest]{tidyr::unnest()}}. This only
 works if \code{long = TRUE}.}
 
 \item{long}{If \code{TRUE} (default), the returned data dictionary is in long
 format with each option getting one row. If \code{FALSE}, then two data frames
-are returned, one with variables and the other with content options.}
+are returned, one with variables and the other with content options.
+
+@param template Only used for \code{msf_dict_survey()}.
+If \code{TRUE} (default) the returned data dictionary is a generic
+MSF OCA ERB pre-approved dictionary. If \code{FALSE} allows you to read in your
+own Kobo dictionary.}
+
+\item{template}{(for survey dictionaries): if \code{TRUE} read in a generic
+dictionary based on the MSF OCA ERB pre-approved template. However you can
+also specify your own dictionary if this differs substantially, by setting
+\code{template = FALSE}.}
 }
 \description{
-These function produces MSF OCA dictionaries based on DHIS2 data sets
-defining the data element name, code, short names, types, and key/value pairs
-for translating the codes into human-readable format.
+These function produces MSF OCA dictionaries based on DHIS2 (for outbreaks)
+and Kobo (for surveys) data sets defining the data element name, code,
+short names, types, and key/value pairs for translating the codes
+into human-readable format.
 }
 \examples{
 
@@ -52,9 +70,9 @@ if (require("dplyr") & require("matchmaker")) {
     # You will often want to use MSF dictionaries to translate codes to human-
     # readable variables. Here, we generate a data set of 20 cases:
     dat <- gen_data(
-      dictionary = "Cholera", 
+      dictionary = "Cholera",
       varnames = "data_element_shortname",
-      numcases = 20, 
+      numcases = 20,
       org = "MSF"
     )
     print(dat)

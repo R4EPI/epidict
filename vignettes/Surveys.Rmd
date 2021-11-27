@@ -34,7 +34,7 @@ The Mortality dictionary contains definitions for `r nrow(epidict::msf_dict_surv
 ```{r mortality, results="asis"}
 library(epidict)
 mortality <- msf_dict_survey("Mortality", compact = TRUE)
-names_desc <- mortality[c("column_name", "description", "data_element_valuetype")]
+names_desc <- mortality[c("name", "label_english", "value_type")]
 DT::datatable(names_desc)
 ```
 
@@ -44,7 +44,7 @@ The dictionaries are exported using option codes that can be translated to
 human-readable format. This table shows how they are translated.
 
 ```{r mortality_values, results = "asis"}
-mortality_codes <- tidyr::unnest(mortality, cols = options)[c("column_name", "data_element_valuetype", "option_code", "option_name", "option_order_in_set")]
+mortality_codes <- tidyr::unnest(mortality, cols = options)[c("name", "value_type", "option_name", "option_label_english", "option_order_in_set")]
 DT::datatable(mortality_codes)
 ```
 
@@ -52,12 +52,16 @@ DT::datatable(mortality_codes)
 
 ## Variables in the dictionary
 
-The Nutrition dictionary contains definitions for `r nrow(epidict::msf_dict_survey("Nutrition"))` variables:
 
-```{r nutrition, results="asis"}
+> NOTE: The Nutrition dictionary still needs to be updated and does not work at
+> at the moment. 
+
+The Nutrition dictionary contains definitions for `r #FIXME nrow(epidict::msf_dict_survey("Nutrition"))` variables:
+
+```{r nutrition, results="asis", eval = FALSE}
 library(epidict)
 nutrition <- msf_dict_survey("Nutrition", compact = TRUE)
-names_desc <- nutrition[c("column_name", "description", "data_element_valuetype")]
+names_desc <- nutrition[c("name", "label_english", "value_type")]
 DT::datatable(names_desc)
 ```
 
@@ -66,8 +70,8 @@ DT::datatable(names_desc)
 The dictionaries are exported using option codes that can be translated to
 human-readable format. This table shows how they are translated.
 
-```{r nutrition_values, results = "asis"}
-nutrition_codes <- tidyr::unnest(nutrition, cols = options)[c("column_name", "data_element_valuetype", "option_code", "option_name", "option_order_in_set")]
+```{r nutrition_values, results = "asis", eval = FALSE}
+nutrition_codes <- tidyr::unnest(nutrition, cols = options)[c("name", "value_type", "option_name", "option_label_english", "option_order_in_set")]
 DT::datatable(nutrition_codes)
 ```
 
@@ -80,7 +84,7 @@ The Vaccination dictionary contains definitions for `r nrow(epidict::msf_dict_su
 ```{r vaccination, results="asis"}
 library(epidict)
 vaccination <- msf_dict_survey("Vaccination", compact = TRUE)
-names_desc <- vaccination[c("column_name", "description", "data_element_valuetype")]
+names_desc <- vaccination[c("name", "label_english", "value_type")]
 DT::datatable(names_desc)
 ```
 
@@ -90,7 +94,7 @@ The dictionaries are exported using option codes that can be translated to
 human-readable format. This table shows how they are translated.
 
 ```{r vaccination_values, results = "asis"}
-vaccination_codes <- tidyr::unnest(vaccination, cols = options)[c("column_name", "data_element_valuetype", "option_code", "option_name", "option_order_in_set")]
+vaccination_codes <- tidyr::unnest(vaccination, cols = options)[c("name", "value_type", "option_name", "option_label_english", "option_order_in_set")]
 DT::datatable(vaccination_codes)
 ```
 

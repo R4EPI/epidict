@@ -1,14 +1,18 @@
 #' MSF data dictionaries and dummy datasets
 #'
-#' These function produces MSF OCA dictionaries based on DHIS2 data sets
-#' defining the data element name, code, short names, types, and key/value pairs
-#' for translating the codes into human-readable format. 
+#' These function produces MSF OCA dictionaries based on DHIS2 (for outbreaks)
+#' and Kobo (for surveys) data sets defining the data element name, code,
+#' short names, types, and key/value pairs for translating the codes
+#' into human-readable format.
 #'
 #' @param disease Specify which disease you would like to use.
 #'   - `msf_dict()` supports "AJS", "Cholera", "Measles", "Meningitis"
 #'   - `msf_dict_survey()` supports "Mortality", "Nutrition", and "Vaccination"
+#'   (only used in surveys if `template = TRUE`)
 #'
 #' @param name the name of the dictionary stored in the package.
+#'   - `msf_dict_survey()` supports Kobo dictionaries not stored within this package,
+#'   to use these: specify `name`as path to .xlsx file and set the `template = False`
 #'
 #' @param tibble Return data dictionary as a tidyverse tibble (default is TRUE)
 #'
@@ -21,6 +25,11 @@
 #'   format with each option getting one row. If `FALSE`, then two data frames
 #'   are returned, one with variables and the other with content options.
 #'
+#'  @param template Only used for `msf_dict_survey()`.
+#'  If `TRUE` (default) the returned data dictionary is a generic
+#'  MSF OCA ERB pre-approved dictionary. If `FALSE` allows you to read in your
+#'  own Kobo dictionary.
+#'
 #' @seealso [matchmaker::match_df()] [gen_data()] [msf_dict_survey()]
 #' @export
 #' @examples
@@ -30,9 +39,9 @@
 #'     # You will often want to use MSF dictionaries to translate codes to human-
 #'     # readable variables. Here, we generate a data set of 20 cases:
 #'     dat <- gen_data(
-#'       dictionary = "Cholera", 
+#'       dictionary = "Cholera",
 #'       varnames = "data_element_shortname",
-#'       numcases = 20, 
+#'       numcases = 20,
 #'       org = "MSF"
 #'     )
 #'     print(dat)
@@ -63,10 +72,10 @@ msf_dict <- function(disease, name = "MSF-outbreak-dict.xlsx", tibble = TRUE,
   path <- system.file("extdata", name, package = "epidict")
 
   # read in categorical variable content options
-  dat_opts <- readxl::read_xlsx(path, sheet = "OptionCodes")
+  dat_opts <- readxl::read_excel(path, sheet = "OptionCodes")
 
   # read in data set - pasting the disease name for sheet
-  dat_dict <- readxl::read_xlsx(path, sheet = disease)
+  dat_dict <- readxl::read_excel(path, sheet = disease)
 
   # clean col names
   colnames(dat_dict) <- tidy_labels(colnames(dat_dict))

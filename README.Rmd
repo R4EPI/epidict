@@ -17,9 +17,8 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/epidict)](https://CRAN.R-project.org/package=epidict)
-[![Travis build status](https://travis-ci.org/R4EPI/epidict.svg?branch=master)](https://travis-ci.org/R4EPI/epidict)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/R4EPI/epidict?branch=master&svg=true)](https://ci.appveyor.com/project/R4EPI/epidict)
 [![Codecov test coverage](https://codecov.io/gh/R4EPI/epidict/branch/master/graph/badge.svg)](https://codecov.io/gh/R4EPI/epidict?branch=master)
+[![R build status](https://github.com/R4EPI/epidict/workflows/R-CMD-check/badge.svg)](https://github.com/R4EPI/epidict/actions)
 <!-- badges: end -->
 
 
