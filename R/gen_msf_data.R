@@ -486,7 +486,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # Violence - death
     ## note that death variables have been dealt with higher up already
 
-    dis_output$source_date_death_hviol[dis_output$source_death_viol != "written" |
+    dis_output$source_date_death_viol[dis_output$source_death_viol != "written" |
                                        is.na(dis_output$source_date_death_hsb)] <- NA
 
 
@@ -725,7 +725,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
 
     # if have answered the without car section then this section NA
-    dis_output[dis_output$vaccine_card == "yes",
+    dis_output[which(dis_output$vaccine_card == "yes"),
                vacc_vars] <- NA
 
     for (i in vacc_vars) {
