@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -36,10 +40,10 @@
 
 
 <meta property="og:title" content="MSF data dictionaries and dummy datasets — msf_dict" />
-<meta property="og:description" content="These function produces MSF OCA dictionaries based on DHIS2 data sets
-defining the data element name, code, short names, types, and key/value pairs
-for translating the codes into human-readable format." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:description" content="These function produces MSF OCA dictionaries based on DHIS2 (for outbreaks)
+and Kobo (for surveys) data sets defining the data element name, code,
+short names, types, and key/value pairs for translating the codes
+into human-readable format." />
 
 
 
@@ -57,7 +61,7 @@ for translating the codes into human-readable format." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -79,7 +83,7 @@ for translating the codes into human-readable format." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -94,13 +98,13 @@ for translating the codes into human-readable format." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/intro.html">Introduction to epidict</a>
+    </li>
+    <li>
       <a href="../articles/Outbreaks.html">MSF Outbreak Dictionaries</a>
     </li>
     <li>
       <a href="../articles/Surveys.html">MSF Survey Dictionaries</a>
-    </li>
-    <li>
-      <a href="../articles/intro.html">Introduction to epidict</a>
     </li>
   </ul>
 </li>
@@ -110,8 +114,8 @@ for translating the codes into human-readable format." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/R4EPI/epidict">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/R4EPI/epidict/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,25 +138,28 @@ for translating the codes into human-readable format." />
     </div>
 
     <div class="ref-description">
-    <p>These function produces MSF OCA dictionaries based on DHIS2 data sets
-defining the data element name, code, short names, types, and key/value pairs
-for translating the codes into human-readable format.</p>
+    <p>These function produces MSF OCA dictionaries based on DHIS2 (for outbreaks)
+and Kobo (for surveys) data sets defining the data element name, code,
+short names, types, and key/value pairs for translating the codes
+into human-readable format.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>msf_dict</span>(
-  <span class='no'>disease</span>,
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"MSF-outbreak-dict.xlsx"</span>,
-  <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>compact</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>long</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+    <pre class="usage"><span class='fu'>msf_dict</span><span class='op'>(</span>
+  <span class='va'>disease</span>,
+  name <span class='op'>=</span> <span class='st'>"MSF-outbreak-dict.xlsx"</span>,
+  tibble <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  compact <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  long <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>msf_dict_survey</span>(
-  <span class='no'>disease</span>,
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"MSF-survey-dict.xlsx"</span>,
-  <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>compact</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+<span class='fu'>msf_dict_survey</span><span class='op'>(</span>
+  <span class='va'>disease</span>,
+  name <span class='op'>=</span> <span class='st'>"MSF-survey-dict.xlsx"</span>,
+  tibble <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  compact <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  long <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  template <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,12 +168,16 @@ for translating the codes into human-readable format.</p>
       <th>disease</th>
       <td><p>Specify which disease you would like to use.</p><ul>
 <li><p><code>msf_dict()</code> supports "AJS", "Cholera", "Measles", "Meningitis"</p></li>
-<li><p><code>msf_dict_survey()</code> supports "Mortality", "Nutrition", and "Vaccination"</p></li>
+<li><p><code>msf_dict_survey()</code> supports "Mortality", "Nutrition", and "Vaccination"
+(only used in surveys if <code>template = TRUE</code>)</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>name</th>
-      <td><p>the name of the dictionary stored in the package.</p></td>
+      <td><p>the name of the dictionary stored in the package.</p><ul>
+<li><p><code>msf_dict_survey()</code> supports Kobo dictionaries not stored within this package,
+to use these: specify <code>name</code>as path to .xlsx file and set the <code>template = False</code></p></li>
+</ul></td>
     </tr>
     <tr>
       <th>tibble</th>
@@ -183,165 +194,154 @@ works if <code>long = TRUE</code>.</p></td>
       <th>long</th>
       <td><p>If <code>TRUE</code> (default), the returned data dictionary is in long
 format with each option getting one row. If <code>FALSE</code>, then two data frames
-are returned, one with variables and the other with content options.</p></td>
+are returned, one with variables and the other with content options.</p>
+<p>@param template Only used for <code>msf_dict_survey()</code>.
+If <code>TRUE</code> (default) the returned data dictionary is a generic
+MSF OCA ERB pre-approved dictionary. If <code>FALSE</code> allows you to read in your
+own Kobo dictionary.</p></td>
+    </tr>
+    <tr>
+      <th>template</th>
+      <td><p>(for survey dictionaries): if <code>TRUE</code> read in a generic
+dictionary based on the MSF OCA ERB pre-approved template. However you can
+also specify your own dictionary if this differs substantially, by setting
+<code>template = FALSE</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/matchmaker/man/match_df.html'>matchmaker::match_df()</a></code> <code><a href='gen_data.html'>gen_data()</a></code> <code>msf_dict_survey()</code></p></div>
+    <div class='dont-index'><p><code><a href='https://www.repidemicsconsortium.org/matchmaker/reference/match_df.html'>matchmaker::match_df()</a></code> <code><a href='gen_data.html'>gen_data()</a></code> <code>msf_dict_survey()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"dplyr"</span>) <span class='kw'>&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"matchmaker"</span>)) {
-  <span class='fu'><a href='https://rdrr.io/r/base/source.html'>withAutoprint</a></span>({
-    <span class='co'># You will often want to use MSF dictionaries to translate codes to human-</span>
-    <span class='co'># readable variables. Here, we generate a data set of 20 cases:</span>
-    <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='gen_data.html'>gen_data</a></span>(
-      <span class='kw'>dictionary</span> <span class='kw'>=</span> <span class='st'>"Cholera"</span>,
-      <span class='kw'>varnames</span> <span class='kw'>=</span> <span class='st'>"data_element_shortname"</span>,
-      <span class='kw'>numcases</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-      <span class='kw'>org</span> <span class='kw'>=</span> <span class='st'>"MSF"</span>
-    )
-    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>dat</span>)
-
-    <span class='co'># We want the expanded dictionary, so we will select `compact = FALSE`</span>
-    <span class='no'>dict</span> <span class='kw'>&lt;-</span> <span class='fu'>msf_dict</span>(<span class='kw'>disease</span> <span class='kw'>=</span> <span class='st'>"Cholera"</span>, <span class='kw'>long</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>compact</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>dict</span>)
-
-    <span class='co'># Now we can use matchmaker to filter the data:</span>
-    <span class='no'>dat_clean</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>matchmaker</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/matchmaker/man/match_df.html'>match_df</a></span>(<span class='no'>dat</span>, <span class='no'>dict</span>,
-      <span class='kw'>from</span> <span class='kw'>=</span> <span class='st'>"option_code"</span>,
-      <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"option_name"</span>,
-      <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"data_element_shortname"</span>,
-      <span class='kw'>order</span> <span class='kw'>=</span> <span class='st'>"option_order_in_set"</span>
-    )
-    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>dat_clean</span>)
-  })
-}</div><div class='output co'>#&gt; &gt; dat &lt;- gen_data(dictionary = "Cholera", varnames = "data_element_shortname", 
-#&gt; +     numcases = 20, org = "MSF")
-#&gt; &gt; print(dat)
-#&gt; <span style='color: #555555;'># A tibble: 20 x 45</span><span>
-#&gt;    trimester exit_status treatment_facil… dehydration_lev… comments_on_lab…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DD          </span><span style='color: #BB0000;'>NA</span><span>               SE               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DD          </span><span style='color: #BB0000;'>NA</span><span>               UN               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 3</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DH          </span><span style='color: #BB0000;'>NA</span><span>               SO               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 4</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DD          </span><span style='color: #BB0000;'>NA</span><span>               SE               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 5</span><span> </span><span style='color: #BB0000;'>NA</span><span>        LA          </span><span style='color: #BB0000;'>NA</span><span>               UN               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 6</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DH          </span><span style='color: #BB0000;'>NA</span><span>               SO               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DOA         </span><span style='color: #BB0000;'>NA</span><span>               NO               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 8</span><span> </span><span style='color: #BB0000;'>NA</span><span>        TR          </span><span style='color: #BB0000;'>NA</span><span>               SO               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 9</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DOA         </span><span style='color: #BB0000;'>NA</span><span>               SE               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #BB0000;'>NA</span><span>        TR          </span><span style='color: #BB0000;'>NA</span><span>               NO               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>11</span><span> </span><span style='color: #BB0000;'>NA</span><span>        TR          </span><span style='color: #BB0000;'>NA</span><span>               NO               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>12</span><span> </span><span style='color: #BB0000;'>NA</span><span>        TR          </span><span style='color: #BB0000;'>NA</span><span>               NO               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>13</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DD          </span><span style='color: #BB0000;'>NA</span><span>               SE               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>14</span><span> </span><span style='color: #BB0000;'>NA</span><span>        TR          </span><span style='color: #BB0000;'>NA</span><span>               SE               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>15</span><span> </span><span style='color: #BB0000;'>NA</span><span>        AD          </span><span style='color: #BB0000;'>NA</span><span>               SE               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>16</span><span> </span><span style='color: #BB0000;'>NA</span><span>        TR          </span><span style='color: #BB0000;'>NA</span><span>               NO               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>17</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DOA         </span><span style='color: #BB0000;'>NA</span><span>               NO               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>18</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DH          </span><span style='color: #BB0000;'>NA</span><span>               SO               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>19</span><span> 3         DOA         </span><span style='color: #BB0000;'>NA</span><span>               UN               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>20</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DD          </span><span style='color: #BB0000;'>NA</span><span>               SO               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'># … with 40 more variables: fluids_treatment_plan </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, time_to_death </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   malaria_rdt_at_admission </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, previously_vaccinated </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   cholera_pcr_result </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, iv_fluids_received_litres </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>,
-#&gt; #   patient_origin_free_text </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, previous_vaccine_doses_received </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   age_years </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, arrival_date_in_area_if_3m </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span style='color: #555555;'>, age_days </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>,
-#&gt; #   msf_involvement </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, date_lab_sample_taken </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span style='color: #555555;'>, readmission </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   age_months </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, date_of_last_vaccination </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span style='color: #555555;'>, case_number </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
-#&gt; #   sex </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, patient_origin </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, prescribed_zinc_supplement </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   delivery_event </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, pregnancy_outcome_at_exit </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, date_of_exit </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span style='color: #555555;'>,
-#&gt; #   date_of_consultation_admission </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span style='color: #555555;'>, oedema </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, event_file_type </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   residential_status_brief </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, pregnant </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, cholera_rdt_result </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   dehydration_severity_during_stay </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, cholera_culture_result </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   foetus_alive_at_admission </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, treatment_facility_site </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>,
-#&gt; #   prescribed_antibiotics </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, cholera_referred_to </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   ors_consumed_litres </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, treatment_location </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
-#&gt; #   cholera_referred_from </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, cholera_treatment_facility_type </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   date_of_onset </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>
-#&gt; &gt; dict &lt;- msf_dict(disease = "Cholera", long = TRUE, compact = FALSE, tibble = TRUE)
-#&gt; &gt; print(dict)
-#&gt; </span><span style='color: #555555;'># A tibble: 182 x 11</span><span>
-#&gt;    data_element_uid data_element_na… data_element_sh… data_element_de…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'> 1</span><span> FF7d81Zy0yQ      egen_013_pregna… trimester        If pregnant, tr…
-#&gt; </span><span style='color: #555555;'> 2</span><span> FF7d81Zy0yQ      egen_013_pregna… trimester        If pregnant, tr…
-#&gt; </span><span style='color: #555555;'> 3</span><span> FF7d81Zy0yQ      egen_013_pregna… trimester        If pregnant, tr…
-#&gt; </span><span style='color: #555555;'> 4</span><span> ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#&gt; </span><span style='color: #555555;'> 5</span><span> ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#&gt; </span><span style='color: #555555;'> 6</span><span> ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#&gt; </span><span style='color: #555555;'> 7</span><span> ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#&gt; </span><span style='color: #555555;'> 8</span><span> ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#&gt; </span><span style='color: #555555;'> 9</span><span> ADfNqpCL5kf      egen_015_exit_s… exit_status      Final status of…
-#&gt; </span><span style='color: #555555;'>10</span><span> wjCDTwXmtix      egen_064_treatm… treatment_facil… Name of facilit…
-#&gt; </span><span style='color: #555555;'># … with 172 more rows, and 7 more variables: data_element_valuetype </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
-#&gt; #   data_element_formname </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, used_optionset_uid </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, option_code </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
-#&gt; #   option_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, option_uid </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, option_order_in_set </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; &gt; dat_clean &lt;- matchmaker::match_df(dat, dict, from = "option_code", to = "option_name", 
-#&gt; +     by = "data_element_shortname", order = "option_order_in_set")
-#&gt; &gt; print(dat_clean)
-#&gt; </span><span style='color: #555555;'># A tibble: 20 x 45</span><span>
-#&gt;    trimester exit_status treatment_facil… dehydration_lev… comments_on_lab…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Dead in fa… </span><span style='color: #BB0000;'>NA</span><span>               Severe           </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Dead in fa… </span><span style='color: #BB0000;'>NA</span><span>               Unknown          </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 3</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Discharged… </span><span style='color: #BB0000;'>NA</span><span>               Some             </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 4</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Dead in fa… </span><span style='color: #BB0000;'>NA</span><span>               Severe           </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 5</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Left again… </span><span style='color: #BB0000;'>NA</span><span>               Unknown          </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 6</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Discharged… </span><span style='color: #BB0000;'>NA</span><span>               Some             </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Dead on ar… </span><span style='color: #BB0000;'>NA</span><span>               None             </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 8</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Transferre… </span><span style='color: #BB0000;'>NA</span><span>               Some             </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'> 9</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Dead on ar… </span><span style='color: #BB0000;'>NA</span><span>               Severe           </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Transferre… </span><span style='color: #BB0000;'>NA</span><span>               None             </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>11</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Transferre… </span><span style='color: #BB0000;'>NA</span><span>               None             </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>12</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Transferre… </span><span style='color: #BB0000;'>NA</span><span>               None             </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>13</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Dead in fa… </span><span style='color: #BB0000;'>NA</span><span>               Severe           </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>14</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Transferre… </span><span style='color: #BB0000;'>NA</span><span>               Severe           </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>15</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Transferre… </span><span style='color: #BB0000;'>NA</span><span>               Severe           </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>16</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Transferre… </span><span style='color: #BB0000;'>NA</span><span>               None             </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>17</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Dead on ar… </span><span style='color: #BB0000;'>NA</span><span>               None             </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>18</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Discharged… </span><span style='color: #BB0000;'>NA</span><span>               Some             </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>19</span><span> 3rd trim… Dead on ar… </span><span style='color: #BB0000;'>NA</span><span>               Unknown          </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'>20</span><span> </span><span style='color: #BB0000;'>NA</span><span>        Dead in fa… </span><span style='color: #BB0000;'>NA</span><span>               Some             </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #555555;'># … with 40 more variables: fluids_treatment_plan </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, time_to_death </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   malaria_rdt_at_admission </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, previously_vaccinated </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   cholera_pcr_result </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, iv_fluids_received_litres </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>,
-#&gt; #   patient_origin_free_text </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, previous_vaccine_doses_received </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   age_years </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, arrival_date_in_area_if_3m </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span style='color: #555555;'>, age_days </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>,
-#&gt; #   msf_involvement </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, date_lab_sample_taken </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span style='color: #555555;'>, readmission </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   age_months </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, date_of_last_vaccination </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span style='color: #555555;'>, case_number </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
-#&gt; #   sex </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, patient_origin </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, prescribed_zinc_supplement </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   delivery_event </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, pregnancy_outcome_at_exit </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, date_of_exit </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span style='color: #555555;'>,
-#&gt; #   date_of_consultation_admission </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span style='color: #555555;'>, oedema </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, event_file_type </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   residential_status_brief </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, pregnant </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, cholera_rdt_result </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   dehydration_severity_during_stay </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, cholera_culture_result </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   foetus_alive_at_admission </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, treatment_facility_site </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
-#&gt; #   prescribed_antibiotics </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, cholera_referred_to </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   ors_consumed_litres </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, treatment_location </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
-#&gt; #   cholera_referred_from </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, cholera_treatment_facility_type </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
-#&gt; #   date_of_onset </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span></div></span></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://www.repidemicsconsortium.org/matchmaker'>"matchmaker"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/source.html'>withAutoprint</a></span><span class='op'>(</span><span class='op'>{</span></span>
+<span class='r-in'>    <span class='co'># You will often want to use MSF dictionaries to translate codes to human-</span></span>
+<span class='r-in'>    <span class='co'># readable variables. Here, we generate a data set of 20 cases:</span></span>
+<span class='r-in'>    <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='gen_data.html'>gen_data</a></span><span class='op'>(</span></span>
+<span class='r-in'>      dictionary <span class='op'>=</span> <span class='st'>"Cholera"</span>,</span>
+<span class='r-in'>      varnames <span class='op'>=</span> <span class='st'>"data_element_shortname"</span>,</span>
+<span class='r-in'>      numcases <span class='op'>=</span> <span class='fl'>20</span>,</span>
+<span class='r-in'>      org <span class='op'>=</span> <span class='st'>"MSF"</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>    <span class='co'># We want the expanded dictionary, so we will select `compact = FALSE`</span></span>
+<span class='r-in'>    <span class='va'>dict</span> <span class='op'>&lt;-</span> <span class='fu'>msf_dict</span><span class='op'>(</span>disease <span class='op'>=</span> <span class='st'>"Cholera"</span>, long <span class='op'>=</span> <span class='cn'>TRUE</span>, compact <span class='op'>=</span> <span class='cn'>FALSE</span>, tibble <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>dict</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>    <span class='co'># Now we can use matchmaker to filter the data:</span></span>
+<span class='r-in'>    <span class='va'>dat_clean</span> <span class='op'>&lt;-</span> <span class='fu'>matchmaker</span><span class='fu'>::</span><span class='fu'><a href='https://www.repidemicsconsortium.org/matchmaker/reference/match_df.html'>match_df</a></span><span class='op'>(</span><span class='va'>dat</span>, <span class='va'>dict</span>,</span>
+<span class='r-in'>      from <span class='op'>=</span> <span class='st'>"option_code"</span>,</span>
+<span class='r-in'>      to <span class='op'>=</span> <span class='st'>"option_name"</span>,</span>
+<span class='r-in'>      by <span class='op'>=</span> <span class='st'>"data_element_shortname"</span>,</span>
+<span class='r-in'>      order <span class='op'>=</span> <span class='st'>"option_order_in_set"</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>dat_clean</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>}</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &gt; dat &lt;- gen_data(dictionary = "Cholera", varnames = "data_element_shortname", </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +     numcases = 20, org = "MSF")</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &gt; print(dat)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 20 x 45</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    trimester exit_status treatment_facilit~ dehydration_level~ comments_on_lab_~</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>            </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DD          </span><span style='color: #BB0000;'>NA</span><span>                 SE                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DD          </span><span style='color: #BB0000;'>NA</span><span>                 UN                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DH          </span><span style='color: #BB0000;'>NA</span><span>                 SO                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DD          </span><span style='color: #BB0000;'>NA</span><span>                 SE                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span><span> </span><span style='color: #BB0000;'>NA</span><span>        LA          </span><span style='color: #BB0000;'>NA</span><span>                 UN                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DH          </span><span style='color: #BB0000;'>NA</span><span>                 SO                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DOA         </span><span style='color: #BB0000;'>NA</span><span>                 NO                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span><span> </span><span style='color: #BB0000;'>NA</span><span>        TR          </span><span style='color: #BB0000;'>NA</span><span>                 SO                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DOA         </span><span style='color: #BB0000;'>NA</span><span>                 SE                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span><span> </span><span style='color: #BB0000;'>NA</span><span>        TR          </span><span style='color: #BB0000;'>NA</span><span>                 NO                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span><span> </span><span style='color: #BB0000;'>NA</span><span>        TR          </span><span style='color: #BB0000;'>NA</span><span>                 NO                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span><span> </span><span style='color: #BB0000;'>NA</span><span>        TR          </span><span style='color: #BB0000;'>NA</span><span>                 NO                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DD          </span><span style='color: #BB0000;'>NA</span><span>                 SE                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>14</span><span> </span><span style='color: #BB0000;'>NA</span><span>        TR          </span><span style='color: #BB0000;'>NA</span><span>                 SE                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>15</span><span> </span><span style='color: #BB0000;'>NA</span><span>        AD          </span><span style='color: #BB0000;'>NA</span><span>                 SE                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>16</span><span> </span><span style='color: #BB0000;'>NA</span><span>        TR          </span><span style='color: #BB0000;'>NA</span><span>                 NO                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>17</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DOA         </span><span style='color: #BB0000;'>NA</span><span>                 NO                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>18</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DH          </span><span style='color: #BB0000;'>NA</span><span>                 SO                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>19</span><span> 3         DOA         </span><span style='color: #BB0000;'>NA</span><span>                 UN                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>20</span><span> </span><span style='color: #BB0000;'>NA</span><span>        DD          </span><span style='color: #BB0000;'>NA</span><span>                 SO                 </span><span style='color: #BB0000;'>NA</span><span>               </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># ... with 40 more variables: fluids_treatment_plan &lt;fct&gt;, time_to_death &lt;fct&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   malaria_rdt_at_admission &lt;fct&gt;, previously_vaccinated &lt;fct&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   cholera_pcr_result &lt;fct&gt;, iv_fluids_received_litres &lt;int&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   patient_origin_free_text &lt;chr&gt;, previous_vaccine_doses_received &lt;fct&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   age_years &lt;int&gt;, arrival_date_in_area_if_3m &lt;date&gt;, age_days &lt;int&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   msf_involvement &lt;fct&gt;, date_lab_sample_taken &lt;date&gt;, readmission &lt;fct&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   age_months &lt;int&gt;, date_of_last_vaccination &lt;date&gt;, case_number &lt;chr&gt;, ...</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &gt; dict &lt;- msf_dict(disease = "Cholera", long = TRUE, compact = FALSE, tibble = TRUE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &gt; print(dict)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 182 x 11</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    data_element_uid data_element_name   data_element_shor~ data_element_descrip~</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span><span> FF7d81Zy0yQ      egen_013_pregnancy~ trimester          If pregnant, trimest~</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span><span> FF7d81Zy0yQ      egen_013_pregnancy~ trimester          If pregnant, trimest~</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span><span> FF7d81Zy0yQ      egen_013_pregnancy~ trimester          If pregnant, trimest~</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span><span> ADfNqpCL5kf      egen_015_exit_stat~ exit_status        Final status of pati~</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span><span> ADfNqpCL5kf      egen_015_exit_stat~ exit_status        Final status of pati~</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span><span> ADfNqpCL5kf      egen_015_exit_stat~ exit_status        Final status of pati~</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span><span> ADfNqpCL5kf      egen_015_exit_stat~ exit_status        Final status of pati~</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span><span> ADfNqpCL5kf      egen_015_exit_stat~ exit_status        Final status of pati~</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span><span> ADfNqpCL5kf      egen_015_exit_stat~ exit_status        Final status of pati~</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span><span> wjCDTwXmtix      egen_064_treatment~ treatment_facilit~ Name of facility/sit~</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># ... with 172 more rows, and 7 more variables: data_element_valuetype &lt;chr&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   data_element_formname &lt;chr&gt;, used_optionset_uid &lt;chr&gt;, option_code &lt;chr&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   option_name &lt;chr&gt;, option_uid &lt;chr&gt;, option_order_in_set &lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &gt; dat_clean &lt;- matchmaker::match_df(dat, dict, from = "option_code", to = "option_name", </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +     by = "data_element_shortname", order = "option_order_in_set")</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &gt; print(dat_clean)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 20 x 45</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    trimester     exit_status  treatment_facil~ dehydration_lev~ comments_on_lab~</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>           </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Dead in fac~ </span><span style='color: #BB0000;'>NA</span><span>               Severe           </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Dead in fac~ </span><span style='color: #BB0000;'>NA</span><span>               Unknown          </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Discharged ~ </span><span style='color: #BB0000;'>NA</span><span>               Some             </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Dead in fac~ </span><span style='color: #BB0000;'>NA</span><span>               Severe           </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Left agains~ </span><span style='color: #BB0000;'>NA</span><span>               Unknown          </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Discharged ~ </span><span style='color: #BB0000;'>NA</span><span>               Some             </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Dead on arr~ </span><span style='color: #BB0000;'>NA</span><span>               None             </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Transferred~ </span><span style='color: #BB0000;'>NA</span><span>               Some             </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Dead on arr~ </span><span style='color: #BB0000;'>NA</span><span>               Severe           </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Transferred~ </span><span style='color: #BB0000;'>NA</span><span>               None             </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Transferred~ </span><span style='color: #BB0000;'>NA</span><span>               None             </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Transferred~ </span><span style='color: #BB0000;'>NA</span><span>               None             </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Dead in fac~ </span><span style='color: #BB0000;'>NA</span><span>               Severe           </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>14</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Transferred~ </span><span style='color: #BB0000;'>NA</span><span>               Severe           </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>15</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Transferred~ </span><span style='color: #BB0000;'>NA</span><span>               Severe           </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>16</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Transferred~ </span><span style='color: #BB0000;'>NA</span><span>               None             </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>17</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Dead on arr~ </span><span style='color: #BB0000;'>NA</span><span>               None             </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>18</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Discharged ~ </span><span style='color: #BB0000;'>NA</span><span>               Some             </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>19</span><span> 3rd trimester Dead on arr~ </span><span style='color: #BB0000;'>NA</span><span>               Unknown          </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>20</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Dead in fac~ </span><span style='color: #BB0000;'>NA</span><span>               Some             </span><span style='color: #BB0000;'>NA</span><span>              </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># ... with 40 more variables: fluids_treatment_plan &lt;fct&gt;, time_to_death &lt;fct&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   malaria_rdt_at_admission &lt;fct&gt;, previously_vaccinated &lt;fct&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   cholera_pcr_result &lt;fct&gt;, iv_fluids_received_litres &lt;int&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   patient_origin_free_text &lt;chr&gt;, previous_vaccine_doses_received &lt;fct&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   age_years &lt;int&gt;, arrival_date_in_area_if_3m &lt;date&gt;, age_days &lt;int&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   msf_involvement &lt;fct&gt;, date_lab_sample_taken &lt;date&gt;, readmission &lt;fct&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   age_months &lt;int&gt;, date_of_last_vaccination &lt;date&gt;, case_number &lt;chr&gt;, ...</span></span>
+</pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
 
       <footer>
       <div class="copyright">
-  <p>Developed by Zhian N. Kamvar, Alex Spina, Lukas Richter, Patrick Keating.</p>
+  <p>Developed by Zhian N. Kamvar, Alexander Spina, Lukas Richter, Patrick Keating.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
