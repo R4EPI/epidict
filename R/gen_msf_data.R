@@ -581,7 +581,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output <- gen_hh_clusters(dis_output,
                                   cluster = "cluster_number",
                                   household = "household_number",
-                                  eligible = "children_count",
+                                  eligible = "number_children",
                                   inc_building = TRUE,
                                   building = "households_building",
                                   select_household = "random_hh"
