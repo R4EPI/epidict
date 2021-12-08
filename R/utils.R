@@ -49,7 +49,7 @@ get_dictionary <- function(dictionary, org = "MSF") {
 
   # define which ones are outbreaks and which ones are survey datasets
   if (toupper(org) == "MSF") {
-    SURVEYS <- c("Mortality", "Nutrition", "Vaccination_long")
+    SURVEYS <- c("Mortality", "Nutrition", "Vaccination_long", "Vaccination_short")
     OUTBREAKS <- c("Cholera", "Measles", "Meningitis", "AJS")
     # NOTE: For future collaborators, if you have other dictionaries you wish to
     #       add to this project, then you should place the names of your valid

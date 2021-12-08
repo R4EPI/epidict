@@ -21,7 +21,7 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
     disease <- get_dictionary(disease, org = "MSF")$survey
 
     if (length(disease) == 0) {
-      stop("disease must be one of 'Mortality', 'Nutrition', 'Vaccination_long'", call. = FALSE)
+      stop("disease must be one of 'Mortality', 'Nutrition', 'Vaccination_long', 'Vaccination_short'", call. = FALSE)
     }
     # get excel file path (need to specify the file name)
     path <- system.file("extdata", name, package = "epidict")

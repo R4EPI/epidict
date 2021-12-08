@@ -78,6 +78,7 @@ In addition, there are four MSF survey dictionaries available:
  - Retrospective mortality and access to care ("Mortality")
  - Malnutrition ("Nutrition") 
  - Vaccination coverage long form ("vaccination_long")
+ - Vaccination coverage short form ("vaccination_short")
 
 > You can read more about the survey dictionaries at <https://r4epis.netlify.com/surveys>
 
@@ -97,6 +98,7 @@ hidden from the user
 msf_dict_survey("Mortality")
 msf_dict_survey("Nutrition")
 msf_dict_survey("Vaccination_long")
+msf_dict_survey("Vaccination_short")
 ```
 
 </details>
