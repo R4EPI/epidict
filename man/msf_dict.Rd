@@ -26,7 +26,7 @@ msf_dict_survey(
 \item{disease}{Specify which disease you would like to use.
 \itemize{
 \item \code{msf_dict()} supports "AJS", "Cholera", "Measles", "Meningitis"
-\item \code{msf_dict_survey()} supports "Mortality", "Nutrition", and "Vaccination"
+\item \code{msf_dict_survey()} supports "Mortality", "Nutrition", and "Vaccination_long"
 (only used in surveys if \code{template = TRUE})
 }}
 

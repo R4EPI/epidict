@@ -1,5 +1,5 @@
 # Function to load MSF data dictionary for surveys based on Kobo collect.
-# The default settings 
+# The default settings
 
 #' @param template (for survey dictionaries): if `TRUE` read in a generic
 #' dictionary based on the MSF OCA ERB pre-approved template. However you can
@@ -21,7 +21,7 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
     disease <- get_dictionary(disease, org = "MSF")$survey
 
     if (length(disease) == 0) {
-      stop("disease must be one of 'Mortality', 'Nutrition', 'Vaccination'", call. = FALSE)
+      stop("disease must be one of 'Mortality', 'Nutrition', 'Vaccination_long'", call. = FALSE)
     }
     # get excel file path (need to specify the file name)
     path <- system.file("extdata", name, package = "epidict")
@@ -54,7 +54,7 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
   colnames(dat_opts) <- sprintf("option_%s", colnames(dat_opts))
 
   # drop rows with grouping variables for repeats (not necessary for generating data)
-  grps <- dat_dict$type %in% c("begin_group", "end_group", "begin_repeat", "end_repeat") 
+  grps <- dat_dict$type %in% c("begin_group", "end_group", "begin_repeat", "end_repeat")
   dat_dict <- dat_dict[!grps, , drop = FALSE]
 
   # create a value type column (for whether select one or multiple)

@@ -49,7 +49,7 @@ get_dictionary <- function(dictionary, org = "MSF") {
 
   # define which ones are outbreaks and which ones are survey datasets
   if (toupper(org) == "MSF") {
-    SURVEYS <- c("Mortality", "Nutrition", "Vaccination")
+    SURVEYS <- c("Mortality", "Nutrition", "Vaccination_long")
     OUTBREAKS <- c("Cholera", "Measles", "Meningitis", "AJS")
     # NOTE: For future collaborators, if you have other dictionaries you wish to
     #       add to this project, then you should place the names of your valid
@@ -102,7 +102,7 @@ enforce_timing <- function(x, first, second, add = 2, inclusive = FALSE) {
 fix_dates <- function(dis_output) {
 
   # Fix DATES ----------------------------------------------------------------
-  #
+  # For outbreaks
   # The date sampling we did above
   # exit dates before date of entry
   # just add 20 to admission.... (was easiest...)

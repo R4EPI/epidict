@@ -2,7 +2,7 @@
 #'
 #' @param dictionary Specify which dictionary you would like to use.
 #'   Currently supports "Cholera", "Measles", "Meningitis", "AJS",
-#'    "Mortality", "Vaccination" and "Nutrition"
+#'    "Mortality", "Nutrition", "Vaccination_long" and
 #'
 #' @param varnames Specify name of column that contains variable names. Currently
 #'   default set to "data_element_shortname". If `dictionary` is a survey,
@@ -574,7 +574,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
   }
 
-  if (dictionary == "Vaccination") {
+  if (dictionary == "Vaccination_long") {
 
 
     # create household numbers within cluster numbers
