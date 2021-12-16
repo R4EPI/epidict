@@ -433,7 +433,7 @@ gen_last_ill_hh <- function(dis_output,
 #' @param weight_var name of variable for weight in kilograms
 #' @param height_var name of variable for height in centimetres
 #' @param muac_var   name of variable for mid-upper arm circumference (MUAC) in milimetres
-#' @param age_var    name of a variable for age in years (used for filtering)
+#' @param age_var    name of variable for age in years (used for filtering)
 #'
 #' @return three variables in your dataframe with the appropriate measures
 #'
@@ -462,6 +462,52 @@ gen_anthro <- function(dis_output,
 
   # MUAC in mm
   dis_output[age_filter, muac_var] <- sample(80:190, nums, replace = TRUE)
+
+  # return dataset
+  return(dis_output)
+
+}
+
+
+#' generate vaccination variables with appropriate ages
+#'
+#' @param dis_output   a data frame containing household and cluster
+#' @param vacc_var     name of variable for whether vaccine was given
+#' @param age_vacc_var name of variable for age at vaccination
+#' @param age_var      name of variable for current age
+#' @param place_var    name of variable for place of vaccination
+#' @param reason_var   name of variable for reason not vaccinated
+#'
+#' @return vaccination variables in your dataframe with the appropriate contents
+#'
+#' @noRd
+
+gen_vaccs <- function(dis_output,
+                      vacc_var,
+                      age_vacc_var,
+                      age_var,
+                      place_var,
+                      reason_var) {
+
+  # get which rows have been vaccinated
+  has_vacc <- dis_output[[vacc_var]] %in% c("verbal", "card")
+
+  # sample months
+  dis_output[[age_vacc_var]][has_vacc] <- sample_age(11L,
+                                                     sum(has_vacc, na.rm = TRUE))
+
+  # find the ones with age vacc bigger than actual age
+  chooser <- has_vacc &
+    has_value(dis_output[[age_var]]) &
+    dis_output[[age_vacc_var]] > dis_output[[age_var]]
+
+  # if age in months not empty just use that (otherwise will have some in future)
+  dis_output[[age_vacc_var]][chooser] <- dis_output[[age_var]][chooser]
+
+  # only fill in place of vaccination if vaccinated
+  dis_output[[place_var]][!has_vacc] <- NA
+  # only fill in reason no vaccination if not vaccinated
+  dis_output[[reason_var]][has_vacc] <- NA
 
   # return dataset
   return(dis_output)

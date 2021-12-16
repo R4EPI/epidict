@@ -800,59 +800,45 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output <- gen_consent(dis_output)
 
 
-    ## TODO turn all this in to a function!
+    # clean up routine vaccination
+    dis_output <- gen_vaccs(dis_output,
+                            vacc_var =     "routine_vacc",
+                            age_vacc_var = "age_routine_vacc",
+                            age_var =      "age_months",
+                            place_var =    "place_routine_vacc",
+                            reason_var =   "reason_route_vacc"
+                            )
 
+    # clean up msf vaccination
+    dis_output <- gen_vaccs(dis_output,
+                            vacc_var =     "msf_vacc",
+                            age_vacc_var = "age_msf_vacc",
+                            age_var =      "age_months",
+                            place_var =    "place_msf_vacc",
+                            reason_var =   "reason_msf_vacc"
+                            )
 
-    # add in age if routine vaccinated
-    rout_vaccinated <- dis_output$routine_vacc %in% c("verbal", "card")
-    # sample months
-    dis_output$age_routine_vacc[rout_vaccinated] <- sample_age(11L, sum(rout_vaccinated, na.rm = TRUE))
-    # if age in months not empty just use that (otherwise will have some in future)
-    dis_output$age_routine_vacc[rout_vaccinated &
-                                  has_value(dis_output$age_months)] <- dis_output$age_months[rout_vaccinated &
-                                                                                               has_value(dis_output$age_months)]
-    # only fill in place of vaccination if vaccinated
-    dis_output$place_routine_vacc[!rout_vaccinated] <- NA
-    # only fill in reason no vaccination if not vaccinated
-    dis_output$reason_route_vacc[rout_vaccinated] <- NA
-    # add in age if msf vaccinated
-    msf_vaccinated <- dis_output$msf_vacc %in% c("verbal", "card")
-    # sample months
-    dis_output$age_msf_vacc[msf_vaccinated] <- sample_age(11L, sum(msf_vaccinated, na.rm = TRUE))
-    # if age in months not empty just use that (otherwise will have some in future)
-    dis_output$age_msf_vacc[msf_vaccinated &
-                              has_value(dis_output$age_months)] <- dis_output$age_months[msf_vaccinated &
-                                                                                           has_value(dis_output$age_months)]
-    # only fill in place of vaccination if vaccinated
-    dis_output$place_msf_vacc[!msf_vaccinated] <- NA
-    # only fill in reason no vaccination if not vaccinated
-    dis_output$reason_msf_vacc[msf_vaccinated] <- NA
-    # add in age if sia vaccinated
-    sia_vaccinated <- dis_output$sia_vacc %in% c("verbal", "card")
-    # sample months
-    dis_output$age_sia_vacc[sia_vaccinated] <- sample_age(11L, sum(sia_vaccinated, na.rm = TRUE))
-    # if age in months not empty just use that (otherwise will have some in future)
-    dis_output$age_sia_vacc[sia_vaccinated &
-                              has_value(dis_output$age_months)] <- dis_output$age_months[sia_vaccinated &
-                                                                                           has_value(dis_output$age_months)]
-    # only fill in place of vaccination if vaccinated
-    dis_output$place_sia_vacc[!sia_vaccinated] <- NA
-    # only fill in reason no vaccination if not vaccinated
-    dis_output$reason_sia_vacc[sia_vaccinated] <- NA
+    # clean up sia vaccination
+    dis_output <- gen_vaccs(dis_output,
+                            vacc_var =     "sia_vacc",
+                            age_vacc_var = "age_sia_vacc",
+                            age_var =      "age_months",
+                            place_var =    "place_sia_vacc",
+                            reason_var =   "reason_sia_vacc"
+                            )
 
     # add in age for children with measles
     meas_diag <- dis_output$diagnosis_disease == "yes"
     meas_diag[is.na(meas_diag)] <- FALSE
 
-
-    ## TODO make sure these ages are less than original age
-
     # sample months
     dis_output$age_diagnosis[meas_diag] <- sample_age(11L, sum(meas_diag, na.rm = TRUE))
     # if age months not empty just use that (otherwise will have some in future)
     dis_output$age_diagnosis[meas_diag &
-                               has_value(dis_output$age_months)] <- dis_output$age_months[meas_diag &
-                                                                                            has_value(dis_output$age_months)]
+                               has_value(dis_output$age_months) &
+                               dis_output$age_diagnosis > dis_output$age_months] <- dis_output$age_months[meas_diag &
+                                                                                                            has_value(dis_output$age_months) &
+                                                                                                            dis_output$age_diagnosis > dis_output$age_months]
 
   }
 
