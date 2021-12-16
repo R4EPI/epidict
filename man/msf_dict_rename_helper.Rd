@@ -12,11 +12,13 @@ msf_dict_rename_helper(
 }
 \arguments{
 \item{disease}{Specify which disease you would like to use.
-Currently supports "Cholera", "Measles" and "Meningitis", "AJS".}
+Currently supports "Cholera", "Measles", "Meningitis", "AJS",
+"Mortality", "Nutrition", "Vaccination_short" and "Vaccination_long".}
 
 \item{varnames}{Specify name of column that contains varnames. Currently
-default set to "Item".  (this can probably be deleted once dictionaries
-standardise) If \code{dictionary} is "Mortality", \code{varnames} needs to be "column_name"`.}
+default set to "data_element_shortname".
+If \code{dictionary} is a survey ("Mortality", "Nutrition", "Vaccination_short"
+or "Vaccination_long") \code{varnames} needs to be "name"`.}
 
 \item{copy_to_clipboard}{if \code{TRUE} (default), the rename template will be
 copied to the user's clipboard with \code{\link[clipr:write_clip]{clipr::write_clip()}}. If \code{FALSE}, the
