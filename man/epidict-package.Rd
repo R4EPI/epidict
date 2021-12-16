@@ -6,13 +6,7 @@
 \alias{epidict-package}
 \title{epidict: Epidemiology data dictionaries and random data generators}
 \description{
-The 'R4EPIs' project <https://R4epis.netlify.com> seeks to provide 
-    a set of standardized tools for analysis of outbreak and survey data in
-    humanitarian aid settings. This package currently provides standardized data
-    dictionaries from MSF OCA for four outbreak scenarios (Acute Jaundice
-    Syndrome, Cholera, Measles, Meningitis) and three surveys (Retrospective
-    mortality and access to care, Malnutrition, and Vaccination coverage). In
-    addition, a data generator from these dictionaries is provided.
+The 'R4EPIs' project <https://R4epis.netlify.com> seeks to provide a set of standardized tools for analysis of outbreak and survey data in humanitarian aid settings. This package currently provides standardized data dictionaries from MSF OCA for four outbreak scenarios (Acute Jaundice Syndrome, Cholera, Measles, Meningitis) and three surveys (Retrospective mortality and access to care, Malnutrition, and Vaccination coverage). In addition, a data generator from these dictionaries is provided.
 }
 \seealso{
 Useful links:

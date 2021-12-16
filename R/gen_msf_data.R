@@ -163,6 +163,17 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     ## TODO: Move UNDER_FIVE up to here so can be used for all child filtering
     ## and make it true/false (see vaccination polio_woc_rows)
 
+    # select children under fifteen yrs
+    dis_under_15 <- dis_output$age_years < 15 &
+      !is.na(dis_output$age_years)
+
+    # select children under five yrs
+    UNDER_FIVE <- dis_output$age_years < 5 &
+      !is.na(dis_output$age_years)
+
+    # select children over one yr
+    OVER_ONE <- dis_output$age_years > 1 &
+      !is.na(dis_output$age_years)
 
     # anthropometric measurements for nutrition module
     dis_output <- gen_anthro(dis_output,
@@ -171,17 +182,17 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                              muac_var   = "muac",
                              age_var    = "age_years")
     # make oedema na for those over 5
-    dis_output$oedema[dis_output$age_years >= 5] <- NA
+    dis_output$oedema[!UNDER_FIVE] <- NA
 
 
     # only read write if over fifteen years
-    dis_under_15 <- dis_output$age_years < 15
     dis_output$read_write[dis_under_15] <- NA
     no_read_write <- dis_under_15 | dis_output$read_write != "yes"
     dis_output$education_level[no_read_write] <- NA
 
-    # measles vaccination only for those between 5 and 60 months
-    no_vaccine <- with(dis_output, age_months <= 5 | age_months >= 61 |
+    # measles vaccination only for those between 5 and 60 months (or just over 5yrs)
+    no_vaccine <- with(dis_output,
+                       age_months <= 5 | age_months >= 61 |
                          age_years >= 5)
     dis_output$measles_vaccination[no_vaccine] <- NA
 
@@ -233,7 +244,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # health seeking behaviour in children being sick with malaria
 
     # only among children below 5 yrs
-    dis_output[which(dis_output$age_years >= 5),
+    dis_output[!UNDER_FIVE,
                c("fever_past_weeks",
                  "fever_now",
                  "care_fever")] <- NA
@@ -258,23 +269,21 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # baseline malaria
 
     # only among children below 5 yrs
-    dis_output[dis_output$age_years >= 5 |
-                 is.na(dis_output$age_years),
+    dis_output[!UNDER_FIVE,
                c("thick_smear",
                  "thin_smear",
                  "rdt",
                  "oedema_mal")] <- NA
 
-    # select children under five
-    UNDER_FIVE <- which(dis_output$age_years < 5)
+
 
     # temperature in celsius
     dis_output$axiliary_temp[UNDER_FIVE] <- gen_eral(36.5:39.5,
-                                                     length(UNDER_FIVE))
+                                                     sum(UNDER_FIVE))
 
     # clinical staging of spleen
     dis_output$spleen[UNDER_FIVE] <- gen_eral(0:4,
-                                              length(UNDER_FIVE))
+                                              sum(UNDER_FIVE))
 
     # anthropometric measurements for malaria module
     dis_output <- gen_anthro(dis_output,
@@ -285,11 +294,10 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
     # number of previous malaria episodes
     dis_output$malaria_episodes[UNDER_FIVE] <- gen_eral(0:9,
-                                                        length(UNDER_FIVE))
+                                                        sum(UNDER_FIVE))
 
 
     # assume person is not born during study when age > 1
-    OVER_ONE <- dis_output$age_years > 1
     dis_output$born[OVER_ONE] <- factor("No", levels(dis_output$born))
     dis_output$remember_dob[OVER_ONE] <- NA
     dis_output$date_birth[OVER_ONE] <- NA
@@ -304,7 +312,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     )
 
     # set columns that are relate to "death" as NA if "died" is "no"
-    died <- dis_output$died == "no"
+    died <- dis_output$died == "no" | is.na(dis_output$died)
     dcols <- c(
       "remember_death",
       "date_death",
@@ -324,19 +332,19 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
       "period_illness_viol",
       "place_death_viol"
     )
-    for (d in dcols) {
-      dis_output[[d]][died] <- NA
-    }
+
+    dis_output[died, dcols] <- NA
+
 
     # fix arrival/leave dates
 
     # cascaded of yeses dates and causes
     # and if did not arrive during study period or dont know date then NA
 
-    not_arrived <- dis_output$arrived != "yes"
-    not_left     <- dis_output$left != "yes"
-    not_born     <- dis_output$born != "yes"
-    not_died     <- dis_output$died != "yes"
+    not_arrived  <- dis_output$arrived != "yes"
+    not_left     <- dis_output$left    != "yes"
+    not_born     <- dis_output$born    != "yes"
+    not_died     <- dis_output$died    != "yes"
 
     dis_output$remember_arrival[not_arrived] <- NA
     not_remember_arrival <- dis_output$remember_arrival != "yes"
@@ -431,9 +439,10 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                  "visit_second_hf",
                  "place_second_hf",
                  "reason_second_hf_selected",
-                 "source_money_last",
-                 grep("source_money_last", names(dis_output))
-                    )] <- NA
+                 names(dis_output)[
+                   grep("source_money_last", names(dis_output))
+                   ]
+                 )] <- NA
 
     # reason for not seeking care only among those who did not
     dis_output$no_care_illness_last[dis_output$care_illness_last != "no" |
@@ -465,8 +474,9 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                  "visit_second_hf_df",
                  "place_second_hf_df",
                  "reason_second_hf_selected_df",
-                 "source_money_df",
-                 grep("source_money_df", names(dis_output))
+                 names(dis_output)[
+                   grep("source_money_df", names(dis_output))
+                   ]
                  )] <- NA
 
     # reason for not seeking care only among those who did not
@@ -480,7 +490,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                  "reason_first_hf_selected_df",
                  "place_second_hf_df",
                  "reason_second_hf_selected_df",
-                 "source_money_last_df"
+                 "source_money_df"
                )] <- NA
 
     # Violence - death
@@ -624,12 +634,12 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     woc_vars <- c("injection_upper_arm"       ,
                   "scar_present"              ,
                   "poliodrop_woc"             ,
-                  "num_poliodrop_hf_woc"      ,
-                  "num_poliodrop_camp_woc"    ,
+                  "poliodrop_hf_woc"          ,
+                  "poliodrop_camp_woc"        ,
                   "polioinjection_woc"        ,
                   "num_polioinjection_woc"    ,
                   "quad_penta_woc"            ,
-                  "num_quand_penta_woc"       ,
+                  "num_quad_penta_woc"        ,
                   "pcv_woc"                   ,
                   "num_pcv_woc"               ,
                   "measles_woc"               ,
