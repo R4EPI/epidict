@@ -14,7 +14,7 @@
 #'   copied to the user's clipboard with [clipr::write_clip()]. If `FALSE`, the
 #'   rename template will be printed to the user's console.
 #'
-#' @return a dplyr command used to rename columns in your data frame according
+#' @return A dplyr command used to rename columns in your data frame according
 #' to the dictionary
 msf_dict_rename_helper <- function(disease, varnames = "data_element_shortname", copy_to_clipboard = TRUE) {
 

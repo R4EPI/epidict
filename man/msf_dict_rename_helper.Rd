@@ -25,7 +25,7 @@ copied to the user's clipboard with \code{\link[clipr:write_clip]{clipr::write_c
 rename template will be printed to the user's console.}
 }
 \value{
-a dplyr command used to rename columns in your data frame according
+A dplyr command used to rename columns in your data frame according
 to the dictionary
 }
 \description{
