@@ -2,7 +2,7 @@
 #'
 #' @param dictionary Specify which dictionary you would like to use.
 #'   Currently supports "Cholera", "Measles", "Meningitis", "AJS",
-#'    "Mortality", "Vaccination" and "Nutrition"
+#'    "Mortality", "Nutrition", "Vaccination_long" and "Vaccination_short"
 #'
 #' @param varnames Specify name of column that contains variable names. Currently
 #'   default set to "data_element_shortname". If `dictionary` is a survey,
@@ -160,9 +160,17 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output <- gen_consent(dis_output)
 
 
-    ## TODO: Move UNDER_FIVE up to here so can be used for all child filtering
-    ## and make it true/false (see vaccination polio_woc_rows)
+    # select children under fifteen yrs
+    dis_under_15 <- dis_output$age_years < 15 &
+      !is.na(dis_output$age_years)
 
+    # select children under five yrs
+    UNDER_FIVE <- dis_output$age_years < 5 &
+      !is.na(dis_output$age_years)
+
+    # select children over one yr
+    OVER_ONE <- dis_output$age_years > 1 &
+      !is.na(dis_output$age_years)
 
     # anthropometric measurements for nutrition module
     dis_output <- gen_anthro(dis_output,
@@ -171,17 +179,17 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                              muac_var   = "muac",
                              age_var    = "age_years")
     # make oedema na for those over 5
-    dis_output$oedema[dis_output$age_years >= 5] <- NA
+    dis_output$oedema[!UNDER_FIVE] <- NA
 
 
     # only read write if over fifteen years
-    dis_under_15 <- dis_output$age_years < 15
     dis_output$read_write[dis_under_15] <- NA
     no_read_write <- dis_under_15 | dis_output$read_write != "yes"
     dis_output$education_level[no_read_write] <- NA
 
-    # measles vaccination only for those between 5 and 60 months
-    no_vaccine <- with(dis_output, age_months <= 5 | age_months >= 61 |
+    # measles vaccination only for those between 5 and 60 months (or just over 5yrs)
+    no_vaccine <- with(dis_output,
+                       age_months <= 5 | age_months >= 61 |
                          age_years >= 5)
     dis_output$measles_vaccination[no_vaccine] <- NA
 
@@ -233,7 +241,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # health seeking behaviour in children being sick with malaria
 
     # only among children below 5 yrs
-    dis_output[which(dis_output$age_years >= 5),
+    dis_output[!UNDER_FIVE,
                c("fever_past_weeks",
                  "fever_now",
                  "care_fever")] <- NA
@@ -258,23 +266,21 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     # baseline malaria
 
     # only among children below 5 yrs
-    dis_output[dis_output$age_years >= 5 |
-                 is.na(dis_output$age_years),
+    dis_output[!UNDER_FIVE,
                c("thick_smear",
                  "thin_smear",
                  "rdt",
                  "oedema_mal")] <- NA
 
-    # select children under five
-    UNDER_FIVE <- which(dis_output$age_years < 5)
+
 
     # temperature in celsius
     dis_output$axiliary_temp[UNDER_FIVE] <- gen_eral(36.5:39.5,
-                                                     length(UNDER_FIVE))
+                                                     sum(UNDER_FIVE))
 
     # clinical staging of spleen
     dis_output$spleen[UNDER_FIVE] <- gen_eral(0:4,
-                                              length(UNDER_FIVE))
+                                              sum(UNDER_FIVE))
 
     # anthropometric measurements for malaria module
     dis_output <- gen_anthro(dis_output,
@@ -285,11 +291,10 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
     # number of previous malaria episodes
     dis_output$malaria_episodes[UNDER_FIVE] <- gen_eral(0:9,
-                                                        length(UNDER_FIVE))
+                                                        sum(UNDER_FIVE))
 
 
     # assume person is not born during study when age > 1
-    OVER_ONE <- dis_output$age_years > 1
     dis_output$born[OVER_ONE] <- factor("No", levels(dis_output$born))
     dis_output$remember_dob[OVER_ONE] <- NA
     dis_output$date_birth[OVER_ONE] <- NA
@@ -304,7 +309,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     )
 
     # set columns that are relate to "death" as NA if "died" is "no"
-    died <- dis_output$died == "no"
+    died <- dis_output$died == "no" | is.na(dis_output$died)
     dcols <- c(
       "remember_death",
       "date_death",
@@ -324,19 +329,19 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
       "period_illness_viol",
       "place_death_viol"
     )
-    for (d in dcols) {
-      dis_output[[d]][died] <- NA
-    }
+
+    dis_output[died, dcols] <- NA
+
 
     # fix arrival/leave dates
 
     # cascaded of yeses dates and causes
     # and if did not arrive during study period or dont know date then NA
 
-    not_arrived <- dis_output$arrived != "yes"
-    not_left     <- dis_output$left != "yes"
-    not_born     <- dis_output$born != "yes"
-    not_died     <- dis_output$died != "yes"
+    not_arrived  <- dis_output$arrived != "yes"
+    not_left     <- dis_output$left    != "yes"
+    not_born     <- dis_output$born    != "yes"
+    not_died     <- dis_output$died    != "yes"
 
     dis_output$remember_arrival[not_arrived] <- NA
     not_remember_arrival <- dis_output$remember_arrival != "yes"
@@ -431,9 +436,10 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                  "visit_second_hf",
                  "place_second_hf",
                  "reason_second_hf_selected",
-                 "source_money_last",
-                 grep("source_money_last", names(dis_output))
-                    )] <- NA
+                 names(dis_output)[
+                   grep("source_money_last", names(dis_output))
+                   ]
+                 )] <- NA
 
     # reason for not seeking care only among those who did not
     dis_output$no_care_illness_last[dis_output$care_illness_last != "no" |
@@ -465,8 +471,9 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                  "visit_second_hf_df",
                  "place_second_hf_df",
                  "reason_second_hf_selected_df",
-                 "source_money_df",
-                 grep("source_money_df", names(dis_output))
+                 names(dis_output)[
+                   grep("source_money_df", names(dis_output))
+                   ]
                  )] <- NA
 
     # reason for not seeking care only among those who did not
@@ -480,7 +487,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                  "reason_first_hf_selected_df",
                  "place_second_hf_df",
                  "reason_second_hf_selected_df",
-                 "source_money_last_df"
+                 "source_money_df"
                )] <- NA
 
     # Violence - death
@@ -574,14 +581,14 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
   }
 
-  if (dictionary == "Vaccination") {
+  if (dictionary == "Vaccination_long") {
 
 
     # create household numbers within cluster numbers
     dis_output <- gen_hh_clusters(dis_output,
                                   cluster = "cluster_number",
                                   household = "household_number",
-                                  eligible = "children_count",
+                                  eligible = "number_children",
                                   inc_building = TRUE,
                                   building = "households_building",
                                   select_household = "random_hh"
@@ -624,12 +631,12 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     woc_vars <- c("injection_upper_arm"       ,
                   "scar_present"              ,
                   "poliodrop_woc"             ,
-                  "num_poliodrop_hf_woc"      ,
-                  "num_poliodrop_camp_woc"    ,
+                  "poliodrop_hf_woc"          ,
+                  "poliodrop_camp_woc"        ,
                   "polioinjection_woc"        ,
                   "num_polioinjection_woc"    ,
                   "quad_penta_woc"            ,
-                  "num_quand_penta_woc"       ,
+                  "num_quad_penta_woc"        ,
                   "pcv_woc"                   ,
                   "num_pcv_woc"               ,
                   "measles_woc"               ,
@@ -761,6 +768,84 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     reasons <- grep("reason_not_all_vacc", names(dis_output))
 
     dis_output[not_vacc, reasons] <- NA
+
+  }
+
+  if (dictionary == "Vaccination_short") {
+
+    # create household numbers within cluster numbers
+    dis_output <- gen_hh_clusters(dis_output,
+                                  cluster = "cluster_number",
+                                  household = "household_number",
+                                  eligible = "number_children",
+                                  inc_building = TRUE,
+                                  building = "households_building",
+                                  select_household = "random_hh"
+    )
+
+
+    # create index numbers and unique IDs
+    # index is the unique household (the parent_index for kobo outputs)
+    # index_y is the unique individual within households (index for kobo outputs)
+    # uid combines these to produce a unique identifier for each individual
+    dis_output <- gen_survey_uid(dis_output)
+
+    # cumulatively count children by household
+    dis_output$child_number <- ave(as.character(dis_output$index),
+                                   as.character(dis_output$index),
+                                   FUN = function(x) rank(x, ties.method = "first"))
+
+    # age in yr (0 to 15) - assuming doing vaccination coverage among those aged less than 15 yrs
+    dis_output$age_years <- sample_age(15L, numcases)
+    dis_output$age_months <- NA_integer_
+
+    # age in mth (0 to 11)
+    zero_yrs <- dis_output$age_years < 1
+    dis_output$age_months[zero_yrs] <- sample_age(11L, sum(zero_yrs, na.rm = TRUE))
+
+    # fix consent
+    dis_output <- gen_consent(dis_output)
+
+
+    # clean up routine vaccination
+    dis_output <- gen_vaccs(dis_output,
+                            vacc_var =     "routine_vacc",
+                            age_vacc_var = "age_routine_vacc",
+                            age_var =      "age_months",
+                            place_var =    "place_routine_vacc",
+                            reason_var =   "reason_route_vacc"
+                            )
+
+    # clean up msf vaccination
+    dis_output <- gen_vaccs(dis_output,
+                            vacc_var =     "msf_vacc",
+                            age_vacc_var = "age_msf_vacc",
+                            age_var =      "age_months",
+                            place_var =    "place_msf_vacc",
+                            reason_var =   "reason_msf_vacc"
+                            )
+
+    # clean up sia vaccination
+    dis_output <- gen_vaccs(dis_output,
+                            vacc_var =     "sia_vacc",
+                            age_vacc_var = "age_sia_vacc",
+                            age_var =      "age_months",
+                            place_var =    "place_sia_vacc",
+                            reason_var =   "reason_sia_vacc"
+                            )
+
+    # add in age for children with measles
+    meas_diag <- dis_output$diagnosis_disease == "yes"
+    meas_diag[is.na(meas_diag)] <- FALSE
+
+    # sample months
+    dis_output$age_diagnosis[meas_diag] <- sample_age(11L, sum(meas_diag, na.rm = TRUE))
+    # if age months not empty just use that (otherwise will have some in future)
+    dis_output$age_diagnosis[meas_diag &
+                               has_value(dis_output$age_months) &
+                               dis_output$age_diagnosis > dis_output$age_months] <- dis_output$age_months[meas_diag &
+                                                                                                            has_value(dis_output$age_months) &
+                                                                                                            dis_output$age_diagnosis > dis_output$age_months]
 
   }
 

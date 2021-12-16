@@ -73,11 +73,12 @@ msf_dict("Meningitis")
 
 </details>
 
-In addition, there are three MSF survey dictionaries available:
+In addition, there are four MSF survey dictionaries available:
 
- - Retrospective mortality and access to care ("mortality")
- - Malnutrition ("nutrition") 
- - Vaccination Coverage ("vaccination")
+ - Retrospective mortality and access to care ("Mortality")
+ - Malnutrition ("Nutrition") 
+ - Vaccination coverage long form ("vaccination_long")
+ - Vaccination coverage short form ("vaccination_short")
 
 > You can read more about the survey dictionaries at <https://r4epis.netlify.com/surveys>
 
@@ -96,7 +97,8 @@ hidden from the user
 ```{r survey}
 msf_dict_survey("Mortality")
 msf_dict_survey("Nutrition")
-msf_dict_survey("Vaccination")
+msf_dict_survey("Vaccination_long")
+msf_dict_survey("Vaccination_short")
 ```
 
 </details>
@@ -116,7 +118,7 @@ hidden from the user
 
 ```{r gendata}
 gen_data("Measles", varnames = "data_element_shortname", numcases = 100, org = "MSF")
-gen_data("Vaccination", varnames = "name", numcases = 100, org = "MSF")
+gen_data("Vaccination_long", varnames = "name", numcases = 100, org = "MSF")
 ```
 
 </details>

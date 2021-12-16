@@ -2,6 +2,7 @@
 
 * Updating to have all surveys in ODK format 
 * Updating documentation and pkgdown
+* Adding both a short and a long form vaccination dictionary
 
 
 # epidict 0.0.0.9000

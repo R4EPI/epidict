@@ -208,11 +208,12 @@ Click here for code examples
 <span class="co">#&gt; 10 AhllpMovCeu      egen_062_patient_or~ patient_origin_~ Name of village or pa~</span>
 <span class="co">#&gt; # ... with 43 more rows, and 4 more variables: data_element_valuetype &lt;chr&gt;,</span>
 <span class="co">#&gt; #   data_element_formname &lt;chr&gt;, used_optionset_uid &lt;chr&gt;, options &lt;list&gt;</span></code></pre></div>
-</details><p>In addition, there are three MSF survey dictionaries available:</p>
+</details><p>In addition, there are four MSF survey dictionaries available:</p>
 <ul>
-<li>Retrospective mortality and access to care (“mortality”)</li>
-<li>Malnutrition (“nutrition”)</li>
-<li>Vaccination Coverage (“vaccination”)</li>
+<li>Retrospective mortality and access to care (“Mortality”)</li>
+<li>Malnutrition (“Nutrition”)</li>
+<li>Vaccination coverage long form (“vaccination_long”)</li>
+<li>Vaccination coverage short form (“vaccination_short”)</li>
 </ul>
 <blockquote>
 <p>You can read more about the survey dictionaries at <a href="https://r4epis.netlify.com/surveys" class="uri">https://r4epis.netlify.com/surveys</a></p>
@@ -258,7 +259,7 @@ Click here for code examples
 <span class="co">#&gt; # ... with 17 more rows, and 7 more variables: relevant &lt;chr&gt;,</span>
 <span class="co">#&gt; #   calculation &lt;lgl&gt;, constraint &lt;chr&gt;, appearance &lt;chr&gt;, default &lt;chr&gt;,</span>
 <span class="co">#&gt; #   value_type &lt;chr&gt;, options &lt;list&gt;</span>
-<span class="fu"><a href="reference/msf_dict.html">msf_dict_survey</a></span><span class="op">(</span><span class="st">"Vaccination"</span><span class="op">)</span>
+<span class="fu"><a href="reference/msf_dict.html">msf_dict_survey</a></span><span class="op">(</span><span class="st">"Vaccination_long"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 106 x 14</span>
 <span class="co">#&gt;    type     name   label_english  label_french  hint_english hint_french default</span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;          &lt;chr&gt;         &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;  </span>
@@ -274,7 +275,24 @@ Click here for code examples
 <span class="co">#&gt; 10 integer  house~ Household num~ Numéro du mé~ &lt;NA&gt;         &lt;NA&gt;        &lt;NA&gt;   </span>  
 <span class="co">#&gt; # ... with 96 more rows, and 7 more variables: relevant &lt;chr&gt;,</span>
 <span class="co">#&gt; #   appearance &lt;chr&gt;, repeat_count &lt;chr&gt;, constraint &lt;chr&gt;, calculation &lt;chr&gt;,</span>
-<span class="co">#&gt; #   value_type &lt;chr&gt;, options &lt;list&gt;</span></code></pre></div>
+<span class="co">#&gt; #   value_type &lt;chr&gt;, options &lt;list&gt;</span>
+<span class="fu"><a href="reference/msf_dict.html">msf_dict_survey</a></span><span class="op">(</span><span class="st">"Vaccination_short"</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 38 x 15</span>
+<span class="co">#&gt;    type     name   label_english  label_french  hint_english hint_french default</span>
+<span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;          &lt;chr&gt;         &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;  </span>
+<span class="co">#&gt;  1 start    start  Start Time     Start Time    &lt;NA&gt;         &lt;NA&gt;        &lt;NA&gt;   </span>
+<span class="co">#&gt;  2 end      end    End Time       End Time      &lt;NA&gt;         &lt;NA&gt;        &lt;NA&gt;   </span>
+<span class="co">#&gt;  3 today    today  Date of Survey Date of Surv~ &lt;NA&gt;         &lt;NA&gt;        &lt;NA&gt;   </span>
+<span class="co">#&gt;  4 deviceid devic~ Phone Serial ~ Phone Serial~ &lt;NA&gt;         &lt;NA&gt;        &lt;NA&gt;   </span>
+<span class="co">#&gt;  5 date     date   Date           Date          &lt;NA&gt;         &lt;NA&gt;        .today~</span>
+<span class="co">#&gt;  6 integer  team_~ Team number    Numéro de l'~ &lt;NA&gt;         &lt;NA&gt;        &lt;NA&gt;   </span> 
+<span class="co">#&gt;  7 village  villa~ Village name   Nom du villa~ &lt;NA&gt;         &lt;NA&gt;        &lt;NA&gt;   </span>
+<span class="co">#&gt;  8 text     villa~ Specify other  Veuillez spé~ &lt;NA&gt;         &lt;NA&gt;        &lt;NA&gt;   </span> 
+<span class="co">#&gt;  9 integer  clust~ Cluster number Numéro de la~ &lt;NA&gt;         &lt;NA&gt;        &lt;NA&gt;   </span> 
+<span class="co">#&gt; 10 integer  house~ Household num~ Numéro du mé~ &lt;NA&gt;         &lt;NA&gt;        &lt;NA&gt;   </span>  
+<span class="co">#&gt; # ... with 28 more rows, and 8 more variables: relevant &lt;chr&gt;,</span>
+<span class="co">#&gt; #   appearance &lt;chr&gt;, repeat_count &lt;chr&gt;, constraint &lt;chr&gt;, calculation &lt;chr&gt;,</span>
+<span class="co">#&gt; #   hxl &lt;chr&gt;, value_type &lt;chr&gt;, options &lt;list&gt;</span></code></pre></div>
 </details>
 </div>
 <div id="generating-data" class="section level2">
@@ -291,16 +309,16 @@ Click here for code examples
 <span class="co">#&gt; # A tibble: 100 x 52</span>
 <span class="co">#&gt;    seizure_episodes trimester croup dehydration_level_at_admi~ residential_stat~</span>
 <span class="co">#&gt;    &lt;fct&gt;            &lt;fct&gt;     &lt;fct&gt; &lt;fct&gt;                      &lt;fct&gt;            </span>
-<span class="co">#&gt;  1 0                3         1     SO                         3                </span>
-<span class="co">#&gt;  2 1                &lt;NA&gt;      0     SO                         4                </span>
-<span class="co">#&gt;  3 1                &lt;NA&gt;      1     NO                         5                </span>
-<span class="co">#&gt;  4 1                &lt;NA&gt;      1     SE                         5                </span>
-<span class="co">#&gt;  5 1                &lt;NA&gt;      1     SO                         2                </span>
-<span class="co">#&gt;  6 0                &lt;NA&gt;      1     UN                         3                </span>
-<span class="co">#&gt;  7 0                &lt;NA&gt;      1     SE                         1                </span>
-<span class="co">#&gt;  8 0                &lt;NA&gt;      1     SO                         5                </span>
-<span class="co">#&gt;  9 0                &lt;NA&gt;      1     SE                         4                </span>
-<span class="co">#&gt; 10 0                &lt;NA&gt;      0     NO                         4                </span>
+<span class="co">#&gt;  1 1                &lt;NA&gt;      0     SO                         2                </span>
+<span class="co">#&gt;  2 1                &lt;NA&gt;      0     SE                         3                </span>
+<span class="co">#&gt;  3 1                &lt;NA&gt;      1     NO                         3                </span>
+<span class="co">#&gt;  4 0                &lt;NA&gt;      1     NO                         3                </span>
+<span class="co">#&gt;  5 1                &lt;NA&gt;      0     SE                         2                </span>
+<span class="co">#&gt;  6 1                &lt;NA&gt;      0     NO                         2                </span>
+<span class="co">#&gt;  7 1                &lt;NA&gt;      1     SE                         3                </span>
+<span class="co">#&gt;  8 1                &lt;NA&gt;      1     SE                         3                </span>
+<span class="co">#&gt;  9 0                &lt;NA&gt;      0     SE                         2                </span>
+<span class="co">#&gt; 10 0                &lt;NA&gt;      1     NO                         5                </span>
 <span class="co">#&gt; # ... with 90 more rows, and 47 more variables: previously_vaccinated &lt;fct&gt;,</span>
 <span class="co">#&gt; #   patient_origin_free_text &lt;chr&gt;, age_days &lt;int&gt;, msf_involvement &lt;fct&gt;,</span>
 <span class="co">#&gt; #   nutrition_status_at_admission &lt;fct&gt;, fever &lt;fct&gt;, sex &lt;fct&gt;,</span>
@@ -308,24 +326,24 @@ Click here for code examples
 <span class="co">#&gt; #   prescribed_vitamin_a &lt;fct&gt;, date_of_exit &lt;date&gt;,</span>
 <span class="co">#&gt; #   date_of_consultation_admission &lt;date&gt;, event_file_type &lt;fct&gt;,</span>
 <span class="co">#&gt; #   residential_status_brief &lt;fct&gt;, other_eye_complications &lt;fct&gt;, ...</span>
-<span class="fu"><a href="reference/gen_data.html">gen_data</a></span><span class="op">(</span><span class="st">"Vaccination"</span>, varnames <span class="op">=</span> <span class="st">"name"</span>, numcases <span class="op">=</span> <span class="fl">100</span>, org <span class="op">=</span> <span class="st">"MSF"</span><span class="op">)</span>
+<span class="fu"><a href="reference/gen_data.html">gen_data</a></span><span class="op">(</span><span class="st">"Vaccination_long"</span>, varnames <span class="op">=</span> <span class="st">"name"</span>, numcases <span class="op">=</span> <span class="fl">100</span>, org <span class="op">=</span> <span class="st">"MSF"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 100 x 123</span>
 <span class="co">#&gt;    start end   today deviceid date       team_number village_name village_other</span>
 <span class="co">#&gt;    &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt;    &lt;date&gt;     &lt;lgl&gt;       &lt;fct&gt;        &lt;lgl&gt;        </span>
-<span class="co">#&gt;  1 NA    NA    NA    NA       2018-04-23 NA          village_5    NA           </span>
-<span class="co">#&gt;  2 NA    NA    NA    NA       2018-01-06 NA          village_4    NA           </span>
-<span class="co">#&gt;  3 NA    NA    NA    NA       2018-03-30 NA          village_6    NA           </span>
-<span class="co">#&gt;  4 NA    NA    NA    NA       2018-02-09 NA          village_10   NA           </span>
-<span class="co">#&gt;  5 NA    NA    NA    NA       2018-04-02 NA          village_4    NA           </span>
-<span class="co">#&gt;  6 NA    NA    NA    NA       2018-01-05 NA          village_3    NA           </span>
-<span class="co">#&gt;  7 NA    NA    NA    NA       2018-01-07 NA          village_4    NA           </span>
-<span class="co">#&gt;  8 NA    NA    NA    NA       2018-01-11 NA          village_10   NA           </span>
-<span class="co">#&gt;  9 NA    NA    NA    NA       2018-04-11 NA          village_1    NA           </span>
-<span class="co">#&gt; 10 NA    NA    NA    NA       2018-01-05 NA          village_3    NA           </span>
+<span class="co">#&gt;  1 NA    NA    NA    NA       2018-01-05 NA          village_5    NA           </span>
+<span class="co">#&gt;  2 NA    NA    NA    NA       2018-04-25 NA          village_3    NA           </span>
+<span class="co">#&gt;  3 NA    NA    NA    NA       2018-03-14 NA          village_9    NA           </span>
+<span class="co">#&gt;  4 NA    NA    NA    NA       2018-03-18 NA          village_1    NA           </span>
+<span class="co">#&gt;  5 NA    NA    NA    NA       2018-03-19 NA          village_10   NA           </span>
+<span class="co">#&gt;  6 NA    NA    NA    NA       2018-03-12 NA          village_4    NA           </span>
+<span class="co">#&gt;  7 NA    NA    NA    NA       2018-03-18 NA          village_8    NA           </span>
+<span class="co">#&gt;  8 NA    NA    NA    NA       2018-03-11 NA          other        NA           </span>
+<span class="co">#&gt;  9 NA    NA    NA    NA       2018-01-27 NA          village_2    NA           </span>
+<span class="co">#&gt; 10 NA    NA    NA    NA       2018-01-11 NA          village_10   NA           </span>
 <span class="co">#&gt; # ... with 90 more rows, and 115 more variables: cluster_number &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   household_number &lt;int&gt;, households_building &lt;int&gt;, random_hh &lt;int&gt;,</span>
 <span class="co">#&gt; #   consent &lt;chr&gt;, no_consent_reason &lt;fct&gt;, no_consent_other &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   caretaker_relation &lt;fct&gt;, caretaker_other &lt;lgl&gt;, children_count &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   caretaker_relation &lt;fct&gt;, caretaker_other &lt;lgl&gt;, number_children &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   child_number &lt;chr&gt;, sex &lt;fct&gt;, date_birth &lt;date&gt;, age_years &lt;int&gt;,</span>
 <span class="co">#&gt; #   age_months &lt;int&gt;, any_vaccine &lt;fct&gt;, vaccine_card &lt;fct&gt;, hf_records &lt;fct&gt;,</span>
 <span class="co">#&gt; #   health_facility &lt;lgl&gt;, date_records_checked &lt;date&gt;, ...</span></code></pre></div>
@@ -354,25 +372,25 @@ Click here for code examples
 <span class="co">#&gt;    trimester exit_status treatment_facilit~ dehydration_level~ comments_on_lab_~</span>
 <span class="co">#&gt;    &lt;fct&gt;     &lt;fct&gt;       &lt;lgl&gt;              &lt;fct&gt;              &lt;lgl&gt;            </span>
 <span class="co">#&gt;  1 &lt;NA&gt;      DOA         NA                 NO                 NA               </span>
-<span class="co">#&gt;  2 2         DOA         NA                 NO                 NA               </span>
-<span class="co">#&gt;  3 &lt;NA&gt;      DH          NA                 SO                 NA               </span>
-<span class="co">#&gt;  4 &lt;NA&gt;      DD          NA                 SE                 NA               </span>
-<span class="co">#&gt;  5 &lt;NA&gt;      DD          NA                 SE                 NA               </span>
-<span class="co">#&gt;  6 &lt;NA&gt;      DD          NA                 SO                 NA               </span>
-<span class="co">#&gt;  7 &lt;NA&gt;      AD          NA                 UN                 NA               </span>
-<span class="co">#&gt;  8 &lt;NA&gt;      DD          NA                 NO                 NA               </span>
-<span class="co">#&gt;  9 &lt;NA&gt;      LA          NA                 NO                 NA               </span>
-<span class="co">#&gt; 10 &lt;NA&gt;      TR          NA                 NO                 NA               </span>
-<span class="co">#&gt; 11 1         LA          NA                 SE                 NA               </span>
-<span class="co">#&gt; 12 &lt;NA&gt;      TR          NA                 SE                 NA               </span>
-<span class="co">#&gt; 13 &lt;NA&gt;      DH          NA                 SO                 NA               </span>
-<span class="co">#&gt; 14 &lt;NA&gt;      TR          NA                 SE                 NA               </span>
-<span class="co">#&gt; 15 &lt;NA&gt;      DOA         NA                 NO                 NA               </span>
-<span class="co">#&gt; 16 &lt;NA&gt;      DH          NA                 SE                 NA               </span>
-<span class="co">#&gt; 17 &lt;NA&gt;      DH          NA                 SE                 NA               </span>
-<span class="co">#&gt; 18 &lt;NA&gt;      DH          NA                 SE                 NA               </span>
-<span class="co">#&gt; 19 &lt;NA&gt;      LA          NA                 SE                 NA               </span>
-<span class="co">#&gt; 20 &lt;NA&gt;      DD          NA                 SO                 NA               </span>
+<span class="co">#&gt;  2 &lt;NA&gt;      LA          NA                 NO                 NA               </span>
+<span class="co">#&gt;  3 &lt;NA&gt;      DH          NA                 UN                 NA               </span>
+<span class="co">#&gt;  4 &lt;NA&gt;      TR          NA                 SE                 NA               </span>
+<span class="co">#&gt;  5 &lt;NA&gt;      AD          NA                 NO                 NA               </span>
+<span class="co">#&gt;  6 1         TR          NA                 SO                 NA               </span>
+<span class="co">#&gt;  7 &lt;NA&gt;      LA          NA                 UN                 NA               </span>
+<span class="co">#&gt;  8 &lt;NA&gt;      TR          NA                 SE                 NA               </span>
+<span class="co">#&gt;  9 &lt;NA&gt;      DD          NA                 UN                 NA               </span>
+<span class="co">#&gt; 10 &lt;NA&gt;      AD          NA                 SE                 NA               </span>
+<span class="co">#&gt; 11 &lt;NA&gt;      TR          NA                 NO                 NA               </span>
+<span class="co">#&gt; 12 &lt;NA&gt;      DD          NA                 NO                 NA               </span>
+<span class="co">#&gt; 13 &lt;NA&gt;      TR          NA                 UN                 NA               </span>
+<span class="co">#&gt; 14 &lt;NA&gt;      AD          NA                 SO                 NA               </span>
+<span class="co">#&gt; 15 &lt;NA&gt;      DOA         NA                 SO                 NA               </span>
+<span class="co">#&gt; 16 &lt;NA&gt;      TR          NA                 SE                 NA               </span>
+<span class="co">#&gt; 17 &lt;NA&gt;      LA          NA                 NO                 NA               </span>
+<span class="co">#&gt; 18 &lt;NA&gt;      AD          NA                 UN                 NA               </span>
+<span class="co">#&gt; 19 &lt;NA&gt;      AD          NA                 UN                 NA               </span>
+<span class="co">#&gt; 20 &lt;NA&gt;      LA          NA                 SE                 NA               </span>
 <span class="co">#&gt; # ... with 40 more variables: fluids_treatment_plan &lt;fct&gt;, time_to_death &lt;fct&gt;,</span>
 <span class="co">#&gt; #   malaria_rdt_at_admission &lt;fct&gt;, previously_vaccinated &lt;fct&gt;,</span>
 <span class="co">#&gt; #   cholera_pcr_result &lt;fct&gt;, iv_fluids_received_litres &lt;int&gt;,</span>
@@ -417,25 +435,25 @@ Click here for code examples
 <span class="co">#&gt;    trimester     exit_status  treatment_facil~ dehydration_lev~ comments_on_lab~</span>
 <span class="co">#&gt;    &lt;fct&gt;         &lt;fct&gt;        &lt;lgl&gt;            &lt;fct&gt;            &lt;lgl&gt;           </span>
 <span class="co">#&gt;  1 &lt;NA&gt;          Dead on arr~ NA               None             NA              </span>
-<span class="co">#&gt;  2 2nd trimester Dead on arr~ NA               None             NA              </span>
-<span class="co">#&gt;  3 &lt;NA&gt;          Discharged ~ NA               Some             NA              </span>
-<span class="co">#&gt;  4 &lt;NA&gt;          Dead in fac~ NA               Severe           NA              </span>
-<span class="co">#&gt;  5 &lt;NA&gt;          Dead in fac~ NA               Severe           NA              </span>
-<span class="co">#&gt;  6 &lt;NA&gt;          Dead in fac~ NA               Some             NA              </span>
-<span class="co">#&gt;  7 &lt;NA&gt;          Transferred~ NA               Unknown          NA              </span>
-<span class="co">#&gt;  8 &lt;NA&gt;          Dead in fac~ NA               None             NA              </span>
-<span class="co">#&gt;  9 &lt;NA&gt;          Left agains~ NA               None             NA              </span>
-<span class="co">#&gt; 10 &lt;NA&gt;          Transferred~ NA               None             NA              </span>
-<span class="co">#&gt; 11 1st trimester Left agains~ NA               Severe           NA              </span>
-<span class="co">#&gt; 12 &lt;NA&gt;          Transferred~ NA               Severe           NA              </span>
-<span class="co">#&gt; 13 &lt;NA&gt;          Discharged ~ NA               Some             NA              </span>
-<span class="co">#&gt; 14 &lt;NA&gt;          Transferred~ NA               Severe           NA              </span>
-<span class="co">#&gt; 15 &lt;NA&gt;          Dead on arr~ NA               None             NA              </span>
-<span class="co">#&gt; 16 &lt;NA&gt;          Discharged ~ NA               Severe           NA              </span>
-<span class="co">#&gt; 17 &lt;NA&gt;          Discharged ~ NA               Severe           NA              </span>
-<span class="co">#&gt; 18 &lt;NA&gt;          Discharged ~ NA               Severe           NA              </span>
-<span class="co">#&gt; 19 &lt;NA&gt;          Left agains~ NA               Severe           NA              </span>
-<span class="co">#&gt; 20 &lt;NA&gt;          Dead in fac~ NA               Some             NA              </span>
+<span class="co">#&gt;  2 &lt;NA&gt;          Left agains~ NA               None             NA              </span>
+<span class="co">#&gt;  3 &lt;NA&gt;          Discharged ~ NA               Unknown          NA              </span>
+<span class="co">#&gt;  4 &lt;NA&gt;          Transferred~ NA               Severe           NA              </span>
+<span class="co">#&gt;  5 &lt;NA&gt;          Transferred~ NA               None             NA              </span>
+<span class="co">#&gt;  6 1st trimester Transferred~ NA               Some             NA              </span>
+<span class="co">#&gt;  7 &lt;NA&gt;          Left agains~ NA               Unknown          NA              </span>
+<span class="co">#&gt;  8 &lt;NA&gt;          Transferred~ NA               Severe           NA              </span>
+<span class="co">#&gt;  9 &lt;NA&gt;          Dead in fac~ NA               Unknown          NA              </span>
+<span class="co">#&gt; 10 &lt;NA&gt;          Transferred~ NA               Severe           NA              </span>
+<span class="co">#&gt; 11 &lt;NA&gt;          Transferred~ NA               None             NA              </span>
+<span class="co">#&gt; 12 &lt;NA&gt;          Dead in fac~ NA               None             NA              </span>
+<span class="co">#&gt; 13 &lt;NA&gt;          Transferred~ NA               Unknown          NA              </span>
+<span class="co">#&gt; 14 &lt;NA&gt;          Transferred~ NA               Some             NA              </span>
+<span class="co">#&gt; 15 &lt;NA&gt;          Dead on arr~ NA               Some             NA              </span>
+<span class="co">#&gt; 16 &lt;NA&gt;          Transferred~ NA               Severe           NA              </span>
+<span class="co">#&gt; 17 &lt;NA&gt;          Left agains~ NA               None             NA              </span>
+<span class="co">#&gt; 18 &lt;NA&gt;          Transferred~ NA               Unknown          NA              </span>
+<span class="co">#&gt; 19 &lt;NA&gt;          Transferred~ NA               Unknown          NA              </span>
+<span class="co">#&gt; 20 &lt;NA&gt;          Left agains~ NA               Severe           NA              </span>
 <span class="co">#&gt; # ... with 40 more variables: fluids_treatment_plan &lt;fct&gt;, time_to_death &lt;fct&gt;,</span>
 <span class="co">#&gt; #   malaria_rdt_at_admission &lt;fct&gt;, previously_vaccinated &lt;fct&gt;,</span>
 <span class="co">#&gt; #   cholera_pcr_result &lt;fct&gt;, iv_fluids_received_litres &lt;int&gt;,</span>

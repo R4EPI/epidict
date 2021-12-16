@@ -26,8 +26,8 @@ msf_dict_survey(
 \item{disease}{Specify which disease you would like to use.
 \itemize{
 \item \code{msf_dict()} supports "AJS", "Cholera", "Measles", "Meningitis"
-\item \code{msf_dict_survey()} supports "Mortality", "Nutrition", and "Vaccination"
-(only used in surveys if \code{template = TRUE})
+\item \code{msf_dict_survey()} supports "Mortality", "Nutrition", "Vaccination_long"
+and "Vaccination_short" (only used in surveys if \code{template = TRUE})
 }}
 
 \item{name}{the name of the dictionary stored in the package.
