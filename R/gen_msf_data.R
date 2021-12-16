@@ -160,9 +160,6 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output <- gen_consent(dis_output)
 
 
-    ## TODO: Move UNDER_FIVE up to here so can be used for all child filtering
-    ## and make it true/false (see vaccination polio_woc_rows)
-
     # select children under fifteen yrs
     dis_under_15 <- dis_output$age_years < 15 &
       !is.na(dis_output$age_years)
