@@ -50,12 +50,12 @@ are returned, one with variables and the other with content options.
 @param template Only used for \code{msf_dict_survey()}.
 If \code{TRUE} (default) the returned data dictionary is a generic
 MSF OCA ERB pre-approved dictionary. If \code{FALSE} allows you to read in your
-own Kobo dictionary.}
+own Kobo dictionary by defining a path in \code{name}.}
 
 \item{template}{(for survey dictionaries): if \code{TRUE} read in a generic
 dictionary based on the MSF OCA ERB pre-approved template. However you can
 also specify your own dictionary if this differs substantially, by setting
-\code{template = FALSE}.}
+\code{template = FALSE} and defining a path in \code{name}.}
 }
 \description{
 These function produces MSF OCA dictionaries based on DHIS2 (for outbreaks)

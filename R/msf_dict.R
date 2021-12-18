@@ -28,7 +28,7 @@
 #'  @param template Only used for `msf_dict_survey()`.
 #'  If `TRUE` (default) the returned data dictionary is a generic
 #'  MSF OCA ERB pre-approved dictionary. If `FALSE` allows you to read in your
-#'  own Kobo dictionary.
+#'  own Kobo dictionary by defining a path in `name`.
 #'
 #' @seealso [matchmaker::match_df()] [gen_data()] [msf_dict_survey()]
 #' @export

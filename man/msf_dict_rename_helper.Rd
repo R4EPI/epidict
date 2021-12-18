@@ -2,11 +2,15 @@
 % Please edit documentation in R/msf_dict_rename_helper.R
 \name{msf_dict_rename_helper}
 \alias{msf_dict_rename_helper}
-\title{Helper for aligning your data to the dictionary}
+\title{Helper for aligning your data to a standardised dictionary or your own dictionary.}
 \usage{
 msf_dict_rename_helper(
   disease,
+  name = NULL,
   varnames = "data_element_shortname",
+  varnames_type = NULL,
+  rmd = NULL,
+  template = TRUE,
   copy_to_clipboard = TRUE
 )
 }
@@ -15,10 +19,34 @@ msf_dict_rename_helper(
 Currently supports "Cholera", "Measles", "Meningitis", "AJS",
 "Mortality", "Nutrition", "Vaccination_short" and "Vaccination_long".}
 
-\item{varnames}{Specify name of column that contains varnames. Currently
+\item{name}{The name of the dictionary stored in the package. The default is
+NULL and will use dictionaries from the package. However you can also use
+dictionaries not stored within this package, to use these:
+specify \code{name}as path to .xlsx file and set the \code{template = False} - nb. this
+needs to be a dataframe containing \code{varnames} and \code{varnames_type}. You will also
+need to specify a path to \code{rmd}.}
+
+\item{varnames}{The name of column that contains variable names. The
 default set to "data_element_shortname".
 If \code{dictionary} is a survey ("Mortality", "Nutrition", "Vaccination_short"
-or "Vaccination_long") \code{varnames} needs to be "name"`.}
+or "Vaccination_long") \code{varnames} needs to be "name"`. Otherwise if using
+your own dictionary then specify.}
+
+\item{varnames_type}{The name of column that contains the variable type.
+The default is NULL and will use "data_element_valuetype" for DHIS2 and "type"
+for Kobo dictionaries. If you specify your own dictionary then this needs to
+be the same length as \code{varnames} in your dictionary.}
+
+\item{rmd}{The Rmarkdown template which you would like to compare to. Default
+is NULL and will use those included in the package. However you can also use
+Rmarkdowns not stored within this package, to use these:
+specify \code{rmd}as path to .rmd file and set the \code{template = False}; nb. you will
+need to specify a path to file in \code{name}containing \code{varnames} and \code{varnames_type}.}
+
+\item{template}{If \code{TRUE} (default) read in a generic
+dictionary and Rmarkdown based on the MSF OCA ERB pre-approved template.
+However you can also specify your own dictionary if this differs substantially,
+by setting \code{template = FALSE}.}
 
 \item{copy_to_clipboard}{if \code{TRUE} (default), the rename template will be
 copied to the user's clipboard with \code{\link[clipr:write_clip]{clipr::write_clip()}}. If \code{FALSE}, the
@@ -29,5 +57,5 @@ A dplyr command used to rename columns in your data frame according
 to the dictionary
 }
 \description{
-Helper for aligning your data to the dictionary
+Helper for aligning your data to a standardised dictionary or your own dictionary.
 }
