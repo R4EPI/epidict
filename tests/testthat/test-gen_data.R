@@ -21,11 +21,11 @@ test_that("errors are thrown if the wrong dicts are used", {
     fixed = TRUE
   )
   expect_error(msf_dict_survey("Measles"),
-    "disease must be one of 'Mortality', 'Nutrition', 'Vaccination'",
+    "disease must be one of 'Mortality', 'Nutrition', 'Vaccination_long', 'Vaccination_short'",
     fixed = TRUE
   )
   expect_error(gen_data("Dada"),
-    "'dictionary' must be one of: 'Cholera', 'Measles', 'Meningitis', 'AJS', 'Mortality', 'Nutrition', 'Vaccination'",
+    "'dictionary' must be one of: 'Cholera', 'Measles', 'Meningitis', 'AJS', 'Mortality', 'Nutrition', 'Vaccination_long', 'Vaccination_short'",
     fixed = TRUE
   )
 
