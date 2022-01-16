@@ -6,10 +6,10 @@
 \usage{
 msf_dict_rename_helper(
   disease,
-  name = NULL,
+  name,
   varnames = "data_element_shortname",
-  varnames_type = NULL,
-  rmd = NULL,
+  varnames_type,
+  rmd,
   template = TRUE,
   copy_to_clipboard = TRUE
 )
@@ -19,8 +19,8 @@ msf_dict_rename_helper(
 Currently supports "Cholera", "Measles", "Meningitis", "AJS",
 "Mortality", "Nutrition", "Vaccination_short" and "Vaccination_long".}
 
-\item{name}{The name of the dictionary stored in the package. The default is
-NULL and will use dictionaries from the package. However you can also use
+\item{name}{The name of the dictionary stored in the package. The default
+will use dictionaries from the package. However you can also use
 dictionaries not stored within this package, to use these:
 specify \code{name}as path to .xlsx file and set the \code{template = False} - nb. this
 needs to be a dataframe containing \code{varnames} and \code{varnames_type}. You will also
@@ -33,15 +33,15 @@ or "Vaccination_long") \code{varnames} needs to be "name"`. Otherwise if using
 your own dictionary then specify.}
 
 \item{varnames_type}{The name of column that contains the variable type.
-The default is NULL and will use "data_element_valuetype" for DHIS2 and "type"
+The default will use "data_element_valuetype" for DHIS2 and "type"
 for Kobo dictionaries. If you specify your own dictionary then this needs to
 be the same length as \code{varnames} in your dictionary.}
 
 \item{rmd}{The Rmarkdown template which you would like to compare to. Default
-is NULL and will use those included in the package. However you can also use
+is will use those included in the package. However you can also use
 Rmarkdowns not stored within this package, to use these:
-specify \code{rmd}as path to .rmd file and set the \code{template = False}; nb. you will
-need to specify a path to file in \code{name}containing \code{varnames} and \code{varnames_type}.}
+specify \code{rmd}as path to .rmd file and set \code{template = False}; nb. you will
+need to specify a path to a file in \code{name} which contains \code{varnames} and \code{varnames_type}.}
 
 \item{template}{If \code{TRUE} (default) read in a generic
 dictionary and Rmarkdown based on the MSF OCA ERB pre-approved template.
