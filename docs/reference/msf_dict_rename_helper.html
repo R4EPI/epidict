@@ -150,13 +150,15 @@
     <tr>
       <th>disease</th>
       <td><p>Specify which disease you would like to use.
-Currently supports "Cholera", "Measles" and "Meningitis", "AJS".</p></td>
+Currently supports "Cholera", "Measles", "Meningitis", "AJS",
+"Mortality", "Nutrition", "Vaccination_short" and "Vaccination_long".</p></td>
     </tr>
     <tr>
       <th>varnames</th>
       <td><p>Specify name of column that contains varnames. Currently
-default set to "Item".  (this can probably be deleted once dictionaries
-standardise) If <code>dictionary</code> is "Mortality", <code>varnames</code> needs to be "column_name"`.</p></td>
+default set to "data_element_shortname".
+If <code>dictionary</code> is a survey ("Mortality", "Nutrition", "Vaccination_short"
+or "Vaccination_long") <code>varnames</code> needs to be "name"`.</p></td>
     </tr>
     <tr>
       <th>copy_to_clipboard</th>
@@ -168,7 +170,7 @@ rename template will be printed to the user's console.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a dplyr command used to rename columns in your data frame according
+    <p>A dplyr command used to rename columns in your data frame according
 to the dictionary</p>
 
   </div>

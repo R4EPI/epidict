@@ -4,11 +4,12 @@
 #' @param template (for survey dictionaries): if `TRUE` read in a generic
 #' dictionary based on the MSF OCA ERB pre-approved template. However you can
 #' also specify your own dictionary if this differs substantially, by setting
-#' `template = FALSE`.
+#' `template = FALSE` and defining a path in `name`.
 #' @importFrom tibble as_tibble
 #' @importFrom tidyr fill spread
 #' @importFrom dplyr mutate group_by row_number ungroup
 #' @importFrom rlang !!
+#' @importFrom readxl read_excel
 #' @export
 #' @rdname msf_dict
 msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
