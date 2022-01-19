@@ -408,7 +408,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                    "born_later",
                    "present_today",
                    "reason_not_present",
-                   "date_death_alt")] <- NA
+                   "date_death_alt")] <- NA_character_
 
 
     # HSB module - death
