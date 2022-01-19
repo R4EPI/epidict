@@ -403,6 +403,14 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
       inclusive = TRUE
     )
 
+    # set alternative questions to empty (not sure the purpose of these)
+    dis_output[, c("present_start",
+                   "born_later",
+                   "present_today",
+                   "reason_not_present",
+                   "date_death_alt")] <- NA
+
+
     # HSB module - death
     # note that NAs have already been set in the death section above
 
