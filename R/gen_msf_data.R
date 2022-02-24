@@ -912,6 +912,11 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                                  inclusive = TRUE
     )
 
+    ## create an initials variable of 3 random letters
+    dis_output$initials <- stringi::stri_rand_strings(nrow(dis_output), 3,
+                                                      pattern = "[a-z]")
+
+
     ## create a signal id
     dis_output$event_id_sig <- paste0(dis_output$initials, "_",
                                       dis_output$location_signal, "_",
@@ -919,22 +924,41 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                                       dis_output$date_signal)
 
 
-    ## Copy this signal id to assessment and response
+    ## Copy this signal id to assessment and response event id variables
     dis_output$event_id_assess <- dis_output$event_id_sig
 
     dis_output$event_id_res <- dis_output$event_id_sig
 
 
+    ## Add a random  number for total people affected
+    dis_output$total_affected <- sample(1:10, nrow(dis_output), replace = TRUE)
 
-    ## Make all columns NA when no intervention required
+
+    ## Add one person less for under 5 affected
+    dis_output$under5_affected <- dis_output$total_affected - 1
+
+
+    ## Add a random  number for total people identified by active case finding
+    dis_output$acf_total <- sample(2:15, nrow(dis_output), replace = TRUE)
+
+    ## Add one person less for total under 5 identified by active case finding
+    dis_output$acf_under5 <- dis_output$act_total - 1
+
+
+    ## Convert all columns NA when no intervention required
     dis_output[dis_output$alert_status == 0, 42:49] <- NA
 
-   ## Make all columns NA when a signal is not verified
+    ## Convert all columns NA when a signal is not verified
     dis_output[dis_output$event_status == 0, 22:49] <- NA
 
-    ## Make all columns NA when a signal doesn't require verification
+    ## Convert all columns NA when a signal doesn't require verification
     dis_output[dis_output$need_verif == 0, 18:49] <- NA
 
+
+    ## Convert dates of start and end of response to NA if no response carried out
+    ## or if unsure if a response was carried out
+    dis_output[dis_output$response_undertaken %in% c("n", "u"),
+               c("date_response_started","date_response_ended")] <- NA
 
   }
 
