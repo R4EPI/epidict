@@ -857,6 +857,63 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
   }
 
+  if (dictionary == "EWAR") {
+
+    # set date of event starting to the earliest date from those given
+    dis_output$date_arrived <- with(
+      dis_output,
+      pmin(
+        date_event_start,
+        date_signal,
+        date_triage,
+        date_verification,
+        date_assessment,
+        date_response_started,
+        date_response_ended,
+        na.rm = TRUE
+      )
+    )
+
+    # date signal
+    dis_output <- enforce_timing(dis_output,
+                                 first  = "date_signal",
+                                 second = "date_triage",
+                                 5:30
+    )
+
+    ## date triage
+    dis_output <- enforce_timing(dis_output,
+                                 first  = "date_triage",
+                                 second = "date_verification",
+                                 5:30,
+                                 inclusive = TRUE
+    )
+
+    # died verification
+    dis_output <- enforce_timing(dis_output,
+                                 first  = "date_verification",
+                                 second = "date_assessment",
+                                 5:30
+    )
+
+    ## date assessment
+    dis_output <- enforce_timing(dis_output,
+                                 first  = "date_assessment",
+                                 second = "date_response_started",
+                                 5:30,
+                                 inclusive = TRUE
+    )
+
+    ## date response started
+    dis_output <- enforce_timing(dis_output,
+                                 first  = "date_response_started",
+                                 second = "date_response_ended",
+                                 5:30,
+                                 inclusive = TRUE
+    )
+
+  }
+
 
   # return dataset as a tibble
   dplyr::as_tibble(dis_output)
