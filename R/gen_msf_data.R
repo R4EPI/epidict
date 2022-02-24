@@ -931,7 +931,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
 
     ## Make all columns NA when no intervention required
-    dis_output[dis_output$alert_status == 0, 42:49] <- NA
+    # dis_output[dis_output$alert_status == 0, 42:49] <- NA
 
 
 
