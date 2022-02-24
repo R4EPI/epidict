@@ -925,18 +925,15 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output$event_id_res <- dis_output$event_id_sig
 
 
-    ## Make all columns NA when a signal doesn't require verification
-
-    dis_output[dis_output$need_verif == 0, 18:49] <- NA
-
-
-    ## Make all columns NA when a signal is not verified
-    dis_output[dis_output$event_status == 0, 22:49] <- NA
-
 
     ## Make all columns NA when no intervention required
-    # dis_output[dis_output$alert_status == 0, 42:49] <- NA
+    dis_output[dis_output$alert_status == 0, 42:49] <- NA
 
+   ## Make all columns NA when a signal is not verified
+    dis_output[dis_output$event_status == 0, 22:49] <- NA
+
+    ## Make all columns NA when a signal doesn't require verification
+    dis_output[dis_output$need_verif == 0, 18:49] <- NA
 
 
   }
