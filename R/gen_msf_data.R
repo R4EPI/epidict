@@ -912,6 +912,29 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                                  inclusive = TRUE
     )
 
+    ## create a signal id
+    dis_output$event_id_sig <- paste0(dis_output$initials, "_",
+                                      dis_output$location_signal, "_",
+                                      dis_output$signal_type, "_",
+                                      dis_output$date_signal)
+
+
+    ## Copy this signal id to assessment and response
+    dis_output$event_id_assess <- dis_output$event_id_sig
+
+    dis_output$event_id_res <- dis_output$event_id_sig
+
+
+    ## Make all columns NA when a variable doesn't require verification
+
+    dis_output[dis_output$need_verif == 0, 18:49] <- NA
+
+
+    ## Make all columns NA when no intervention required
+    dis_output[dis_output$alert_status == 0, 42:49] <- NA
+
+
+
   }
 
 
