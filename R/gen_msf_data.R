@@ -942,7 +942,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     dis_output$acf_total <- sample(2:15, nrow(dis_output), replace = TRUE)
 
     ## Add one person less for total under 5 identified by active case finding
-    dis_output$acf_under5 <- dis_output$act_total - 1
+    dis_output$acf_under5 <- dis_output$acf_total - 1
 
 
     ## Convert all columns NA when no intervention required
