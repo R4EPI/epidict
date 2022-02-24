@@ -860,7 +860,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
   if (dictionary == "EWAR") {
 
     # set date of event starting to the earliest date from those given
-    dis_output$date_arrived <- with(
+    dis_output$date_event_start <- with(
       dis_output,
       pmin(
         date_event_start,
