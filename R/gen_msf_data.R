@@ -913,7 +913,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     )
 
     ## create an initials variable of 3 random letters
-    dis_output$initials <- stringi::stri_rand_strings(nrow(dis_output), 3,
+    dis_output$initials <- stringi::stri_rand_strings(nrow(dis_output), 2,
                                                       pattern = "[a-z]")
 
 
@@ -944,6 +944,16 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     ## Add one person less for total under 5 identified by active case finding
     dis_output$acf_under5 <- dis_output$acf_total - 1
 
+
+    ## Ensure that alert_status takes a value of 1 where risk characterisation
+    ## is y (yes)
+    dis_output$alert_status[dis_output$risk_characterisation == "y"] <- 1
+
+
+    ## Ensure that alert_status takes a value of 0 where risk characterisation
+    ## is n (n) or u (unsure)
+    dis_output$alert_status[dis_output$risk_characterisation == "n" |
+                              dis_output$risk_characterisation == "u"] <- 0
 
     ## Convert all columns NA when no intervention required
     dis_output[dis_output$alert_status == 0, 42:49] <- NA
