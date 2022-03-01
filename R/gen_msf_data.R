@@ -958,10 +958,11 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     ## Convert all columns NA when no intervention required
     dis_output[dis_output$alert_status == 0, 42:49] <- NA
 
-    ## Convert all columns NA when a signal is not verified
+    ## Convert all values in columns to NA when a signal is not verified
     dis_output[dis_output$event_status == 0, 22:49] <- NA
 
-    ## Convert all columns NA when a signal doesn't require verification
+    ## Convert all values in columns to NA when a signal doesn't require
+    ## verification
     dis_output[dis_output$need_verif == 0, 18:49] <- NA
 
 
