@@ -33,7 +33,10 @@ Description: The 'R4EPIs' project <https://R4epis.netlify.com> seeks to provide
     Syndrome, Cholera, Measles, Meningitis) and three surveys (Retrospective
     mortality and access to care, Malnutrition, and Vaccination coverage). In
     addition, a data generator from these dictionaries is provided.  
-URL: https://r4epis.netlify.com, https://github.com/R4EPI/epidict, https://r4epi.github.io/epidict
+URL: https://r4epis.netlify.com,
+    https://github.com/R4EPI/epidict,
+    https://r4epi.github.io/epidict,
+    https://r4epi.github.io/epidict/
 License: GPL-3
 Imports: 
     tibble,
