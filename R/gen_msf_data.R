@@ -2,7 +2,7 @@
 #'
 #' @param dictionary Specify which dictionary you would like to use.
 #'   Currently supports "Cholera", "Measles", "Meningitis", "AJS",
-#'    "Mortality", "Nutrition", "Vaccination_long" and "Vaccination_short"
+#'    "Mortality", "Nutrition", "Vaccination_long", "Vaccination_short" and "EWAR"
 #'
 #' @param varnames Specify name of column that contains variable names. Currently
 #'   default set to "data_element_shortname". If `dictionary` is a survey,
