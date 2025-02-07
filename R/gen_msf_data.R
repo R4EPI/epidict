@@ -2,7 +2,7 @@
 #'
 #' @param dictionary Specify which dictionary you would like to use.
 #'   Currently supports "Cholera", "Measles", "Meningitis", "AJS",
-#'    "Mortality", "Nutrition", "Vaccination_long", "Vaccination_short" and "EWAR"
+#'    "Mortality", "Nutrition", "Vaccination_long", "Vaccination_short" and "ebs"
 #'
 #' @param varnames Specify name of column that contains variable names. Currently
 #'   default set to "data_element_shortname". If `dictionary` is a survey,
@@ -857,7 +857,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
   }
 
-  if (dictionary == "EBS") {
+  if (dictionary == "ebs") {
 
     # set date of event starting to the earliest date from those given
     dis_output$date_event_start <- with(
@@ -924,7 +924,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                                       dis_output$date_signal)
 
 
-    ## Copy this signal id to assessment and response event id variables
+    ## Copy this signal id to assessment and response signal id variables
     dis_output$c_signal_id <- dis_output$signal_id
 
 
