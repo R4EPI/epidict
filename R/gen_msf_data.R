@@ -857,7 +857,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
   }
 
-  if (dictionary == "EWAR") {
+  if (dictionary == "EBS") {
 
     # set date of event starting to the earliest date from those given
     dis_output$date_event_start <- with(
@@ -889,7 +889,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                                  inclusive = TRUE
     )
 
-    # died verification
+    # date verification
     dis_output <- enforce_timing(dis_output,
                                  first  = "date_verification",
                                  second = "date_assessment",
@@ -918,16 +918,14 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
 
 
     ## create a signal id
-    dis_output$event_id_sig <- paste0(dis_output$initials, "_",
+    dis_output$signal_id <- paste0(dis_output$initials, "_",
                                       dis_output$location_signal, "_",
                                       dis_output$signal_type, "_",
                                       dis_output$date_signal)
 
 
     ## Copy this signal id to assessment and response event id variables
-    dis_output$event_id_assess <- dis_output$event_id_sig
-
-    dis_output$event_id_res <- dis_output$event_id_sig
+    dis_output$c_signal_id <- dis_output$signal_id
 
 
     ## Add a random  number for total people affected
