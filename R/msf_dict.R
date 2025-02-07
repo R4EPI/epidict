@@ -8,7 +8,7 @@
 #' @param disease Specify which disease you would like to use.
 #'   - `msf_dict()` supports "AJS", "Cholera", "Measles", "Meningitis"
 #'   - `msf_dict_survey()` supports "Mortality", "Nutrition", "Vaccination_long",
-#'    "Vaccination_short" (only used in surveys if `template = TRUE`) and "EWAR"
+#'    "Vaccination_short" (only used in surveys if `template = TRUE`) and "ebs
 #'
 #' @param name the name of the dictionary stored in the package.
 #'   - `msf_dict_survey()` supports Kobo dictionaries not stored within this package,
@@ -65,7 +65,7 @@ msf_dict <- function(disease, name = "MSF-outbreak-dict.xlsx", tibble = TRUE,
   disease <- get_dictionary(disease, org = "MSF")$outbreak
 
   if (length(disease) == 0) {
-    stop("disease must be one of 'Cholera', 'Measles', 'Meningitis', or 'AJS'", call. = FALSE)
+    stop("disease must be one of 'Cholera', 'Measles', 'Meningitis', 'AJS' or 'ebs'", call. = FALSE)
   }
 
   # get excel file path (need to specify the file name)
