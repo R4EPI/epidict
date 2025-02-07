@@ -924,8 +924,11 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                                       dis_output$date_signal)
 
 
-    ## Copy this signal id to assessment and response signal id variables
+    ## Copy this signal id to assessment signal id variable
     dis_output$c_signal_id <- dis_output$signal_id
+
+    ## Copy this signal id to response signal id variable
+    dis_output$c_signal_id2 <- dis_output$signal_id
 
 
     ## Add a random  number for total people affected
