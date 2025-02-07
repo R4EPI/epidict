@@ -3,7 +3,7 @@
 #' @export
 #' @param disease Specify which disease you would like to use.
 #' Currently supports "Cholera", "Measles", "Meningitis", "AJS",
-#' "Mortality", "Nutrition", "Vaccination_short", "Vaccination_long" and "EWAR".
+#' "Mortality", "Nutrition", "Vaccination_short", "Vaccination_long" and "ebs".
 #'
 #' @param name The name of the dictionary stored in the package. The default
 #' will use dictionaries from the package. However you can also use
