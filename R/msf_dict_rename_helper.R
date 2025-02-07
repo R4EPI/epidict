@@ -60,11 +60,11 @@ msf_dict_rename_helper <- function(disease,
   if (
     !tolower(disease) %in% c("cholera", "measles", "meningitis", "ajs",
                           "mortality", "nutrition", "vaccination_short",
-                          "vaccination_long", "ewar") &
+                          "vaccination_long", "ebs") &
       template) {
         stop("disease must be one of `cholera`, `measles`, `meningitis`, `ajs`,
            `mortality`, `nutrition`, `vaccination_short`, `vaccination_long`,
-           `ewar`.
+           `ebs`.
            If using your own dictionary please set template to `FALSE`",
            call. = FALSE)
       }
@@ -86,7 +86,7 @@ msf_dict_rename_helper <- function(disease,
 
     # get msf disease specific survey data dictionary
     if (disease == "mortality" | disease == "nutrition" |
-        disease == "vaccination_short" | disease == "vaccination_long" | disease == "ewar") {
+        disease == "vaccination_short" | disease == "vaccination_long" | disease == "ebs") {
 
       dat_dict <- msf_dict_survey(disease, compact = TRUE)
 
