@@ -913,8 +913,9 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
     )
 
     ## create an initials variable of 3 random letters
-    dis_output$initials <- stringi::stri_rand_strings(nrow(dis_output), 2,
-                                                      pattern = "[a-z]")
+    dis_output$initials <-  replicate(nrow(dis_output),
+                                      paste0(sample(letters, 2, replace = TRUE),
+                                             collapse = ""))
 
 
     ## create a signal id
