@@ -3,7 +3,7 @@
 #' @export
 #' @param disease Specify which disease you would like to use.
 #' Currently supports "Cholera", "Measles", "Meningitis", "AJS",
-#' "Mortality", "Nutrition", "Vaccination_short" and "Vaccination_long".
+#' "Mortality", "Nutrition", "Vaccination_short", "Vaccination_long" and "ebs".
 #'
 #' @param name The name of the dictionary stored in the package. The default
 #' will use dictionaries from the package. However you can also use
@@ -15,7 +15,7 @@
 #' @param varnames The name of column that contains variable names. The
 #' default set to "data_element_shortname".
 #' If `dictionary` is a survey ("Mortality", "Nutrition", "Vaccination_short"
-#' or "Vaccination_long") `varnames` needs to be "name"`. Otherwise if using
+#' "Vaccination_long" or "ebs") `varnames` needs to be "name"`. Otherwise if using
 #' your own dictionary then specify.
 #'
 #' @param varnames_type The name of column that contains the variable type.
@@ -60,10 +60,11 @@ msf_dict_rename_helper <- function(disease,
   if (
     !tolower(disease) %in% c("cholera", "measles", "meningitis", "ajs",
                           "mortality", "nutrition", "vaccination_short",
-                          "vaccination_long") &
+                          "vaccination_long", "ebs") &
       template) {
         stop("disease must be one of `cholera`, `measles`, `meningitis`, `ajs`,
-           `mortality`, `nutrition`, `vaccination_short`, `vaccination_long`.
+           `mortality`, `nutrition`, `vaccination_short`, `vaccination_long`,
+           `ebs`.
            If using your own dictionary please set template to `FALSE`",
            call. = FALSE)
       }
@@ -85,7 +86,7 @@ msf_dict_rename_helper <- function(disease,
 
     # get msf disease specific survey data dictionary
     if (disease == "mortality" | disease == "nutrition" |
-        disease == "vaccination_short" | disease == "vaccination_long") {
+        disease == "vaccination_short" | disease == "vaccination_long" | disease == "ebs") {
 
       dat_dict <- msf_dict_survey(disease, compact = TRUE)
 

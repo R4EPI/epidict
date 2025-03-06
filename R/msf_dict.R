@@ -7,8 +7,8 @@
 #'
 #' @param disease Specify which disease you would like to use.
 #'   - `msf_dict()` supports "AJS", "Cholera", "Measles", "Meningitis"
-#'   - `msf_dict_survey()` supports "Mortality", "Nutrition", "Vaccination_long"
-#'   and "Vaccination_short" (only used in surveys if `template = TRUE`)
+#'   - `msf_dict_survey()` supports "Mortality", "Nutrition", "Vaccination_long",
+#'    "Vaccination_short" (only used in surveys if `template = TRUE`) and "ebs"
 #'
 #' @param name the name of the dictionary stored in the package.
 #'   - `msf_dict_survey()` supports Kobo dictionaries not stored within this package,

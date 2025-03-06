@@ -2,7 +2,7 @@
 #'
 #' @param dictionary Specify which dictionary you would like to use.
 #'   Currently supports "Cholera", "Measles", "Meningitis", "AJS",
-#'    "Mortality", "Nutrition", "Vaccination_long" and "Vaccination_short"
+#'    "Mortality", "Nutrition", "Vaccination_long", "Vaccination_short" and "ebs"
 #'
 #' @param varnames Specify name of column that contains variable names. Currently
 #'   default set to "data_element_shortname". If `dictionary` is a survey,
@@ -854,6 +854,124 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "data_eleme
                                dis_output$age_diagnosis > dis_output$age_months] <- dis_output$age_months[meas_diag &
                                                                                                             has_value(dis_output$age_months) &
                                                                                                             dis_output$age_diagnosis > dis_output$age_months]
+
+  }
+
+  if (dictionary == "ebs") {
+
+    # set date of event starting to the earliest date from those given
+    dis_output$date_event_start <- with(
+      dis_output,
+      pmin(
+        date_event_start,
+        date_signal,
+        date_triage,
+        date_verification,
+        date_assessment,
+        date_response_started,
+        date_response_ended,
+        na.rm = TRUE
+      )
+    )
+
+    # date signal
+    dis_output <- enforce_timing(dis_output,
+                                 first  = "date_signal",
+                                 second = "date_triage",
+                                 5:30
+    )
+
+    ## date triage
+    dis_output <- enforce_timing(dis_output,
+                                 first  = "date_triage",
+                                 second = "date_verification",
+                                 5:30,
+                                 inclusive = TRUE
+    )
+
+    # date verification
+    dis_output <- enforce_timing(dis_output,
+                                 first  = "date_verification",
+                                 second = "date_assessment",
+                                 5:30
+    )
+
+    ## date assessment
+    dis_output <- enforce_timing(dis_output,
+                                 first  = "date_assessment",
+                                 second = "date_response_started",
+                                 5:30,
+                                 inclusive = TRUE
+    )
+
+    ## date response started
+    dis_output <- enforce_timing(dis_output,
+                                 first  = "date_response_started",
+                                 second = "date_response_ended",
+                                 5:30,
+                                 inclusive = TRUE
+    )
+
+    ## create an initials variable of 3 random letters
+    dis_output$initials <-  replicate(nrow(dis_output),
+                                      paste0(sample(letters, 2, replace = TRUE),
+                                             collapse = ""))
+
+
+    ## create a signal id
+    dis_output$signal_id <- paste0(dis_output$initials, "_",
+                                      dis_output$location_signal, "_",
+                                      dis_output$signal_type, "_",
+                                      dis_output$date_signal)
+
+
+    ## Copy this signal id to assessment signal id variable
+    dis_output$c_signal_id <- dis_output$signal_id
+
+    ## Copy this signal id to response signal id variable
+    dis_output$c_signal_id2 <- dis_output$signal_id
+
+
+    ## Add a random  number for total people affected
+    dis_output$total_affected <- sample(1:10, nrow(dis_output), replace = TRUE)
+
+
+    ## Add one person less for under 5 affected
+    dis_output$under5_affected <- dis_output$total_affected - 1
+
+
+    ## Add a random  number for total people identified by active case finding
+    dis_output$acf_total <- sample(2:15, nrow(dis_output), replace = TRUE)
+
+    ## Add one person less for total under 5 identified by active case finding
+    dis_output$acf_under5 <- dis_output$acf_total - 1
+
+
+    ## Ensure that alert_status takes a value of 1 where risk characterisation
+    ## is y (yes)
+    dis_output$alert_status[dis_output$risk_characterisation == "y"] <- 1
+
+
+    ## Ensure that alert_status takes a value of 0 where risk characterisation
+    ## is n (n) or u (unsure)
+    dis_output$alert_status[dis_output$risk_characterisation == "n" |
+                              dis_output$risk_characterisation == "u"] <- 0
+
+    ## Convert all columns NA when no intervention required
+    dis_output[dis_output$alert_status == 0, 42:49] <- NA
+
+    ## Convert all values in columns to NA when a signal is not verified
+    dis_output[dis_output$event_status == 0, 22:49] <- NA
+
+    ## Convert all values in columns to NA when a signal doesn't require
+    ## verification
+    dis_output[dis_output$need_verif == 0, 18:49] <- NA
+
+
+    ## Convert dates of start and end of response to NA if no response carried out
+    ## or if unsure if a response was carried out
+    dis_output[dis_output$response_undertaken %in% c("n", "u"),
+               c("date_response_started","date_response_ended")] <- NA
 
   }
 

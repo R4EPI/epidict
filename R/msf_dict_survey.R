@@ -22,7 +22,7 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
     disease <- get_dictionary(disease, org = "MSF")$survey
 
     if (length(disease) == 0) {
-      stop("disease must be one of 'Mortality', 'Nutrition', 'Vaccination_long', 'Vaccination_short'", call. = FALSE)
+      stop("disease must be one of 'Mortality', 'Nutrition', 'Vaccination_long', 'Vaccination_short', 'ebs'", call. = FALSE)
     }
     # get excel file path (need to specify the file name)
     path <- system.file("extdata", name, package = "epidict")
@@ -86,7 +86,7 @@ msf_dict_survey <- function(disease, name = "MSF-survey-dict.xlsx",
 
     outtie <- if (tibble) tibble::as_tibble(outtie) else outtie
 
-    # Return second option: a list with data dictionary and value options seperate
+    # Return second option: a list with data dictionary and value options separate
   } else {
     if (tibble) {
       dat_dict <- tibble::as_tibble(dat_dict)
