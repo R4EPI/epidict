@@ -15,7 +15,7 @@
 #' @param varnames The name of column that contains variable names. The
 #' default set to "data_element_shortname".
 #' If `dictionary` is a survey ("Mortality", "Nutrition", "Vaccination_short"
-#' "Vaccination_long" or "EWAR") `varnames` needs to be "name"`. Otherwise if using
+#' "Vaccination_long" or "ebs") `varnames` needs to be "name"`. Otherwise if using
 #' your own dictionary then specify.
 #'
 #' @param varnames_type The name of column that contains the variable type.
