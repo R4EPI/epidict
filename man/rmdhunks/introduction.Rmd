@@ -20,15 +20,6 @@ hidden from the user
 If there is a bugfix or feature that is not yet on CRAN, you can install it via
 the {drat} package:
 
-
-You can install {epidict} from the R4EPI repository:
-
-```{r eval = FALSE}
-# install.packages("drat")
-drat::addRepo("R4EPI")
-install.packages("epidict")
-```
-
 You can also install the in-development version from GitHub using the {remotes}
 package (but there's no guarantee that it will be stable):
 

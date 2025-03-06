@@ -39,14 +39,6 @@ Click here for alternative installation options
 If there is a bugfix or feature that is not yet on CRAN, you can install
 it via the {drat} package:
 
-You can install {epidict} from the R4EPI repository:
-
-``` r
-# install.packages("drat")
-drat::addRepo("R4EPI")
-install.packages("epidict")
-```
-
 You can also install the in-development version from GitHub using the
 {remotes} package (but there’s no guarantee that it will be stable):
 
@@ -87,69 +79,77 @@ Click here for code examples
 ``` r
 library("epidict")
 msf_dict("AJS")
-#> # A tibble: 68 x 8
-#>    data_element_uid data_element_name   data_element_sho~ data_element_descript~
-#>    <lgl>            <chr>               <chr>             <chr>                 
-#>  1 NA               egen_044_event_fil~ event_file_type   Is the event file for~
-#>  2 NA               egen_001_patient_c~ case_number       Anonymised patient nu~
-#>  3 NA               egen_004_date_of_c~ date_of_consulta~ Date patient presents~
-#>  4 NA               egen_022_detected_~ detected_by       How patient was ident~
-#>  5 NA               egen_005_patient_f~ patient_facility~ Patient is presenting~
-#>  6 NA               egen_029_msf_invol~ msf_involvement   How extensive is MSF'~
-#>  7 NA               egen_008_age_years  age_years         Age of patient (in ye~
-#>  8 NA               egen_009_age_months age_months        Age of patient in mon~
-#>  9 NA               egen_010_age_days   age_days          Age of patient in day~
-#> 10 NA               egen_011_sex        sex               Sex of patient (If Tr~
-#> # ... with 58 more rows, and 4 more variables: data_element_valuetype <chr>,
-#> #   data_element_formname <chr>, used_optionset_uid <chr>, options <list>
+#> # A tibble: 68 × 8
+#>    data_element_uid data_elem…¹ data_…² data_…³ data_…⁴ data_…⁵ used_…⁶ options 
+#>    <lgl>            <chr>       <chr>   <chr>   <chr>   <chr>   <chr>   <list>  
+#>  1 NA               egen_044_e… event_… Is the… TEXT    <NA>    HgdrO8… <tibble>
+#>  2 NA               egen_001_p… case_n… Anonym… TEXT    <NA>    <NA>    <tibble>
+#>  3 NA               egen_004_d… date_o… Date p… DATE    <NA>    <NA>    <tibble>
+#>  4 NA               egen_022_d… detect… How pa… TEXT    <NA>    BlfHX5… <tibble>
+#>  5 NA               egen_005_p… patien… Patien… TEXT    <NA>    YNeOOp… <tibble>
+#>  6 NA               egen_029_m… msf_in… How ex… TEXT    <NA>    PN5NWt… <tibble>
+#>  7 NA               egen_008_a… age_ye… Age of… INTEGE… <NA>    <NA>    <tibble>
+#>  8 NA               egen_009_a… age_mo… Age of… INTEGE… <NA>    <NA>    <tibble>
+#>  9 NA               egen_010_a… age_da… Age of… INTEGE… <NA>    <NA>    <tibble>
+#> 10 NA               egen_011_s… sex     Sex of… TEXT    <NA>    orgc5Y… <tibble>
+#> # … with 58 more rows, and abbreviated variable names ¹​data_element_name,
+#> #   ²​data_element_shortname, ³​data_element_description,
+#> #   ⁴​data_element_valuetype, ⁵​data_element_formname, ⁶​used_optionset_uid
+#> # ℹ Use `print(n = ...)` to see more rows
 msf_dict("Cholera")
-#> # A tibble: 45 x 8
-#>    data_element_uid data_element_name    data_element_sho~ data_element_descrip~
-#>    <chr>            <chr>                <chr>             <chr>                
-#>  1 FF7d81Zy0yQ      egen_013_pregnancy_~ trimester         If pregnant, trimest~
-#>  2 ADfNqpCL5kf      egen_015_exit_status exit_status       Final status of pati~
-#>  3 wjCDTwXmtix      egen_064_treatment_~ treatment_facili~ Name of facility/sit~
-#>  4 UUVnMdaBY5T      esym_002_dehydratio~ dehydration_leve~ Dehydration based on~
-#>  5 BTZdJKpS3S5      egen_059_comments_o~ comments_on_lab_~ Any additional comme~
-#>  6 bpT8T341oQG      egen_054_fluids_tre~ fluids_treatment~ What was the fluids ~
-#>  7 FqPqIr5m0AQ      egen_017_time_betwe~ time_to_death     Hours between patien~
-#>  8 epbKb1GczaS      esym_003_malaria_rd~ malaria_rdt_at_a~ Malaria rapid diagno~
-#>  9 F04TM58HHsd      egen_020_previously~ previously_vacci~ Has the patient prev~
-#> 10 CfRNuWWuTr5      egen_058_cholera_pc~ cholera_pcr_resu~ Was a PCR test for c~
-#> # ... with 35 more rows, and 4 more variables: data_element_valuetype <chr>,
-#> #   data_element_formname <chr>, used_optionset_uid <chr>, options <list>
+#> # A tibble: 45 × 8
+#>    data_element_uid data_elem…¹ data_…² data_…³ data_…⁴ data_…⁵ used_…⁶ options 
+#>    <chr>            <chr>       <chr>   <chr>   <chr>   <chr>   <chr>   <list>  
+#>  1 AafTlSwliVQ      egen_001_p… case_n… Anonym… TEXT    Case n… <NA>    <tibble>
+#>  2 OTGOtWBz39J      egen_004_d… date_o… Date p… DATE    Date o… <NA>    <tibble>
+#>  3 wnmMr2V3T3u      egen_006_p… patien… Locati… ORGANI… Patien… <NA>    <tibble>
+#>  4 sbgqjeVwtb8      egen_008_a… age_ye… Age of… INTEGE… Age in… <NA>    <tibble>
+#>  5 eXYhovYyl61      egen_009_a… age_mo… Age of… INTEGE… Age in… <NA>    <tibble>
+#>  6 UrYJSk2Wp46      egen_010_a… age_da… Age of… INTEGE… Age in… <NA>    <tibble>
+#>  7 D1Ky5K7pFN6      egen_011_s… sex     Sex of… TEXT    Sex     orgc5Y… <tibble>
+#>  8 dTm5R53YYXC      egen_012_p… pregna… Pregna… TEXT    Pregna… IEjzG2… <tibble>
+#>  9 FF7d81Zy0yQ      egen_013_p… trimes… If pre… TEXT    Trimes… QjGHFN… <tibble>
+#> 10 vLAmA6Pmjip      egen_014_p… foetus… If pre… TEXT    Foetus… SR8Jtf… <tibble>
+#> # … with 35 more rows, and abbreviated variable names ¹​data_element_name,
+#> #   ²​data_element_shortname, ³​data_element_description,
+#> #   ⁴​data_element_valuetype, ⁵​data_element_formname, ⁶​used_optionset_uid
+#> # ℹ Use `print(n = ...)` to see more rows
 msf_dict("Measles")
-#> # A tibble: 52 x 8
-#>    data_element_uid data_element_name    data_element_sho~ data_element_descrip~
-#>    <chr>            <chr>                <chr>             <chr>                
-#>  1 DE_ESYM_012      esym_012_seizures    seizure_episodes  Complication (Seizur~
-#>  2 DE_EGEN_013      egen_013_pregnancy_~ trimester         If pregnant, trimest~
-#>  3 DE_ESYM_014      esym_014_croup       croup             Complication (Croup)~
-#>  4 DE_ESYM_002      esym_002_dehydratio~ dehydration_leve~ Dehydration based on~
-#>  5 DE_EGEN_030      egen_030_residentia~ residential_stat~ Whether the patient ~
-#>  6 DE_EGEN_020      egen_020_previously~ previously_vacci~ Has the patient prev~
-#>  7 DE_EGEN_062      egen_062_patient_or~ patient_origin_f~ Name of village or p~
-#>  8 DE_EGEN_010      egen_010_age_days    age_days          Age of patient in da~
-#>  9 DE_EGEN_029      egen_029_msf_involv~ msf_involvement   How extensive is MSF~
-#> 10 DE_EGEN_053      egen_053_nutrition_~ nutrition_status~ What is the nutritio~
-#> # ... with 42 more rows, and 4 more variables: data_element_valuetype <chr>,
-#> #   data_element_formname <chr>, used_optionset_uid <chr>, options <list>
+#> # A tibble: 52 × 8
+#>    data_element_uid data_elem…¹ data_…² data_…³ data_…⁴ data_…⁵ used_…⁶ options 
+#>    <chr>            <chr>       <chr>   <chr>   <chr>   <chr>   <chr>   <list>  
+#>  1 DE_EGEN_001      egen_001_p… case_n… Anonym… TEXT    Case n… <NA>    <tibble>
+#>  2 DE_EGEN_004      egen_004_d… date_o… Date p… DATE    Date o… <NA>    <tibble>
+#>  3 DE_EGEN_005      egen_005_p… patien… Patien… TEXT    Patien… YNeOOp… <tibble>
+#>  4 DE_EGEN_006      egen_006_p… patien… Locati… ORGANI… Patien… <NA>    <tibble>
+#>  5 DE_EGEN_008      egen_008_a… age_ye… Age of… INTEGE… Age in… <NA>    <tibble>
+#>  6 DE_EGEN_009      egen_009_a… age_mo… Age of… INTEGE… Age in… <NA>    <tibble>
+#>  7 DE_EGEN_010      egen_010_a… age_da… Age of… INTEGE… Age in… <NA>    <tibble>
+#>  8 DE_EGEN_011      egen_011_s… sex     Sex of… TEXT    Sex     orgc5Y… <tibble>
+#>  9 DE_EGEN_012      egen_012_p… pregna… Pregna… TEXT    Pregna… IEjzG2… <tibble>
+#> 10 DE_EGEN_013      egen_013_p… trimes… If pre… TEXT    Trimes… QjGHFN… <tibble>
+#> # … with 42 more rows, and abbreviated variable names ¹​data_element_name,
+#> #   ²​data_element_shortname, ³​data_element_description,
+#> #   ⁴​data_element_valuetype, ⁵​data_element_formname, ⁶​used_optionset_uid
+#> # ℹ Use `print(n = ...)` to see more rows
 msf_dict("Meningitis")
-#> # A tibble: 53 x 8
-#>    data_element_uid data_element_name    data_element_sh~ data_element_descript~
-#>    <chr>            <chr>                <chr>            <chr>                 
-#>  1 Ow8ss6T1tT5      esym_028_seizures_a~ seizures_at_adm~ Presenting symptoms (~
-#>  2 CEEr9lcwKVG      esym_036_kernigs_br~ kernigs_brudzin~ Presenting symptoms (~
-#>  3 tIe59Htd2Ba      esym_012_seizures    seizure_episodes Complication (Seizure~
-#>  4 Sjms36Aj6bT      esym_023_febrile_co~ febrile_coma     Complication (Febrile~
-#>  5 BTZdJKpS3S5      egen_059_comments_o~ comments_on_lab~ Any additional commen~
-#>  6 wHnNEMRrS5A      esym_025_chills_at_~ chills           Presenting symptoms (~
-#>  7 T3Gn8mTYu0c      esym_026_stiff_neck~ stiff_neck       Presenting symptoms (~
-#>  8 JCexRYsmjmS      eobr_006_ti_sample_~ ti_result_organ~ TI sample result - or~
-#>  9 myL5BYzy6zW      esym_034_coma_at_ad~ coma             Presenting symptoms (~
-#> 10 AhllpMovCeu      egen_062_patient_or~ patient_origin_~ Name of village or pa~
-#> # ... with 43 more rows, and 4 more variables: data_element_valuetype <chr>,
-#> #   data_element_formname <chr>, used_optionset_uid <chr>, options <list>
+#> # A tibble: 53 × 8
+#>    data_element_uid data_elem…¹ data_…² data_…³ data_…⁴ data_…⁵ used_…⁶ options 
+#>    <chr>            <chr>       <chr>   <chr>   <chr>   <chr>   <chr>   <list>  
+#>  1 AafTlSwliVQ      egen_001_p… case_n… Anonym… TEXT    Case n… <NA>    <tibble>
+#>  2 OTGOtWBz39J      egen_004_d… date_o… Date p… DATE    Date o… <NA>    <tibble>
+#>  3 udXAcFEE1dl      egen_005_p… patien… Patien… TEXT    Patien… YNeOOp… <tibble>
+#>  4 wnmMr2V3T3u      egen_006_p… patien… Locati… ORGANI… Patien… <NA>    <tibble>
+#>  5 sbgqjeVwtb8      egen_008_a… age_ye… Age of… INTEGE… Age in… <NA>    <tibble>
+#>  6 eXYhovYyl61      egen_009_a… age_mo… Age of… INTEGE… Age in… <NA>    <tibble>
+#>  7 UrYJSk2Wp46      egen_010_a… age_da… Age of… INTEGE… Age in… <NA>    <tibble>
+#>  8 D1Ky5K7pFN6      egen_011_s… sex     Sex of… TEXT    Sex     orgc5Y… <tibble>
+#>  9 ADfNqpCL5kf      egen_015_e… exit_s… Final … TEXT    Exit s… hO9TET… <tibble>
+#> 10 JZ8yqTow79G      egen_016_d… date_o… Date p… DATE    Exit d… <NA>    <tibble>
+#> # … with 43 more rows, and abbreviated variable names ¹​data_element_name,
+#> #   ²​data_element_shortname, ³​data_element_description,
+#> #   ⁴​data_element_valuetype, ⁵​data_element_formname, ⁶​used_optionset_uid
+#> # ℹ Use `print(n = ...)` to see more rows
 ```
 
 </details>
@@ -158,8 +158,8 @@ In addition, there are four MSF survey dictionaries available:
 
 -   Retrospective mortality and access to care (“Mortality”)
 -   Malnutrition (“Nutrition”)
--   Vaccination coverage long form (“vaccination\_long”)
--   Vaccination coverage short form (“vaccination\_short”)
+-   Vaccination coverage long form (“vaccination_long”)
+-   Vaccination coverage short form (“vaccination_short”)
 
 > You can read more about the survey dictionaries at
 > <https://r4epis.netlify.com/surveys>
@@ -180,73 +180,81 @@ Click here for code examples
 
 ``` r
 msf_dict_survey("Mortality")
-#> # A tibble: 174 x 14
-#>    type     name    label_english  label_french hint_english hint_french default
-#>    <chr>    <chr>   <chr>          <chr>        <chr>        <chr>       <chr>  
-#>  1 start    start   Start Time     <NA>         <NA>         <NA>        <NA>   
-#>  2 end      end     End Time       <NA>         <NA>         <NA>        <NA>   
-#>  3 today    today   Date of Survey <NA>         <NA>         <NA>        <NA>   
-#>  4 deviceid device~ Phone Serial ~ <NA>         <NA>         <NA>        <NA>   
-#>  5 date     date    Date           Date         <NA>         <NA>        today()
-#>  6 integer  team_n~ Team number    Numéro d'éq~ <NA>         <NA>        <NA>   
-#>  7 village  villag~ Village name   Nom du vill~ <NA>         <NA>        <NA>   
-#>  8 text     villag~ Specify other  Autre, spéc~ <NA>         <NA>        <NA>   
-#>  9 integer  cluste~ Cluster number Numéro de l~ <NA>         <NA>        <NA>   
-#> 10 integer  househ~ Household num~ Numéro du m~ <NA>         <NA>        <NA>   
-#> # ... with 164 more rows, and 7 more variables: relevant <chr>,
-#> #   appearance <chr>, constraint <chr>, repeat_count <chr>, calculation <chr>,
-#> #   value_type <chr>, options <list>
+#> # A tibble: 174 × 15
+#>    type    name  short…¹ label…² label…³ hint_…⁴ hint_…⁵ default relev…⁶ appea…⁷
+#>    <chr>   <chr> <chr>   <chr>   <chr>   <chr>   <chr>   <chr>   <chr>   <chr>  
+#>  1 start   start start   Start … <NA>    <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  2 end     end   end     End Ti… <NA>    <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  3 today   today today   Date o… <NA>    <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  4 device… devi… device… Phone … <NA>    <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  5 date    date  Date o… Date    Date    <NA>    <NA>    today() <NA>    <NA>   
+#>  6 integer team… Team n… Team n… Numéro… <NA>    <NA>    <NA>    <NA>    numbers
+#>  7 village vill… Villag… Villag… Nom du… <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  8 text    vill… Other … Specif… Autre,… <NA>    <NA>    <NA>    ${vill… <NA>   
+#>  9 integer clus… Cluste… Cluste… Numéro… <NA>    <NA>    <NA>    <NA>    numbers
+#> 10 integer hous… Househ… Househ… Numéro… <NA>    <NA>    <NA>    <NA>    numbers
+#> # … with 164 more rows, 5 more variables: constraint <chr>, repeat_count <chr>,
+#> #   calculation <chr>, value_type <chr>, options <list>, and abbreviated
+#> #   variable names ¹​short_name, ²​label_english, ³​label_french, ⁴​hint_english,
+#> #   ⁵​hint_french, ⁶​relevant, ⁷​appearance
+#> # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 msf_dict_survey("Nutrition")
-#> # A tibble: 27 x 14
-#>    type     name  label_english label_french hint_english hint_french repeat_count
-#>    <chr>    <chr> <chr>         <chr>        <chr>        <chr>       <chr>       
-#>  1 start    start Start Time    <NA>         <NA>         <NA>        <NA>        
-#>  2 end      end   End Time      <NA>         <NA>         <NA>        <NA>        
-#>  3 today    today Date of Surv~ <NA>         <NA>         <NA>        <NA>        
-#>  4 deviceid devi~ Phone Serial~ <NA>         <NA>         <NA>        <NA>        
-#>  5 date     date  Date          <NA>         <NA>         <NA>        <NA>        
-#>  6 integer  team~ Team number   <NA>         <NA>         <NA>        <NA>        
-#>  7 village  vill~ Village name  Nom du vill~ <NA>         <NA>        <NA>        
-#>  8 text     vill~ Specify other Précisez au~ <NA>         <NA>        <NA>        
-#>  9 geopoint vill~ Village loca~ Localisatio~ <NA>         <NA>        <NA>        
-#> 10 integer  clus~ Cluster numb~ Numéro de g~ <NA>         <NA>        <NA>        
-#> # ... with 17 more rows, and 7 more variables: relevant <chr>,
-#> #   calculation <lgl>, constraint <chr>, appearance <chr>, default <chr>,
-#> #   value_type <chr>, options <list>
+#> # A tibble: 27 × 15
+#>    type    name  short…¹ label…² label…³ hint_…⁴ hint_…⁵ repea…⁶ relev…⁷ calcu…⁸
+#>    <chr>   <chr> <chr>   <chr>   <chr>   <chr>   <chr>   <chr>   <chr>   <lgl>  
+#>  1 start   start <NA>    Start … <NA>    <NA>    <NA>    <NA>    <NA>    NA     
+#>  2 end     end   <NA>    End Ti… <NA>    <NA>    <NA>    <NA>    <NA>    NA     
+#>  3 today   today <NA>    Date o… <NA>    <NA>    <NA>    <NA>    <NA>    NA     
+#>  4 device… devi… <NA>    Phone … <NA>    <NA>    <NA>    <NA>    <NA>    NA     
+#>  5 date    date  Date    Date    <NA>    <NA>    <NA>    <NA>    <NA>    NA     
+#>  6 integer team… Team n… Team n… <NA>    <NA>    <NA>    <NA>    <NA>    NA     
+#>  7 village vill… Villag… Villag… Nom du… <NA>    <NA>    <NA>    <NA>    NA     
+#>  8 text    vill… Other … Specif… Précis… <NA>    <NA>    <NA>    ${vill… NA     
+#>  9 geopoi… vill… Villag… Villag… Locali… <NA>    <NA>    <NA>    <NA>    NA     
+#> 10 integer clus… Cluste… Cluste… Numéro… <NA>    <NA>    <NA>    <NA>    NA     
+#> # … with 17 more rows, 5 more variables: constraint <chr>, appearance <chr>,
+#> #   default <chr>, value_type <chr>, options <list>, and abbreviated variable
+#> #   names ¹​short_name, ²​label_english, ³​label_french, ⁴​hint_english,
+#> #   ⁵​hint_french, ⁶​repeat_count, ⁷​relevant, ⁸​calculation
+#> # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 msf_dict_survey("Vaccination_long")
-#> # A tibble: 106 x 14
-#>    type     name   label_english  label_french  hint_english hint_french default
-#>    <chr>    <chr>  <chr>          <chr>         <chr>        <chr>       <chr>  
-#>  1 start    start  Start Time     Start Time    <NA>         <NA>        <NA>   
-#>  2 end      end    End Time       End Time      <NA>         <NA>        <NA>   
-#>  3 today    today  Date of Survey Date of Surv~ <NA>         <NA>        <NA>   
-#>  4 deviceid devic~ Phone Serial ~ Phone Serial~ <NA>         <NA>        <NA>   
-#>  5 date     date   Date           Date          <NA>         <NA>        today()
-#>  6 integer  team_~ Team number    Numéro de l'~ <NA>         <NA>        <NA>   
-#>  7 village  villa~ Village name   Nom du villa~ <NA>         <NA>        <NA>   
-#>  8 text     villa~ Specify other  Veuillez spé~ <NA>         <NA>        <NA>   
-#>  9 integer  clust~ Cluster number Numéro de la~ <NA>         <NA>        <NA>   
-#> 10 integer  house~ Household num~ Numéro du mé~ <NA>         <NA>        <NA>   
-#> # ... with 96 more rows, and 7 more variables: relevant <chr>,
-#> #   appearance <chr>, repeat_count <chr>, constraint <chr>, calculation <chr>,
-#> #   value_type <chr>, options <list>
+#> # A tibble: 106 × 15
+#>    type    name  short…¹ label…² label…³ hint_…⁴ hint_…⁵ default relev…⁶ appea…⁷
+#>    <chr>   <chr> <chr>   <chr>   <chr>   <chr>   <chr>   <chr>   <chr>   <chr>  
+#>  1 start   start <NA>    Start … Start … <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  2 end     end   <NA>    End Ti… End Ti… <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  3 today   today <NA>    Date o… Date o… <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  4 device… devi… <NA>    Phone … Phone … <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  5 date    date  Date    Date    Date    <NA>    <NA>    today() <NA>    <NA>   
+#>  6 integer team… Team n… Team n… Numéro… <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  7 village vill… Villag… Villag… Nom du… <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  8 text    vill… Other … Specif… Veuill… <NA>    <NA>    <NA>    ${vill… <NA>   
+#>  9 integer clus… Cluste… Cluste… Numéro… <NA>    <NA>    <NA>    <NA>    numbers
+#> 10 integer hous… Househ… Househ… Numéro… <NA>    <NA>    <NA>    <NA>    <NA>   
+#> # … with 96 more rows, 5 more variables: repeat_count <chr>, constraint <chr>,
+#> #   calculation <chr>, value_type <chr>, options <list>, and abbreviated
+#> #   variable names ¹​short_name, ²​label_english, ³​label_french, ⁴​hint_english,
+#> #   ⁵​hint_french, ⁶​relevant, ⁷​appearance
+#> # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 msf_dict_survey("Vaccination_short")
-#> # A tibble: 38 x 15
-#>    type     name   label_english  label_french  hint_english hint_french default
-#>    <chr>    <chr>  <chr>          <chr>         <chr>        <chr>       <chr>  
-#>  1 start    start  Start Time     Start Time    <NA>         <NA>        <NA>   
-#>  2 end      end    End Time       End Time      <NA>         <NA>        <NA>   
-#>  3 today    today  Date of Survey Date of Surv~ <NA>         <NA>        <NA>   
-#>  4 deviceid devic~ Phone Serial ~ Phone Serial~ <NA>         <NA>        <NA>   
-#>  5 date     date   Date           Date          <NA>         <NA>        .today~
-#>  6 integer  team_~ Team number    Numéro de l'~ <NA>         <NA>        <NA>   
-#>  7 village  villa~ Village name   Nom du villa~ <NA>         <NA>        <NA>   
-#>  8 text     villa~ Specify other  Veuillez spé~ <NA>         <NA>        <NA>   
-#>  9 integer  clust~ Cluster number Numéro de la~ <NA>         <NA>        <NA>   
-#> 10 integer  house~ Household num~ Numéro du mé~ <NA>         <NA>        <NA>   
-#> # ... with 28 more rows, and 8 more variables: relevant <chr>,
-#> #   appearance <chr>, repeat_count <chr>, constraint <chr>, calculation <chr>,
-#> #   hxl <chr>, value_type <chr>, options <list>
+#> # A tibble: 38 × 16
+#>    type    name  short…¹ label…² label…³ hint_…⁴ hint_…⁵ default relev…⁶ appea…⁷
+#>    <chr>   <chr> <chr>   <chr>   <chr>   <chr>   <chr>   <chr>   <chr>   <chr>  
+#>  1 start   start <NA>    Start … Start … <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  2 end     end   <NA>    End Ti… End Ti… <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  3 today   today <NA>    Date o… Date o… <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  4 device… devi… <NA>    Phone … Phone … <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  5 date    date  Date    Date    Date    <NA>    <NA>    .today… <NA>    <NA>   
+#>  6 integer team… Team n… Team n… Numéro… <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  7 village vill… Villag… Villag… Nom du… <NA>    <NA>    <NA>    <NA>    <NA>   
+#>  8 text    vill… Other … Specif… Veuill… <NA>    <NA>    <NA>    ${vill… <NA>   
+#>  9 integer clus… Cluste… Cluste… Numéro… <NA>    <NA>    <NA>    <NA>    numbers
+#> 10 integer hous… Househ… Househ… Numéro… <NA>    <NA>    <NA>    <NA>    <NA>   
+#> # … with 28 more rows, 6 more variables: repeat_count <chr>, constraint <chr>,
+#> #   calculation <chr>, hxl <chr>, value_type <chr>, options <list>, and
+#> #   abbreviated variable names ¹​short_name, ²​label_english, ³​label_french,
+#> #   ⁴​hint_english, ⁵​hint_french, ⁶​relevant, ⁷​appearance
+#> # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 ```
 
 </details>
@@ -269,47 +277,49 @@ Click here for code examples
 
 ``` r
 gen_data("Measles", varnames = "data_element_shortname", numcases = 100, org = "MSF")
-#> # A tibble: 100 x 52
-#>    seizure_episodes trimester croup dehydration_level_at_admi~ residential_stat~
-#>    <fct>            <fct>     <fct> <fct>                      <fct>            
-#>  1 1                <NA>      0     SO                         2                
-#>  2 1                <NA>      0     SE                         3                
-#>  3 1                <NA>      1     NO                         3                
-#>  4 0                <NA>      1     NO                         3                
-#>  5 1                <NA>      0     SE                         2                
-#>  6 1                <NA>      0     NO                         2                
-#>  7 1                <NA>      1     SE                         3                
-#>  8 1                <NA>      1     SE                         3                
-#>  9 0                <NA>      0     SE                         2                
-#> 10 0                <NA>      1     NO                         5                
-#> # ... with 90 more rows, and 47 more variables: previously_vaccinated <fct>,
-#> #   patient_origin_free_text <chr>, age_days <int>, msf_involvement <fct>,
-#> #   nutrition_status_at_admission <fct>, fever <fct>, sex <fct>,
-#> #   patient_origin <chr>, pregnancy_outcome_at_exit <fct>,
-#> #   prescribed_vitamin_a <fct>, date_of_exit <date>,
-#> #   date_of_consultation_admission <date>, event_file_type <fct>,
-#> #   residential_status_brief <fct>, other_eye_complications <fct>, ...
+#> # A tibble: 100 × 52
+#>    case_number date_of_c…¹ patie…² patie…³ age_y…⁴ age_m…⁵ age_d…⁶ sex   pregn…⁷
+#>    <chr>       <date>      <fct>   <chr>     <int>   <int>   <int> <fct> <fct>  
+#>  1 A1          2018-04-05  IP      Villag…      38      NA      NA M     NA     
+#>  2 A2          2018-01-07  OP      Villag…      77      NA      NA M     NA     
+#>  3 A3          2018-03-18  IP      Villag…      13      NA      NA F     NA     
+#>  4 A4          2018-02-16  IP      Villag…      28      NA      NA F     Y      
+#>  5 A5          2018-03-25  IP      Villag…      NA      NA       9 U     NA     
+#>  6 A6          2018-03-16  IP      Villag…      24      NA      NA F     Y      
+#>  7 A7          2018-04-09  OP      Villag…      86      NA      NA M     NA     
+#>  8 A8          2018-04-08  IP      Villag…       8      NA      NA U     NA     
+#>  9 A9          2018-03-23  OP      Villag…      60      NA      NA M     NA     
+#> 10 A10         2018-04-23  OP      Villag…      21      NA      NA U     NA     
+#> # … with 90 more rows, 43 more variables: trimester <fct>,
+#> #   foetus_alive_at_admission <fct>, exit_status <fct>, date_of_exit <date>,
+#> #   time_to_death <fct>, pregnancy_outcome_at_exit <fct>,
+#> #   baby_born_with_complications <fct>, previously_vaccinated <fct>,
+#> #   previous_vaccine_doses_received <fct>, detected_by <fct>,
+#> #   msf_involvement <fct>, residential_status <fct>,
+#> #   residential_status_brief <fct>, date_of_last_vaccination <date>, …
+#> # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 gen_data("Vaccination_long", varnames = "name", numcases = 100, org = "MSF")
-#> # A tibble: 100 x 123
-#>    start end   today deviceid date       team_number village_name village_other
-#>    <lgl> <lgl> <lgl> <lgl>    <date>     <lgl>       <fct>        <lgl>        
-#>  1 NA    NA    NA    NA       2018-01-05 NA          village_5    NA           
-#>  2 NA    NA    NA    NA       2018-04-25 NA          village_3    NA           
-#>  3 NA    NA    NA    NA       2018-03-14 NA          village_9    NA           
-#>  4 NA    NA    NA    NA       2018-03-18 NA          village_1    NA           
-#>  5 NA    NA    NA    NA       2018-03-19 NA          village_10   NA           
-#>  6 NA    NA    NA    NA       2018-03-12 NA          village_4    NA           
-#>  7 NA    NA    NA    NA       2018-03-18 NA          village_8    NA           
-#>  8 NA    NA    NA    NA       2018-03-11 NA          other        NA           
-#>  9 NA    NA    NA    NA       2018-01-27 NA          village_2    NA           
-#> 10 NA    NA    NA    NA       2018-01-11 NA          village_10   NA           
-#> # ... with 90 more rows, and 115 more variables: cluster_number <dbl>,
-#> #   household_number <int>, households_building <int>, random_hh <int>,
-#> #   consent <chr>, no_consent_reason <fct>, no_consent_other <lgl>,
-#> #   caretaker_relation <fct>, caretaker_other <lgl>, number_children <dbl>,
-#> #   child_number <chr>, sex <fct>, date_birth <date>, age_years <int>,
-#> #   age_months <int>, any_vaccine <fct>, vaccine_card <fct>, hf_records <fct>,
-#> #   health_facility <lgl>, date_records_checked <date>, ...
+#> # A tibble: 100 × 120
+#>    start end   today deviceid date       team_…¹ villa…² villa…³ clust…⁴ house…⁵
+#>    <lgl> <lgl> <lgl> <lgl>    <date>     <lgl>   <fct>   <lgl>     <dbl>   <int>
+#>  1 NA    NA    NA    NA       2018-02-18 NA      villag… NA            1       1
+#>  2 NA    NA    NA    NA       2018-02-13 NA      villag… NA            7       2
+#>  3 NA    NA    NA    NA       2018-02-21 NA      villag… NA            6       1
+#>  4 NA    NA    NA    NA       2018-02-24 NA      other   NA           11       1
+#>  5 NA    NA    NA    NA       2018-03-21 NA      villag… NA            3       1
+#>  6 NA    NA    NA    NA       2018-04-06 NA      villag… NA            7       1
+#>  7 NA    NA    NA    NA       2018-02-09 NA      villag… NA            3       2
+#>  8 NA    NA    NA    NA       2018-04-29 NA      villag… NA            4       3
+#>  9 NA    NA    NA    NA       2018-04-15 NA      villag… NA            8       1
+#> 10 NA    NA    NA    NA       2018-03-26 NA      villag… NA            8       3
+#> # … with 90 more rows, 110 more variables: households_building <int>,
+#> #   random_hh <int>, consent <chr>, no_consent_reason <fct>,
+#> #   no_consent_other <lgl>, caretaker_relation <fct>, caretaker_other <lgl>,
+#> #   number_children <dbl>, child_number <chr>, sex <fct>, date_birth <date>,
+#> #   age_years <int>, age_months <int>, any_vaccine <fct>, vaccine_card <fct>,
+#> #   hf_records <fct>, health_facility <lgl>, date_records_checked <date>,
+#> #   injection_upper_arm <fct>, scar_present <fct>, poliodrop_woc <fct>, …
+#> # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 ```
 
 </details>
@@ -338,36 +348,37 @@ dat <- gen_data(dictionary = "Cholera",
   org = "MSF"
 )
 print(dat)
-#> # A tibble: 20 x 45
-#>    trimester exit_status treatment_facilit~ dehydration_level~ comments_on_lab_~
-#>    <fct>     <fct>       <lgl>              <fct>              <lgl>            
-#>  1 <NA>      DOA         NA                 NO                 NA               
-#>  2 <NA>      LA          NA                 NO                 NA               
-#>  3 <NA>      DH          NA                 UN                 NA               
-#>  4 <NA>      TR          NA                 SE                 NA               
-#>  5 <NA>      AD          NA                 NO                 NA               
-#>  6 1         TR          NA                 SO                 NA               
-#>  7 <NA>      LA          NA                 UN                 NA               
-#>  8 <NA>      TR          NA                 SE                 NA               
-#>  9 <NA>      DD          NA                 UN                 NA               
-#> 10 <NA>      AD          NA                 SE                 NA               
-#> 11 <NA>      TR          NA                 NO                 NA               
-#> 12 <NA>      DD          NA                 NO                 NA               
-#> 13 <NA>      TR          NA                 UN                 NA               
-#> 14 <NA>      AD          NA                 SO                 NA               
-#> 15 <NA>      DOA         NA                 SO                 NA               
-#> 16 <NA>      TR          NA                 SE                 NA               
-#> 17 <NA>      LA          NA                 NO                 NA               
-#> 18 <NA>      AD          NA                 UN                 NA               
-#> 19 <NA>      AD          NA                 UN                 NA               
-#> 20 <NA>      LA          NA                 SE                 NA               
-#> # ... with 40 more variables: fluids_treatment_plan <fct>, time_to_death <fct>,
-#> #   malaria_rdt_at_admission <fct>, previously_vaccinated <fct>,
-#> #   cholera_pcr_result <fct>, iv_fluids_received_litres <int>,
-#> #   patient_origin_free_text <chr>, previous_vaccine_doses_received <fct>,
-#> #   age_years <int>, arrival_date_in_area_if_3m <date>, age_days <int>,
-#> #   msf_involvement <fct>, date_lab_sample_taken <date>, readmission <fct>,
-#> #   age_months <int>, date_of_last_vaccination <date>, case_number <chr>, ...
+#> # A tibble: 20 × 45
+#>    case_number date_of_c…¹ patie…² age_y…³ age_m…⁴ age_d…⁵ sex   pregn…⁶ trime…⁷
+#>    <chr>       <date>      <chr>     <int>   <int>   <int> <fct> <fct>   <fct>  
+#>  1 A1          2018-03-08  Villag…       8      NA      NA M     NA      <NA>   
+#>  2 A2          2018-04-09  Villag…       9      NA      NA U     NA      <NA>   
+#>  3 A3          2018-02-21  Villag…       8      NA      NA M     NA      <NA>   
+#>  4 A4          2018-04-24  Villag…       3      NA      NA U     NA      <NA>   
+#>  5 A5          2018-04-07  Villag…      52      NA      NA M     NA      <NA>   
+#>  6 A6          2018-01-30  Villag…      24      NA      NA M     NA      <NA>   
+#>  7 A7          2018-02-21  Villag…      57      NA      NA U     NA      <NA>   
+#>  8 A8          2018-01-10  Villag…      12      NA      NA F     NA      <NA>   
+#>  9 A9          2018-01-11  Villag…      NA      NA       3 U     NA      <NA>   
+#> 10 A10         2018-04-02  Villag…       7      NA      NA F     Y       2      
+#> 11 A11         2018-04-10  Villag…      12      NA      NA F     W       <NA>   
+#> 12 A12         2018-02-19  Villag…      23      NA      NA M     NA      <NA>   
+#> 13 A13         2018-02-12  Villag…      NA       8      NA F     N       <NA>   
+#> 14 A14         2018-01-31  Villag…      66      NA      NA U     NA      <NA>   
+#> 15 A15         2018-01-11  Villag…       7      NA      NA U     NA      <NA>   
+#> 16 A16         2018-04-22  Villag…      25      NA      NA M     NA      <NA>   
+#> 17 A17         2018-01-10  Villag…      27      NA      NA F     NA      <NA>   
+#> 18 A18         2018-01-18  Villag…      16      NA      NA F     N       <NA>   
+#> 19 A19         2018-03-05  Villag…       9      NA      NA F     NA      <NA>   
+#> 20 A20         2018-02-13  Villag…       8      NA      NA M     NA      <NA>   
+#> # … with 36 more variables: foetus_alive_at_admission <fct>, exit_status <fct>,
+#> #   date_of_exit <date>, time_to_death <fct>, pregnancy_outcome_at_exit <fct>,
+#> #   previously_vaccinated <fct>, previous_vaccine_doses_received <fct>,
+#> #   readmission <fct>, msf_involvement <fct>,
+#> #   cholera_treatment_facility_type <fct>, residential_status_brief <fct>,
+#> #   date_of_last_vaccination <date>, prescribed_zinc_supplement <fct>,
+#> #   prescribed_antibiotics <fct>, ors_consumed_litres <int>, …
+#> # ℹ Use `colnames()` to see all variable names
 
 # We want the expanded dictionary, so we will select `compact = FALSE`
 dict <- msf_dict(disease = "Cholera", 
@@ -376,22 +387,25 @@ dict <- msf_dict(disease = "Cholera",
   tibble  = TRUE
 )
 print(dict)
-#> # A tibble: 182 x 11
-#>    data_element_uid data_element_name   data_element_shor~ data_element_descrip~
-#>    <chr>            <chr>               <chr>              <chr>                
-#>  1 FF7d81Zy0yQ      egen_013_pregnancy~ trimester          If pregnant, trimest~
-#>  2 FF7d81Zy0yQ      egen_013_pregnancy~ trimester          If pregnant, trimest~
-#>  3 FF7d81Zy0yQ      egen_013_pregnancy~ trimester          If pregnant, trimest~
-#>  4 ADfNqpCL5kf      egen_015_exit_stat~ exit_status        Final status of pati~
-#>  5 ADfNqpCL5kf      egen_015_exit_stat~ exit_status        Final status of pati~
-#>  6 ADfNqpCL5kf      egen_015_exit_stat~ exit_status        Final status of pati~
-#>  7 ADfNqpCL5kf      egen_015_exit_stat~ exit_status        Final status of pati~
-#>  8 ADfNqpCL5kf      egen_015_exit_stat~ exit_status        Final status of pati~
-#>  9 ADfNqpCL5kf      egen_015_exit_stat~ exit_status        Final status of pati~
-#> 10 wjCDTwXmtix      egen_064_treatment~ treatment_facilit~ Name of facility/sit~
-#> # ... with 172 more rows, and 7 more variables: data_element_valuetype <chr>,
-#> #   data_element_formname <chr>, used_optionset_uid <chr>, option_code <chr>,
-#> #   option_name <chr>, option_uid <chr>, option_order_in_set <dbl>
+#> # A tibble: 182 × 11
+#>    data_elemen…¹ data_…² data_…³ data_…⁴ data_…⁵ data_…⁶ used_…⁷ optio…⁸ optio…⁹
+#>    <chr>         <chr>   <chr>   <chr>   <chr>   <chr>   <chr>   <chr>   <chr>  
+#>  1 AafTlSwliVQ   egen_0… case_n… Anonym… TEXT    Case n… <NA>    <NA>    <NA>   
+#>  2 OTGOtWBz39J   egen_0… date_o… Date p… DATE    Date o… <NA>    <NA>    <NA>   
+#>  3 wnmMr2V3T3u   egen_0… patien… Locati… ORGANI… Patien… <NA>    <NA>    <NA>   
+#>  4 sbgqjeVwtb8   egen_0… age_ye… Age of… INTEGE… Age in… <NA>    <NA>    <NA>   
+#>  5 eXYhovYyl61   egen_0… age_mo… Age of… INTEGE… Age in… <NA>    <NA>    <NA>   
+#>  6 UrYJSk2Wp46   egen_0… age_da… Age of… INTEGE… Age in… <NA>    <NA>    <NA>   
+#>  7 D1Ky5K7pFN6   egen_0… sex     Sex of… TEXT    Sex     orgc5Y… M       Male   
+#>  8 D1Ky5K7pFN6   egen_0… sex     Sex of… TEXT    Sex     orgc5Y… F       Female 
+#>  9 D1Ky5K7pFN6   egen_0… sex     Sex of… TEXT    Sex     orgc5Y… U       Unknow…
+#> 10 dTm5R53YYXC   egen_0… pregna… Pregna… TEXT    Pregna… IEjzG2… N       Not cu…
+#> # … with 172 more rows, 2 more variables: option_uid <chr>,
+#> #   option_order_in_set <dbl>, and abbreviated variable names
+#> #   ¹​data_element_uid, ²​data_element_name, ³​data_element_shortname,
+#> #   ⁴​data_element_description, ⁵​data_element_valuetype, ⁶​data_element_formname,
+#> #   ⁷​used_optionset_uid, ⁸​option_code, ⁹​option_name
+#> # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 
 # Now we can use matchmaker to filter the data
 dat_clean <- matchmaker::match_df(dat, dict, 
@@ -401,36 +415,37 @@ dat_clean <- matchmaker::match_df(dat, dict,
   order = "option_order_in_set"
 )
 print(dat_clean)
-#> # A tibble: 20 x 45
-#>    trimester     exit_status  treatment_facil~ dehydration_lev~ comments_on_lab~
-#>    <fct>         <fct>        <lgl>            <fct>            <lgl>           
-#>  1 <NA>          Dead on arr~ NA               None             NA              
-#>  2 <NA>          Left agains~ NA               None             NA              
-#>  3 <NA>          Discharged ~ NA               Unknown          NA              
-#>  4 <NA>          Transferred~ NA               Severe           NA              
-#>  5 <NA>          Transferred~ NA               None             NA              
-#>  6 1st trimester Transferred~ NA               Some             NA              
-#>  7 <NA>          Left agains~ NA               Unknown          NA              
-#>  8 <NA>          Transferred~ NA               Severe           NA              
-#>  9 <NA>          Dead in fac~ NA               Unknown          NA              
-#> 10 <NA>          Transferred~ NA               Severe           NA              
-#> 11 <NA>          Transferred~ NA               None             NA              
-#> 12 <NA>          Dead in fac~ NA               None             NA              
-#> 13 <NA>          Transferred~ NA               Unknown          NA              
-#> 14 <NA>          Transferred~ NA               Some             NA              
-#> 15 <NA>          Dead on arr~ NA               Some             NA              
-#> 16 <NA>          Transferred~ NA               Severe           NA              
-#> 17 <NA>          Left agains~ NA               None             NA              
-#> 18 <NA>          Transferred~ NA               Unknown          NA              
-#> 19 <NA>          Transferred~ NA               Unknown          NA              
-#> 20 <NA>          Left agains~ NA               Severe           NA              
-#> # ... with 40 more variables: fluids_treatment_plan <fct>, time_to_death <fct>,
-#> #   malaria_rdt_at_admission <fct>, previously_vaccinated <fct>,
-#> #   cholera_pcr_result <fct>, iv_fluids_received_litres <int>,
-#> #   patient_origin_free_text <chr>, previous_vaccine_doses_received <fct>,
-#> #   age_years <int>, arrival_date_in_area_if_3m <date>, age_days <int>,
-#> #   msf_involvement <fct>, date_lab_sample_taken <date>, readmission <fct>,
-#> #   age_months <int>, date_of_last_vaccination <date>, case_number <chr>, ...
+#> # A tibble: 20 × 45
+#>    case_number date_of_c…¹ patie…² age_y…³ age_m…⁴ age_d…⁵ sex   pregn…⁶ trime…⁷
+#>    <chr>       <date>      <chr>     <int>   <int>   <int> <fct> <fct>   <fct>  
+#>  1 A1          2018-03-08  Villag…       8      NA      NA Male  Not ap… <NA>   
+#>  2 A2          2018-04-09  Villag…       9      NA      NA Unkn… Not ap… <NA>   
+#>  3 A3          2018-02-21  Villag…       8      NA      NA Male  Not ap… <NA>   
+#>  4 A4          2018-04-24  Villag…       3      NA      NA Unkn… Not ap… <NA>   
+#>  5 A5          2018-04-07  Villag…      52      NA      NA Male  Not ap… <NA>   
+#>  6 A6          2018-01-30  Villag…      24      NA      NA Male  Not ap… <NA>   
+#>  7 A7          2018-02-21  Villag…      57      NA      NA Unkn… Not ap… <NA>   
+#>  8 A8          2018-01-10  Villag…      12      NA      NA Fema… Not ap… <NA>   
+#>  9 A9          2018-01-11  Villag…      NA      NA       3 Unkn… Not ap… <NA>   
+#> 10 A10         2018-04-02  Villag…       7      NA      NA Fema… Yes, c… 2nd tr…
+#> 11 A11         2018-04-10  Villag…      12      NA      NA Fema… Was pr… <NA>   
+#> 12 A12         2018-02-19  Villag…      23      NA      NA Male  Not ap… <NA>   
+#> 13 A13         2018-02-12  Villag…      NA       8      NA Fema… Not cu… <NA>   
+#> 14 A14         2018-01-31  Villag…      66      NA      NA Unkn… Not ap… <NA>   
+#> 15 A15         2018-01-11  Villag…       7      NA      NA Unkn… Not ap… <NA>   
+#> 16 A16         2018-04-22  Villag…      25      NA      NA Male  Not ap… <NA>   
+#> 17 A17         2018-01-10  Villag…      27      NA      NA Fema… Not ap… <NA>   
+#> 18 A18         2018-01-18  Villag…      16      NA      NA Fema… Not cu… <NA>   
+#> 19 A19         2018-03-05  Villag…       9      NA      NA Fema… Not ap… <NA>   
+#> 20 A20         2018-02-13  Villag…       8      NA      NA Male  Not ap… <NA>   
+#> # … with 36 more variables: foetus_alive_at_admission <fct>, exit_status <fct>,
+#> #   date_of_exit <date>, time_to_death <fct>, pregnancy_outcome_at_exit <fct>,
+#> #   previously_vaccinated <fct>, previous_vaccine_doses_received <fct>,
+#> #   readmission <fct>, msf_involvement <fct>,
+#> #   cholera_treatment_facility_type <fct>, residential_status_brief <fct>,
+#> #   date_of_last_vaccination <date>, prescribed_zinc_supplement <fct>,
+#> #   prescribed_antibiotics <fct>, ors_consumed_litres <int>, …
+#> # ℹ Use `colnames()` to see all variable names
 ```
 
 </details>

@@ -2,16 +2,16 @@ Package: epidict
 Title: Epidemiology data dictionaries and random data generators
 Version: 0.0.0.9001
 Authors@R: c(
-    person(given = "Zhian N.",
-           family = "Kamvar",
-           role = c("aut", "cre"),
-           email = "zkamvar@gmail.com",
-           comment = c(ORCID = "0000-0003-1458-7108")),
     person(given = "Alexander",
            family = "Spina",
-           email = "alexfspina@gmail.com", 
+           email = "aspina@appliedepi.org", 
            comment = c(ORCID = "0000-0001-8425-1867"),
-           role = c("aut")),
+           role = c("aut", "cre")),
+    person(given = "Zhian N.",
+           family = "Kamvar",
+           role = c("aut"),
+           email = "zkamvar@gmail.com",
+           comment = c(ORCID = "0000-0003-1458-7108")),
     person(given = "Lukas",
            family = "Richter",
            role = c("aut")),
@@ -28,7 +28,10 @@ Description: The 'R4EPIs' project <https://R4epis.netlify.com> seeks to provide
     Syndrome, Cholera, Measles, Meningitis) and three surveys (Retrospective
     mortality and access to care, Malnutrition, and Vaccination coverage). In
     addition, a data generator from these dictionaries is provided.  
-URL: https://r4epis.netlify.com, https://github.com/R4EPI/epidict, https://r4epi.github.io/epidict
+URL: https://r4epis.netlify.com,
+    https://github.com/R4EPI/epidict,
+    https://r4epi.github.io/epidict,
+    https://r4epi.github.io/epidict/
 License: GPL-3
 Imports: 
     tibble,
