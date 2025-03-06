@@ -1,57 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://r4epi.github.io/epidict/404.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/ISSUE_TEMPLATE.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/SUPPORT.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/articles/Outbreaks.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/articles/Surveys.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/articles/intro.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/index.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/reference/epidict-package.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/reference/gen_data.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/reference/msf_dict.html</loc>
-  </url>
-  <url>
-    <loc>https://r4epi.github.io/epidict/reference/msf_dict_rename_helper.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://r4epi.github.io/epidict/404.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/CONTRIBUTING.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/ISSUE_TEMPLATE.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/LICENSE.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/SUPPORT.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/articles/Outbreaks.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/articles/Surveys.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/articles/index.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/articles/intro.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/authors.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/index.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/news/index.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/reference/epidict-package.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/reference/gen_data.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/reference/index.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/reference/msf_dict.html</loc></url>
+<url><loc>https://r4epi.github.io/epidict/reference/msf_dict_rename_helper.html</loc></url>
 </urlset>
+
