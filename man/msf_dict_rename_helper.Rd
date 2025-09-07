@@ -17,7 +17,7 @@ msf_dict_rename_helper(
 \arguments{
 \item{disease}{Specify which disease you would like to use.
 Currently supports "Cholera", "Measles", "Meningitis", "AJS",
-"Mortality", "Nutrition", "Vaccination_short" and "Vaccination_long".}
+"Mortality", "Nutrition", "Vaccination_short", "Vaccination_long" and "ebs".}
 
 \item{name}{The name of the dictionary stored in the package. The default
 will use dictionaries from the package. However you can also use
@@ -29,7 +29,7 @@ need to specify a path to \code{rmd}.}
 \item{varnames}{The name of column that contains variable names. The
 default set to "data_element_shortname".
 If \code{dictionary} is a survey ("Mortality", "Nutrition", "Vaccination_short"
-or "Vaccination_long") \code{varnames} needs to be "name"`. Otherwise if using
+"Vaccination_long" or "ebs") \code{varnames} needs to be "name"`. Otherwise if using
 your own dictionary then specify.}
 
 \item{varnames_type}{The name of column that contains the variable type.

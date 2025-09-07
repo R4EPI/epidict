@@ -1,36 +1,30 @@
 #' MSF data dictionaries and dummy datasets
 #'
-#' These function produces MSF OCA dictionaries based on DHIS2 (for outbreaks)
-#' and Kobo (for surveys) data sets defining the data element name, code,
-#' short names, types, and key/value pairs for translating the codes
-#' into human-readable format.
+#' These function produce MSF dictionaries based on DHIS2 (for OCA outbreaks)
+#' and ODK (for intersectional outbreaks and surveys) data sets defining the 
+#' data element name, code, short names, types, and key/value pairs for 
+#' translating the codes into human-readable format.
 #'
-#' @param disease Specify which disease you would like to use.
-#'   - `msf_dict()` supports "AJS", "Cholera", "Measles", "Meningitis"
-#'   - `msf_dict_survey()` supports "Mortality", "Nutrition", "Vaccination_long",
-#'    "Vaccination_short" (only used in surveys if `template = TRUE`) and "ebs"
+#' @param disease Specify which disease dictionary you would like to use.
+#'   - MSF OCA outbreaks include: "AJS", "Cholera", "Measles", "Meningitis"
+#'   - MSF intersectional outbreaks include: "AJS_intersectional", "Cholera_intersectional",
+#'     "Diphtheria_intersectional", "Measles_intersectional", "Meningitis_intersectional"
+#'   - MSF OCA surveys include "Mortality", "Nutrition", "Vaccination_long",
+#'    "Vaccination_short" and "ebs"
 #'
-#' @param name the name of the dictionary stored in the package.
-#'   - `msf_dict_survey()` supports Kobo dictionaries not stored within this package,
-#'   to use these: specify `name`as path to .xlsx file and set the `template = False`
-#'
-#' @param tibble Return data dictionary as a tidyverse tibble (default is TRUE)
-#'
-#' @param compact if `TRUE` (default), then a nested data frame is returned
-#'   where each row represents a single variable and a nested data frame column
-#'   called "options", which can be expanded with [tidyr::unnest()]. This only
-#'   works if `long = TRUE`.
-#'
+#' @param tibble If `TRUE` (default), return data dictionary as a 
+#'    tidyverse tibble otherwise will return a list. 
+#' 
 #' @param long If `TRUE` (default), the returned data dictionary is in long
 #'   format with each option getting one row. If `FALSE`, then two data frames
 #'   are returned, one with variables and the other with content options.
 #'
-#'  @param template Only used for `msf_dict_survey()`.
-#'  If `TRUE` (default) the returned data dictionary is a generic
-#'  MSF OCA ERB pre-approved dictionary. If `FALSE` allows you to read in your
-#'  own Kobo dictionary by defining a path in `name`.
+#' @param compact If `TRUE` (default), then a nested data frame is returned
+#'   where each row represents a single variable and a nested data frame column
+#'   called "options", which can be expanded with [tidyr::unnest()]. This only
+#'   works if `long = TRUE`.
 #'
-#' @seealso [matchmaker::match_df()] [gen_data()] [msf_dict_survey()]
+#' @seealso [read_dict()] [gen_data()] [matchmaker::match_df()] 
 #' @export
 #' @examples
 #'
@@ -60,98 +54,34 @@
 #'     print(dat_clean)
 #'   })
 #' }
-msf_dict <- function(disease, name = "MSF-outbreak-dict.xlsx", tibble = TRUE,
+msf_dict <- function(disease, 
+                     tibble = TRUE,
                      compact = TRUE, long = TRUE) {
-  disease <- get_dictionary(disease, org = "MSF")$outbreak
+  
+  # define dictionary types 
+  dict <- get_dictionary(disease, org = "MSF")
+  disease <- unlist(disease, use.names = FALSE)
+  is_survey <- length(dict$survey) == 1
+  format <- ifelse(is_survey | grepl("_intersectional", disease), 
+                  "ODK", "DHIS2")
 
   if (length(disease) == 0) {
-    stop("disease must be one of 'Cholera', 'Measles', 'Meningitis', or 'AJS'", call. = FALSE)
+    stop("disease must be one of the supported dictionaries", call. = FALSE)
+  }
+
+  if (is_survey) {
+    name <- "MSF-survey-dict.xlsx"
+  } else if (grepl("_intersectional", disease)) {
+    name <- "MSF-outbreak-intersectional-dict.xlsx"
+    disease <- gsub("_intersectional", "", disease)
+  } else {
+    name <- "MSF-outbreak-dict.xlsx"
   }
 
   # get excel file path (need to specify the file name)
   path <- system.file("extdata", name, package = "epidict")
 
-  # read in categorical variable content options
-  dat_opts <- readxl::read_excel(path, sheet = "OptionCodes")
+  read_dict(name = path, sheet = disease, format = format, 
+            tibble = tibble, long = long, compact = compact)
 
-  # read in data set - pasting the disease name for sheet
-  dat_dict <- readxl::read_excel(path, sheet = disease)
-
-  # clean col names
-  colnames(dat_dict) <- tidy_labels(colnames(dat_dict))
-  colnames(dat_opts) <- tidy_labels(colnames(dat_opts))
-
-  # clean future var names
-  # excel names (data element shortname)
-  # csv names (data_element_name)
-  dat_dict$data_element_shortname <- tidy_labels(dat_dict$data_element_shortname)
-  dat_dict$data_element_name <- tidy_labels(dat_dict$data_element_name)
-
-  # Adding hardcoded var types to options list
-  # 2 types added to - BOOLEAN, TRUE_ONLY
-  BOOLEAN <- data.frame(
-    option_code = c("1", "0"),
-    option_name = c("[1] Yes", "[0] No"),
-    option_uid = c(NA, NA),
-    option_order_in_set = c(1, 2),
-    optionset_uid = c("BOOLEAN", "BOOLEAN")
-  )
-
-  TRUE_ONLY <- data.frame(
-    option_code = c("1", "NA"),
-    option_name = c("[1] TRUE", "[NA] Not TRUE"),
-    option_uid = c(NA, NA),
-    option_order_in_set = c(1, 2),
-    optionset_uid = c("TRUE_ONLY", "TRUE_ONLY")
-  )
-
-  # bind these on to the bottom of dat_opts (option list) as rows
-  suppressWarnings(dat_opts <- dplyr::bind_rows(dat_opts, BOOLEAN, TRUE_ONLY))
-
-
-
-  # add the unique identifier to link above three in dictionary to options list
-  for (i in c("BOOLEAN", "TRUE_ONLY")) {
-    dat_dict$used_optionset_uid[dat_dict$data_element_valuetype == i] <- i
-  }
-
-  # remove back end codes from front end var in the options list
-  dat_opts$option_name <- gsub("^\\[.*\\] ", "", dat_opts$option_name)
-
-  if (long) {
-    outtie <- dplyr::left_join(dat_dict, dat_opts,
-      by = c("used_optionset_uid" = "optionset_uid")
-    )
-
-    outtie <- if (tibble) tibble::as_tibble(outtie) else outtie
-
-    # Return second option: a list with data dictionary and value options seperate
-  } else {
-    if (tibble) {
-      dat_dict <- tibble::as_tibble(dat_dict)
-      dat_opts <- tibble::as_tibble(dat_opts)
-    }
-    outtie <- list(
-      dictionary = dat_dict,
-      options    = dat_opts
-    )
-  }
-
-  # produce clean compact data dictionary for use in gen_data
-  if (long && compact == TRUE) {
-    squished <- dplyr::group_by(outtie, !!quote(data_element_shortname))
-
-    if (utils::packageVersion("tidyr") > "0.8.99") {
-      squished <- tidyr::nest(squished, options = dplyr::starts_with("option_"))
-    } else {
-      squished <- tidyr::nest(squished, dplyr::starts_with("option_"), .key = "options")
-      outtie <- dplyr::select(outtie, -dplyr::starts_with("option_"))
-      outtie <- dplyr::distinct(outtie)
-      squished <- dplyr::left_join(outtie, squished, by = "data_element_shortname")
-    }
-    return(dplyr::ungroup(squished))
-  }
-
-  # return dictionary dataset
-  outtie
 }
