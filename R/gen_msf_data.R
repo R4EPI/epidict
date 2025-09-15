@@ -49,7 +49,7 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "name", num
     dis_output[[i]] <- sample(posidates, numcases, replace = TRUE)
   }
 
-  if (!is_survey | format == "DHIS2") {
+  if (format == "DHIS2") {
 
     # Make sure exit dates don't come before entrance dates
     dis_output <- fix_dates(dis_output)
@@ -72,7 +72,8 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "name", num
 
   # GENERATE AGES --------------------------------------------------------------
 
-  # works for both outbreaks and surveys
+  # works for both DHIS2 outbreaks and ODK surveys
+  # (ODK outbreaks is done in the section below )
   dis_output <- gen_ages(
     dis_output,
     numcases,
@@ -80,8 +81,74 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "name", num
     year_cutoff = if (is_survey) 0 else 2
   )
 
+  
+
 
   # DISEASE-SPECIFIC GENERATORS ------------------------------------------------
+  
+  # ODK OUTBREAKS 
+  if (!is_survey & format == "ODK") {
+
+    # add case id 
+    dis_output$case_id <- 1:nrow(dis_output)
+
+    # add admin areas (cholera name different to others)
+    if (dictionary != "Cholera_intersectional") {
+      dis_output$adm1_residence <- gen_eral(paste0("State ", 1:4), nrow(dis_output))
+      dis_output$adm2_residence <- gen_eral(paste0("County ", 1:4), nrow(dis_output))
+      dis_output$adm3_residence <- gen_eral(paste0("Locality ", 1:4), nrow(dis_output))
+    }
+    
+    # Add numbers to age column 
+    # (month under 2 years, day under 2 months)
+  
+    dis_output$age_num[dis_output$age_unit == "Year"] <- gen_eral(2:100, 
+            sum(dis_output$age_unit == "Year"))
+    
+    dis_output$age_num[dis_output$age_unit == "Month"] <- gen_eral(2:23, 
+            sum(dis_output$age_unit == "Month"))
+    
+    dis_output$age_num[dis_output$age_unit == "Day"] <- gen_eral(0:61, 
+            sum(dis_output$age_unit == "Day"))
+  }
+
+  if (dictionary == "AJS_intersectional") {
+    # remove pregnancies among men and post partum 
+    dis_output$pregnant_yn[dis_output$sex_id != "Female"] <- NA
+    dis_output$post_partum[dis_output$sex_id != "Female"] <- NA
+    dis_output$post_partum[dis_output$pregnant == "Yes"] <- "No"
+
+    # remove follow-up vaccine doses 
+    dis_output$vacci_hev_dose2_yn[!grepl("Yes", dis_output$vacci_hev_dose1_yn)] <- NA
+    dis_output$vacci_hev_dose3_yn[!grepl("Yes", dis_output$vacci_hev_dose2_yn)] <- NA
+  }
+
+  if (dictionary == "Cholera_intersectional") {
+    # add admin areas (have "current", different to other dictionaries - stupid)
+    dis_output$adm1_residencecurrent <- gen_eral(paste0("State ", 1:4), nrow(dis_output))
+    dis_output$adm2_residencecurrent <- gen_eral(paste0("County ", 1:4), nrow(dis_output))
+    dis_output$adm3_residencecurrent <- gen_eral(paste0("Locality ", 1:4), nrow(dis_output))
+
+    # remove doses for those not vaccinated
+    dis_output$vacci_doses[!grepl("Yes", dis_output$vacci_status)] <- NA
+  }
+
+  if (dictionary == "Measles_intersectional") {
+    # remove doses for those not vaccinated
+    dis_output$vacci_measles_doses[!grepl("Yes", dis_output$vacci_measles_yn)] <- NA
+  }
+
+  if (dictionary == "Meningitis_intersectional") {
+    # remove card check for those not vaccinated
+    dis_output$vacci_card_nm[!grepl("Yes", dis_output$vacci_status_nm)] <- NA
+  }
+
+  
+
+
+
+
+  # DHIS2 OUTBREAKS 
   if (dictionary == "Cholera" | dictionary == "Measles" | dictionary == "AJS") {
     # In this case, not female == not applicable
     dis_output$pregnant[dis_output$sex != "F"] <- "NA"
@@ -139,6 +206,9 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "name", num
     dis_output$name_meningitis_vaccine[NOTVACC] <- NA
     dis_output$date_of_last_vaccination[NOTVACC] <- NA
   }
+
+
+  # ODK SURVEYS
 
   if (dictionary == "Mortality") {
 
