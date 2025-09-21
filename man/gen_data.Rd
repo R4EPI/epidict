@@ -4,22 +4,18 @@
 \alias{gen_data}
 \title{Generate random linelist or survey data}
 \usage{
-gen_data(
-  dictionary,
-  varnames = "data_element_shortname",
-  numcases = 300,
-  org = "MSF"
-)
+gen_data(dictionary, varnames = "name", numcases = 300, org = "MSF")
 }
 \arguments{
 \item{dictionary}{Specify which dictionary you would like to use.}
 
 \item{varnames}{Specify name of column that contains variable names.
-If \code{dictionary} is a survey, \code{varnames} needs to be "name"`.}
+If \code{dictionary} is in ODK format, \code{varnames} needs to be "name" (Default),
+if in DHIS2 format then change to "data_element_shortname".}
 
 \item{numcases}{Specify the number of cases you want (default is 300)}
 
-\item{org}{the organization the dictionary belongs to. Currently, only MSF
+\item{org}{the organisation the dictionary belongs to. Currently, only MSF
 exists. In the future, dictionaries from WHO and other organizations may
 become available.}
 }
@@ -29,10 +25,10 @@ of columns will vary from dictionary to dictionary, so please use the
 dictionary functions to generate a corresponding dictionary.
 }
 \description{
-Based on a dictionary generator like \code{\link[=msf_dict]{msf_dict()}} or \code{\link[=msf_dict_survey]{msf_dict_survey()}},
-this function will generate a randomized data set based on values defined in
+Based on a dictionary generator like \code{\link[=msf_dict]{msf_dict()}},
+this function will generate a randomized dataset based on values defined in
 the dictionaries. The randomized dataset produced should mimic an excel
-export from DHIS2 for outbreaks and a Kobo export for surveys.
+export from DHIS2 or ODK.
 }
 \examples{
 

@@ -1,9 +1,9 @@
 #' Generate random linelist or survey data
 #'
-#' Based on a dictionary generator like [msf_dict()] or [msf_dict_survey()],
-#' this function will generate a randomized data set based on values defined in
+#' Based on a dictionary generator like [msf_dict()],
+#' this function will generate a randomized dataset based on values defined in
 #' the dictionaries. The randomized dataset produced should mimic an excel
-#' export from DHIS2 for outbreaks and a Kobo export for surveys.
+#' export from DHIS2 or ODK.
 #'
 #' @param dictionary Specify which dictionary you would like to use.
 #'
