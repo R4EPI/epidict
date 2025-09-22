@@ -4,10 +4,10 @@
 \alias{msf_dict}
 \title{MSF data dictionaries and dummy datasets}
 \usage{
-msf_dict(disease, tibble = TRUE, compact = TRUE, long = TRUE)
+msf_dict(dictionary, tibble = TRUE, long = TRUE, compact = TRUE)
 }
 \arguments{
-\item{disease}{Specify which disease dictionary you would like to use.
+\item{dictionary}{Specify which dictionary you would like to use.
 \itemize{
 \item MSF OCA outbreaks include: "AJS", "Cholera", "Measles", "Meningitis"
 \item MSF intersectional outbreaks include: "AJS_intersectional", "Cholera_intersectional",
@@ -19,14 +19,14 @@ msf_dict(disease, tibble = TRUE, compact = TRUE, long = TRUE)
 \item{tibble}{If \code{TRUE} (default), return data dictionary as a
 tidyverse tibble otherwise will return a list.}
 
+\item{long}{If \code{TRUE} (default), the returned data dictionary is in long
+format with each option getting one row. If \code{FALSE}, then two data frames
+are returned, one with variables and the other with content options.}
+
 \item{compact}{If \code{TRUE} (default), then a nested data frame is returned
 where each row represents a single variable and a nested data frame column
 called "options", which can be expanded with \code{\link[tidyr:unnest]{tidyr::unnest()}}. This only
 works if \code{long = TRUE}.}
-
-\item{long}{If \code{TRUE} (default), the returned data dictionary is in long
-format with each option getting one row. If \code{FALSE}, then two data frames
-are returned, one with variables and the other with content options.}
 }
 \description{
 These function produce MSF dictionaries based on DHIS2 (for OCA outbreaks)
@@ -49,7 +49,7 @@ if (require("dplyr") & require("matchmaker")) {
     print(dat)
 
     # We want the expanded dictionary, so we will select `compact = FALSE`
-    dict <- msf_dict(disease = "Cholera", long = TRUE, compact = FALSE, tibble = TRUE)
+    dict <- msf_dict(dictionary = "Cholera", long = TRUE, compact = FALSE, tibble = TRUE)
     print(dict)
 
     # Now we can use matchmaker to filter the data:

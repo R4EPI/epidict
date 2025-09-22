@@ -39,7 +39,7 @@ tidy_labels <- function(x, sep = "_", protect = "") {
 #' get dictionary in format according to dictionaries
 #'
 #' @param dictionary a single character that matches one of the surveys or outbreaks
-#'
+#' @param org a single character with the organisation of interest
 #' @return the correct name of the dictionary
 #' @noRd
 #'

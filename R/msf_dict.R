@@ -5,7 +5,7 @@
 #' data element name, code, short names, types, and key/value pairs for 
 #' translating the codes into human-readable format.
 #'
-#' @param disease Specify which disease dictionary you would like to use.
+#' @param dictionary Specify which dictionary you would like to use.
 #'   - MSF OCA outbreaks include: "AJS", "Cholera", "Measles", "Meningitis"
 #'   - MSF intersectional outbreaks include: "AJS_intersectional", "Cholera_intersectional",
 #'     "Diphtheria_intersectional", "Measles_intersectional", "Meningitis_intersectional"
@@ -41,7 +41,7 @@
 #'     print(dat)
 #'
 #'     # We want the expanded dictionary, so we will select `compact = FALSE`
-#'     dict <- msf_dict(disease = "Cholera", long = TRUE, compact = FALSE, tibble = TRUE)
+#'     dict <- msf_dict(dictionary = "Cholera", long = TRUE, compact = FALSE, tibble = TRUE)
 #'     print(dict)
 #'
 #'     # Now we can use matchmaker to filter the data:
@@ -54,13 +54,14 @@
 #'     print(dat_clean)
 #'   })
 #' }
-msf_dict <- function(disease, 
-                     tibble = TRUE,
-                     compact = TRUE, long = TRUE) {
+msf_dict <- function(dictionary, 
+                     tibble = TRUE, 
+                     long = TRUE,
+                     compact = TRUE) {
   
   # define dictionary types 
-  dict <- get_dictionary(disease, org = "MSF")
-  disease <- unlist(disease, use.names = FALSE)
+  dict <- get_dictionary(dictionary, org = "MSF")
+  disease <- unlist(dict, use.names = FALSE)
   is_survey <- length(dict$survey) == 1
   format <- ifelse(is_survey | grepl("_intersectional", disease), 
                   "ODK", "DHIS2")
@@ -81,7 +82,7 @@ msf_dict <- function(disease,
   # get excel file path (need to specify the file name)
   path <- system.file("extdata", name, package = "epidict")
 
-  read_dict(name = path, sheet = disease, format = format, 
+  read_dict(path = path, sheet = disease, format = format, 
             tibble = tibble, long = long, compact = compact)
 
 }

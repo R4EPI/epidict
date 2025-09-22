@@ -29,7 +29,7 @@ msf_dict_rename_helper <- function(dictionary,
                   "ODK", "DHIS2")
 
   # get dictionary
-  dat_dict <- msf_dict(disease = disease, compact = TRUE)
+  dat_dict <- msf_dict(dictionary = disease, compact = TRUE)
 
   # define the dictionary columns for variable names and variable type
   varnames <- ifelse(format == "ODK", "name", "data_element_shortname")
@@ -46,7 +46,7 @@ msf_dict_rename_helper <- function(dictionary,
 
   # call the dict_rename_helper function 
   dict_rename_helper(
-    dict = dat_dict, 
+    dictionary = dat_dict, 
     varnames = varnames, 
     varnames_type = varnames_type, 
     rmd = outbreak_file, 

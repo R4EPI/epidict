@@ -5,7 +5,7 @@
 \title{Dictionary-based helper for aligning your data to variables used in a script}
 \usage{
 dict_rename_helper(
-  dict,
+  dictionary,
   varnames,
   varnames_type,
   rmd,
@@ -13,7 +13,7 @@ dict_rename_helper(
 )
 }
 \arguments{
-\item{dict}{A dataframe of the dictionary which you would like to use.}
+\item{dictionary}{A dataframe of the dictionary which you would like to use.}
 
 \item{varnames}{The name of column that contains variable names.}
 

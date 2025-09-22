@@ -1,6 +1,6 @@
 #' Dictionary-based helper for aligning your data to variables used in a script 
 #' 
-#' @param dict A dataframe of the dictionary which you would like to use. 
+#' @param dictionary A dataframe of the dictionary which you would like to use. 
 #' 
 #' @param varnames The name of column that contains variable names. 
 #'
@@ -23,27 +23,27 @@
 #' 
 #' @export
 
-dict_rename_helper <- function(dict, 
+dict_rename_helper <- function(dictionary, 
                                varnames, 
                                varnames_type, 
                                rmd, 
                                copy_to_clipboard = TRUE) {
 
   # check format of inputs 
-  if (!is.data.frame(dict)) {
-    stop("`dict` must be a dataframe")
+  if (!is.data.frame(dictionary)) {
+    stop("`dictionary` must be a dataframe")
   }
 
   if (!is.character(varnames) | !is.character(varnames_type)) {
-    stop("`varnames` and `varnames` must be quoted names of variables in `dict`")
+    stop("`varnames` and `varnames` must be quoted names of variables in `dictionary`")
   }
 
-  if (!(varnames %in% names(dict))) {
-    stop(paste0("`varnames` must be a column in `dict`, but '", varnames, "' not found"))
+  if (!(varnames %in% names(dictionary))) {
+    stop(paste0("`varnames` must be a column in `dictionary`, but '", varnames, "' not found"))
   }
   
-  if (!(varnames_type %in% names(dict))) {
-    stop(paste0("`varnames_type` must be a column in `dict`, but '", varnames_type, "' not found"))
+  if (!(varnames_type %in% names(dictionary))) {
+    stop(paste0("`varnames_type` must be a column in `dictionary`, but '", varnames_type, "' not found"))
   }
   
   if (!file.exists(rmd)) {
@@ -55,22 +55,22 @@ dict_rename_helper <- function(dict,
 
   # for each of the variables - search in the rmd
   # (if found then set to required else optional)
-  dict[["var_required"]] <- vapply(dict[[varnames]],
+  dictionary[["var_required"]] <- vapply(dictionary[[varnames]],
     FUN = function(i, o) if (any(grepl(paste0("^[^#]*", i), o))) "REQUIRED" else "optional",
     FUN.VALUE = character(1),
     o = template_file
   )
 
   # move the required variables to the top
-  dict <- dict[order(dict[["var_required"]] != "REQUIRED",
-                             dict[[varnames]]), ]
+  dictionary <- dictionary[order(dictionary[["var_required"]] != "REQUIRED",
+                             dictionary[[varnames]]), ]
   # pull together instructions for where users should input recodes
   msg <- "## Add the appropriate column names after the equals signs\n\n"
   msg <- paste0(msg, "linelist_cleaned <- rename(linelist_cleaned,\n")
   the_renames <- sprintf("  %s =   , # %s (%s)",
-    format(dict[[varnames]]),
-    format(dict[[varnames_type]]),
-    dict[["var_required"]]
+    format(dictionary[[varnames]]),
+    format(dictionary[[varnames_type]]),
+    dictionary[["var_required"]]
   )
   # remove commas
   the_renames[length(the_renames)] <- gsub(",", " ", the_renames[length(the_renames)])

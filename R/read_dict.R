@@ -3,7 +3,7 @@
 #' These function read dictionaries in ODK and DHIS2  formats, and reformats them 
 #' for dataset recoding into human-readable format. 
 #'
-#' @param name Define the path to .xlsx file where the dictionary is stored
+#' @param path Define the path to .xlsx file where the dictionary is stored
 #' 
 #' @param sheet Optional, if your sheets have non-standard names 
 #'    (using a disease pre-fix) - this can be specified here. 
@@ -32,7 +32,7 @@
 #' @export
 
 
-read_dict <- function(name, sheet, format, 
+read_dict <- function(path, sheet, format, 
                      tibble = TRUE, long = TRUE, compact = TRUE) {
   
   #### import dictionaries 
@@ -40,10 +40,10 @@ read_dict <- function(name, sheet, format,
   if (format == "DHIS2")  {
 
   # read in categorical variable content options
-  dat_opts <- readxl::read_excel(name, sheet = "OptionCodes")
+  dat_opts <- readxl::read_excel(path, sheet = "OptionCodes")
 
-  # read in data set - pasting the disease name for sheet
-  dat_dict <- readxl::read_excel(name, sheet = sheet)
+  # read in data set - pasting the disease path for sheet
+  dat_dict <- readxl::read_excel(path, sheet = sheet)
 
   }
 
@@ -51,17 +51,17 @@ read_dict <- function(name, sheet, format,
 
     if(!missing(sheet)) {
     # read in data set - pasting the disease name for sheet
-    dat_dict <- readxl::read_excel(name, sheet = sheet)
+    dat_dict <- readxl::read_excel(path, sheet = sheet)
 
     # read in categorical variable content options
-    dat_opts <- readxl::read_excel(name, sheet = sprintf("%s_options", sheet))
+    dat_opts <- readxl::read_excel(path, sheet = sprintf("%s_options", sheet))
 
     } else {
     # read in data set
-    dat_dict <- readxl::read_excel(name, sheet = "survey")
+    dat_dict <- readxl::read_excel(path, sheet = "survey")
 
     # read in categorical variable content options
-    dat_opts <- readxl::read_excel(name, sheet = "choices")
+    dat_opts <- readxl::read_excel(path, sheet = "choices")
 
     }
 

@@ -74,7 +74,7 @@ gen_data <- function(dictionary, varnames = "name", numcases = 300, org = "MSF")
 
   # Match the function for data generator. At the moment, these are all internal
   GENERATE <- get(sprintf("gen_%s_data", lorg), envir = ns)
-  dictionary <- GET_DICT(disease = disease, tibble = FALSE, compact = TRUE)
+  dictionary <- GET_DICT(dictionary = disease, tibble = FALSE, compact = TRUE)
 
   GENERATE(disease, dictionary, is_survey, varnames = varnames, numcases = numcases)
 }
