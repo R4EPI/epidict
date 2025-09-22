@@ -1,6 +1,7 @@
 #' Helper for aligning your data to MSF standardised dictionaries and analysis templates. 
 #'
 #' @param dictionary Specify which MSF dictionary you would like to use.
+#' See [msf_dict()] for options. 
 #'
 #' @param copy_to_clipboard if `TRUE` (default), the rename template will be
 #'   copied to the user's clipboard with [clipr::write_clip()]. If `FALSE`, the

@@ -13,7 +13,7 @@
 #'
 #' @param numcases Specify the number of cases you want (default is 300)
 #'
-#' @param org the organisation the dictionary belongs to. Currently, only MSF
+#' @param org Specify the organisation which the dictionary belongs to. Currently, only MSF
 #'   exists. In the future, dictionaries from WHO and other organizations may
 #'   become available.
 #'
@@ -37,7 +37,7 @@
 #'     print(dat)
 #'
 #'     # We want the expanded dictionary, so we will select `compact = FALSE`
-#'     dict <- msf_dict(disease = "Cholera", long = TRUE, compact = FALSE, tibble = TRUE)
+#'     dict <- msf_dict(dictionary = "Cholera", long = TRUE, compact = FALSE, tibble = TRUE)
 #'     print(dict)
 #'
 #'     # Now we can use matchmaker to filter the data:

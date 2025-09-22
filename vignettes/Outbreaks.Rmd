@@ -17,20 +17,46 @@ knitr::opts_chunk$set(
 )
 ```
 
-There are four MSF outbreak dictionaries available:
+There are five MSF intersectional outbreak dictionaries available (in ODK format): 
+ - Cholera/Acute watery diarrhea ("Cholera_intersectional")
+ - Meningitis ("Meningitis_intersectional)
+ - Measles/Rubella ("Measles_intersectional")
+ - Acute Jaundice Syndrome (often suspected to be Hepatitis E) ("AJS_intersectional")
+
+There are four MSF OCA outbreak dictionaries available (in DHIS2 format):
 
  - Cholera/Acute watery diarrhea ("Cholera")
  - Meningitis ("Meningitis)
  - Measles/Rubella ("Measles")
  - Acute Jaundice Syndrome (often suspected to be Hepatitis E) ("AJS")
 
-> You can read more about the outbreak dictionaries at <https://r4epis.netlify.com/outbreaks>
-
 # Acute Jaundice Syndrome (AJS)
 
-## Variables in the dictionary
+## Variables in the intersectional dictionary
 
-The AJS dictionary contains definitions for `r nrow(epidict::msf_dict("AJS"))` variables:
+The intersectional AJS dictionary contains definitions for `r nrow(epidict::msf_dict("AJS_intersectional"))` variables:
+
+```{r ajs_intersectional, results="asis"}
+library(epidict)
+ajs <- msf_dict("AJS_intersectional")
+names_desc <- ajs[c("name", "label_english", "value_type")]
+DT::datatable(names_desc)
+```
+
+## Option codes in the intersectional dictionary
+
+The dictionaries are exported using option codes that can be translated to
+human-readable format. This table shows how they are translated.
+
+```{r ajs_intersectional_values, results = "asis"}
+ajs_codes <- tidyr::unnest(ajs, cols = options)[c("name", "value_type", "option_name", "option_label_english", "option_order_in_set")]
+DT::datatable(ajs_codes)
+```
+
+
+## Variables in the OCA dictionary
+
+The OCA AJS dictionary contains definitions for `r nrow(epidict::msf_dict("AJS"))` variables:
 
 ```{r ajs, results="asis"}
 library(epidict)
@@ -39,7 +65,7 @@ names_desc <- ajs[c("data_element_formname", "data_element_shortname", "data_ele
 DT::datatable(names_desc)
 ```
 
-## Option codes
+## Option codes in the OCA dictionary
 
 The dictionaries are exported using option codes that can be translated to
 human-readable format. This table shows how they are translated.
@@ -51,9 +77,31 @@ DT::datatable(ajs_codes)
 
 # Cholera
 
-## Variables in the dictionary
+## Variables in the intersectional dictionary
 
-The Cholera dictionary contains definitions for `r nrow(epidict::msf_dict("Cholera"))` variables:
+The intersectional Cholera dictionary contains definitions for `r nrow(epidict::msf_dict("Cholera_intersectional"))` variables:
+
+```{r cholera_intersectional, results="asis"}
+library(epidict)
+cholera <- msf_dict("Cholera_intersectional")
+names_desc <- cholera[c("name", "label_english", "value_type")]
+DT::datatable(names_desc)
+```
+
+## Option codes in the intersectional dictionary
+
+The dictionaries are exported using option codes that can be translated to
+human-readable format. This table shows how they are translated.
+
+```{r cholera_intersectional_values, results = "asis"}
+cholera_codes <- tidyr::unnest(cholera, cols = options)[c("name", "value_type", "option_name", "option_label_english", "option_order_in_set")]
+DT::datatable(cholera_codes)
+```
+
+
+## Variables in the OCA dictionary
+
+The OCA Cholera dictionary contains definitions for `r nrow(epidict::msf_dict("Cholera"))` variables:
 
 ```{r cholera, results="asis"}
 library(epidict)
@@ -62,7 +110,7 @@ names_desc <- cholera[c("data_element_formname", "data_element_shortname", "data
 DT::datatable(names_desc)
 ```
 
-## Option codes
+## Option codes in the OCA dictionary
 
 The dictionaries are exported using option codes that can be translated to
 human-readable format. This table shows how they are translated.
@@ -75,7 +123,29 @@ DT::datatable(cholera_codes)
 
 # Measles
 
-## Variables in the dictionary
+## Variables in the intersectional dictionary
+
+The Measles dictionary contains definitions for `r nrow(epidict::msf_dict("Measles_intersectional"))` variables:
+
+```{r measles_intersectional, results="asis"}
+library(epidict)
+measles <- msf_dict("Measles_intersectional")
+names_desc <- measles[c("name", "label_english", "value_type")]
+DT::datatable(names_desc)
+```
+
+## Option codes in the intersectional dictionary
+
+The dictionaries are exported using option codes that can be translated to
+human-readable format. This table shows how they are translated.
+
+```{r measles_intersectional_values, results = "asis"}
+measles_codes <- tidyr::unnest(measles, cols = options)[c("name", "value_type", "option_name", "option_label_english", "option_order_in_set")]
+DT::datatable(measles_codes)
+```
+
+
+## Variables in the OCA dictionary
 
 The Measles dictionary contains definitions for `r nrow(epidict::msf_dict("Measles"))` variables:
 
@@ -86,7 +156,7 @@ names_desc <- measles[c("data_element_formname", "data_element_shortname", "data
 DT::datatable(names_desc)
 ```
 
-## Option codes
+## Option codes in the OCA dictionary
 
 The dictionaries are exported using option codes that can be translated to
 human-readable format. This table shows how they are translated.
@@ -98,7 +168,29 @@ DT::datatable(measles_codes)
 
 # Meningitis
 
-## Variables in the dictionary
+## Variables in the intersectional dictionary
+
+The Meningitis dictionary contains definitions for `r nrow(epidict::msf_dict("Meningitis_intersectional"))` variables:
+
+```{r meningitis_intersectional, results="asis"}
+library(epidict)
+meningitis <- msf_dict("Meningitis_intersectional")
+names_desc <- meningitis[c("name", "label_english", "value_type")]
+DT::datatable(names_desc)
+```
+
+## Option codes in the intersectional dictionary
+
+The dictionaries are exported using option codes that can be translated to
+human-readable format. This table shows how they are translated.
+
+```{r meningitis_intersectional_values, results = "asis"}
+meningitis_codes <- tidyr::unnest(meningitis, cols = options)[c("name", "value_type", "option_name", "option_label_english", "option_order_in_set")]
+DT::datatable(meningitis_codes)
+```
+
+
+## Variables in the OCA dictionary
 
 The Meningitis dictionary contains definitions for `r nrow(epidict::msf_dict("Meningitis"))` variables:
 
@@ -109,7 +201,7 @@ names_desc <- meningitis[c("data_element_formname", "data_element_shortname", "d
 DT::datatable(names_desc)
 ```
 
-## Option codes
+## Option codes in the OCA dictionary
 
 The dictionaries are exported using option codes that can be translated to
 human-readable format. This table shows how they are translated.
@@ -117,6 +209,29 @@ human-readable format. This table shows how they are translated.
 ```{r meningitis_values, results = "asis"}
 meningitis_codes <- tidyr::unnest(meningitis, cols = options)[c("data_element_shortname", "data_element_valuetype", "option_code", "option_name", "option_order_in_set")]
 DT::datatable(meningitis_codes)
+```
+
+# Diphtheria
+
+## Variables in the intersectional dictionary
+
+The Diptheria dictionary contains definitions for `r nrow(epidict::msf_dict("Diphtheria_intersectional"))` variables:
+
+```{r diphtheria_intersectional, results="asis"}
+library(epidict)
+Diphtheria <- msf_dict("Diphtheria_intersectional")
+names_desc <- meningitis[c("name", "label_english", "value_type")]
+DT::datatable(names_desc)
+```
+
+## Option codes in the intersectional dictionary
+
+The dictionaries are exported using option codes that can be translated to
+human-readable format. This table shows how they are translated.
+
+```{r diphtheria_intersectional_values, results = "asis"}
+diphtheria_codes <- tidyr::unnest(diphtheria, cols = options)[c("name", "value_type", "option_name", "option_label_english", "option_order_in_set")]
+DT::datatable(diphtheria_codes)
 ```
 
 

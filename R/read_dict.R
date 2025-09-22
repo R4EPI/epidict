@@ -6,7 +6,7 @@
 #' @param path Define the path to .xlsx file where the dictionary is stored
 #' 
 #' @param sheet Optional, if your sheets have non-standard names 
-#'    (using a disease pre-fix) - this can be specified here. 
+#'    (e.g. using a disease pre-fix) - this can be specified here. 
 #' 
 #' @param format The format which the dictionary is in. Currently supports 
 #'    "DHIS2" and "ODK". 

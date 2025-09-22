@@ -30,11 +30,11 @@ There are four MSF survey dictionaries available:
 
 ## Variables in the dictionary
 
-The Mortality dictionary contains definitions for `r nrow(epidict::msf_dict_survey("Mortality"))` variables:
+The Mortality dictionary contains definitions for `r nrow(epidict::msf_dict("Mortality"))` variables:
 
 ```{r mortality, results="asis"}
 library(epidict)
-mortality <- msf_dict_survey("Mortality", compact = TRUE)
+mortality <- msf_dict("Mortality", compact = TRUE)
 names_desc <- mortality[c("name", "label_english", "value_type")]
 DT::datatable(names_desc)
 ```
@@ -53,11 +53,11 @@ DT::datatable(mortality_codes)
 
 ## Variables in the dictionary
 
-The Nutrition dictionary contains definitions for `r nrow(epidict::msf_dict_survey("Nutrition"))` variables:
+The Nutrition dictionary contains definitions for `r nrow(epidict::msf_dict("Nutrition"))` variables:
 
 ```{r nutrition, results="asis"}
 library(epidict)
-nutrition <- msf_dict_survey("Nutrition", compact = TRUE)
+nutrition <- msf_dict("Nutrition", compact = TRUE)
 names_desc <- nutrition[c("name", "label_english", "value_type")]
 DT::datatable(names_desc)
 ```
@@ -76,20 +76,20 @@ DT::datatable(nutrition_codes)
 
 ## Variables in the dictionary
 There are two Vaccination dictionaries - a long form and a short form.  
-The Vaccination long dictionary contains definitions for `r nrow(epidict::msf_dict_survey("Vaccination_long"))` variables:
+The Vaccination long dictionary contains definitions for `r nrow(epidict::msf_dict("Vaccination_long"))` variables:
 
 ```{r vaccination_long, results="asis"}
 library(epidict)
-vaccination_long <- msf_dict_survey("Vaccination_long", compact = TRUE)
+vaccination_long <- msf_dict("Vaccination_long", compact = TRUE)
 names_desc_long <- vaccination_long[c("name", "label_english", "value_type")]
 DT::datatable(names_desc_long)
 ```
 
-The Vaccination short dictionary contains definitions for `r nrow(epidict::msf_dict_survey("Vaccination_short"))` variables:
+The Vaccination short dictionary contains definitions for `r nrow(epidict::msf_dict("Vaccination_short"))` variables:
 
 ```{r vaccination_short, results="asis"}
 library(epidict)
-vaccination_short <- msf_dict_survey("Vaccination_short", compact = TRUE)
+vaccination_short <- msf_dict("Vaccination_short", compact = TRUE)
 names_desc_short <- vaccination_short[c("name", "label_english", "value_type")]
 DT::datatable(names_desc_short)
 ```

@@ -1,7 +1,7 @@
 The goal of {epidict} is to provide standardized data dictionaries for use in 
 epidemiological data analysis templates. Currently it supports standardised 
 dictionaries from MSF OCA. 
-This is a product of the R4EPIs project; learn more at <https://r4epis.netlify.com>
+This is a product of the R4EPIs project; learn more at <https://r4epi.github.io/sitrep/>
 
 ## Installation
 
@@ -33,66 +33,23 @@ remotes::install_github("R4EPI/epidict")
 
 ## Accessing dictionaries
 
-There are four MSF outbreak dictionaries available in {epidict} based on DHIS2
-exports:
+The dictionaries can be obtained via the `msf_dict()` function, which specifies a
+variable and their possible options (if categorical).
 
- - Acute Jaundice Syndrome (often suspected to be Hepatitis E) ("AJS")
- - Cholera/Acute watery diarrhea ("Cholera")
- - Measles/Rubella ("Measles")
- - Meningitis ("Meningitis")
+There are five MSF intersectional outbreak dictionaries available in {epidict}
+based on ODK exports. 
 
-> You can read more about the outbreak dictionaries at <https://r4epis.netlify.com/outbreaks>
+There are four MSF OCA outbreak dictionaries available in {epidict} based on DHIS2
+exports.
+> You can read more about the outbreak dictionaries at <https://r4epi.github.io/epidict/articles/Outbreaks.html>
 
-The dictionary can be obtained via the `msf_dict()` function, which specifies a
-dictionary that describes recorded variables (`data_element_shortname`) in rows
-and their possible options (if categorical):
 
-<details>
-<!--
-NOTE: everything inside the details tag will be collapsed and effectively
-hidden from the user
--->
-<summary style='text-decoration: underline'>Click here for code examples </summary>
+In addition, there are four MSF survey dictionaries available based on 
+ODK exports. 
+> You can read more about the survey dictionaries at <https://r4epi.github.io/epidict/articles/Surveys.html>
 
-```{r outbreak}
-library("epidict")
-msf_dict("AJS")
-msf_dict("Cholera")
-msf_dict("Measles")
-msf_dict("Meningitis")
-```
 
-</details>
-
-In addition, there are four MSF survey dictionaries available:
-
- - Retrospective mortality and access to care ("Mortality")
- - Malnutrition ("Nutrition") 
- - Vaccination coverage long form ("vaccination_long")
- - Vaccination coverage short form ("vaccination_short")
-
-> You can read more about the survey dictionaries at <https://r4epis.netlify.com/surveys>
-
-These are accessible via `msf_dict_survey()` where the variables are in 
-`name`.
-You can also read in your own Kobo (ODK) dictionaries by specifying `tempalte = FALSE` 
-and then setting `name = <path to your .xlsx>`. 
-
-<details>
-<!--
-NOTE: everything inside the details tag will be collapsed and effectively
-hidden from the user
--->
-<summary style='text-decoration: underline'>Click here for code examples </summary>
-
-```{r survey}
-msf_dict_survey("Mortality")
-msf_dict_survey("Nutrition")
-msf_dict_survey("Vaccination_long")
-msf_dict_survey("Vaccination_short")
-```
-
-</details>
+You can also read in your own ODK dictionaries using `read_dict()`. 
 
 ## Generating data
 

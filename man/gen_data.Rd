@@ -15,7 +15,7 @@ if in DHIS2 format then change to "data_element_shortname".}
 
 \item{numcases}{Specify the number of cases you want (default is 300)}
 
-\item{org}{the organisation the dictionary belongs to. Currently, only MSF
+\item{org}{Specify the organisation which the dictionary belongs to. Currently, only MSF
 exists. In the future, dictionaries from WHO and other organizations may
 become available.}
 }

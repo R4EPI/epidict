@@ -7,7 +7,8 @@
 msf_dict_rename_helper(dictionary, copy_to_clipboard = TRUE)
 }
 \arguments{
-\item{dictionary}{Specify which MSF dictionary you would like to use.}
+\item{dictionary}{Specify which MSF dictionary you would like to use.
+See \code{\link[=msf_dict]{msf_dict()}} for options.}
 
 \item{copy_to_clipboard}{if \code{TRUE} (default), the rename template will be
 copied to the user's clipboard with \code{\link[clipr:write_clip]{clipr::write_clip()}}. If \code{FALSE}, the

@@ -15,9 +15,9 @@ dict_rename_helper(
 \arguments{
 \item{dictionary}{A dataframe of the dictionary which you would like to use.}
 
-\item{varnames}{The name of column that contains variable names.}
+\item{varnames}{The name of \code{dictionary} column that contains variable names.}
 
-\item{varnames_type}{The name of column that contains the variable type.
+\item{varnames_type}{The name of \code{dictionary} column that contains the variable type.
 This variable needs to be the same number of rows as as \code{varnames}.}
 
 \item{rmd}{Path to the Rmarkdown file which you would like to compare to.}

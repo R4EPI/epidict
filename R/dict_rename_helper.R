@@ -2,9 +2,9 @@
 #' 
 #' @param dictionary A dataframe of the dictionary which you would like to use. 
 #' 
-#' @param varnames The name of column that contains variable names. 
+#' @param varnames The name of `dictionary` column that contains variable names. 
 #'
-#' @param varnames_type The name of column that contains the variable type.
+#' @param varnames_type The name of `dictionary` column that contains the variable type.
 #' This variable needs to be the same number of rows as as `varnames`.
 #' 
 #' @param rmd Path to the Rmarkdown file which you would like to compare to. 
