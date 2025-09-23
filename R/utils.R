@@ -39,7 +39,7 @@ tidy_labels <- function(x, sep = "_", protect = "") {
 #' get dictionary in format according to dictionaries
 #'
 #' @param dictionary a single character that matches one of the surveys or outbreaks
-#'
+#' @param org a single character with the organisation of interest
 #' @return the correct name of the dictionary
 #' @noRd
 #'
@@ -49,8 +49,12 @@ get_dictionary <- function(dictionary, org = "MSF") {
 
   # define which ones are outbreaks and which ones are survey datasets
   if (toupper(org) == "MSF") {
-    SURVEYS <- c("Mortality", "Nutrition", "Vaccination_long", "Vaccination_short", "ebs")
-    OUTBREAKS <- c("Cholera", "Measles", "Meningitis", "AJS")
+    SURVEYS <- c("Mortality", "Nutrition", "Vaccination_long", 
+                  "Vaccination_short", "ebs")
+    OUTBREAKS <- c("Cholera", "Measles", "Meningitis", "AJS", 
+                  "Cholera_intersectional", "Measles_intersectional", 
+                  "Meningitis_intersectional", "AJS_intersectional", 
+                  "Diphtheria_intersectional")
     # NOTE: For future collaborators, if you have other dictionaries you wish to
     #       add to this project, then you should place the names of your valid
     #       dictionaries here in SURVEYS and OUTBREAKS.

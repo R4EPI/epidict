@@ -6,7 +6,7 @@
 \alias{epidict-package}
 \title{epidict: Epidemiology data dictionaries and random data generators}
 \description{
-The 'R4EPIs' project <https://R4epis.netlify.com> seeks to provide a set of standardized tools for analysis of outbreak and survey data in humanitarian aid settings. This package currently provides standardized data dictionaries from MSF OCA for four outbreak scenarios (Acute Jaundice Syndrome, Cholera, Measles, Meningitis) and three surveys (Retrospective mortality and access to care, Malnutrition, and Vaccination coverage). In addition, a data generator from these dictionaries is provided.
+The 'R4EPIs' project \url{https://R4epis.netlify.com} seeks to provide a set of standardized tools for analysis of outbreak and survey data in humanitarian aid settings. This package currently provides standardized data dictionaries from MSF OCA for four outbreak scenarios (Acute Jaundice Syndrome, Cholera, Measles, Meningitis) and three surveys (Retrospective mortality and access to care, Malnutrition, and Vaccination coverage). In addition, a data generator from these dictionaries is provided.
 }
 \seealso{
 Useful links:
@@ -14,15 +14,16 @@ Useful links:
   \item \url{https://r4epis.netlify.com}
   \item \url{https://github.com/R4EPI/epidict}
   \item \url{https://r4epi.github.io/epidict}
+  \item \url{https://r4epi.github.io/epidict/}
 }
 
 }
 \author{
-\strong{Maintainer}: Zhian N. Kamvar \email{zkamvar@gmail.com} (\href{https://orcid.org/0000-0003-1458-7108}{ORCID})
+\strong{Maintainer}: Alexander Spina \email{aspina@appliedepi.org} (\href{https://orcid.org/0000-0001-8425-1867}{ORCID})
 
 Authors:
 \itemize{
-  \item Alexander Spina \email{alexfspina@gmail.com} (\href{https://orcid.org/0000-0001-8425-1867}{ORCID})
+  \item Zhian N. Kamvar \email{zkamvar@gmail.com} (\href{https://orcid.org/0000-0003-1458-7108}{ORCID})
   \item Lukas Richter
   \item Patrick Keating
 }
