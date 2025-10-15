@@ -219,8 +219,8 @@ The Diptheria dictionary contains definitions for `r nrow(epidict::msf_dict("Dip
 
 ```{r diphtheria_intersectional, results="asis"}
 library(epidict)
-Diphtheria <- msf_dict("Diphtheria_intersectional")
-names_desc <- meningitis[c("name", "label_english", "value_type")]
+diphtheria <- msf_dict("Diphtheria_intersectional")
+names_desc <- diphtheria[c("name", "label_english", "value_type")]
 DT::datatable(names_desc)
 ```
 

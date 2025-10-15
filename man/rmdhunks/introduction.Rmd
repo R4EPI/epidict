@@ -65,6 +65,7 @@ hidden from the user
 <summary style='text-decoration: underline'>Click here for code examples </summary>
 
 ```{r gendata}
+library("epidict")
 gen_data("Measles", varnames = "data_element_shortname", numcases = 100, org = "MSF")
 gen_data("Vaccination_long", varnames = "name", numcases = 100, org = "MSF")
 ```
@@ -94,7 +95,7 @@ dat <- gen_data(dictionary = "Cholera",
 print(dat)
 
 # We want the expanded dictionary, so we will select `compact = FALSE`
-dict <- msf_dict(disease = "Cholera", 
+dict <- msf_dict(dictionary = "Cholera", 
   long    = TRUE,
   compact = FALSE,
   tibble  = TRUE
