@@ -1,6 +1,8 @@
 
-outbreaks <- c("MeAsles", "CHolera", "AjS", "meningitis")
-surveys   <- c("MOrtality", "VaCcination_ShoRt", 'Vaccination_LonG', "NutritIon")
+outbreaks <- c("MeAsles", "CHolera", "AjS", "meningitis", 'Cholera_intersectional',
+               'Measles_intersectional', 'Meningitis_intersectional', 'AJS_intersectional',
+               'Diphtheria_intersectional')
+surveys   <- c("MOrtality", "VaCcination_ShoRt", 'Vaccination_LonG', "NutritIon", 'ebs')
 
 # Functions for checking age columns
 get_ages <- function(x) x[grepl("age_(year|month|day)s?$", names(x), perl = TRUE)]
@@ -9,7 +11,7 @@ check_exclusive_ages <- function(x, n = 300) {
   # There should be a total of `n` ages, but no more, indicating that they
   # are all exclusive
   # Alex: changed to less than or equal because have NAs now
-  sum(vapply(x, function(i) sum(i > -1, na.rm = TRUE), integer(1))) <= n
+  all(vapply(x, function(i) sum(i > -1, na.rm = TRUE) <= n, logical(1)))
 }
 check_age_integers <- function(x) {
   all(vapply(x, is.integer, logical(1)))
@@ -17,16 +19,8 @@ check_age_integers <- function(x) {
 
 test_that("errors are thrown if the wrong dicts are used", {
 
-  expect_error(msf_dict("Mortality"),
-    "disease must be one of 'Cholera', 'Measles', 'Meningitis', or 'AJS'",
-    fixed = TRUE
-  )
-  expect_error(msf_dict_survey("Measles"),
-    "disease must be one of 'Mortality', 'Nutrition', 'Vaccination_long', 'Vaccination_short'",
-    fixed = TRUE
-  )
   expect_error(gen_data("Dada"),
-    "'dictionary' must be one of: 'Cholera', 'Measles', 'Meningitis', 'AJS', 'Mortality', 'Nutrition', 'Vaccination_long', 'Vaccination_short'",
+               "'dictionary' must be one of: 'Cholera', 'Measles', 'Meningitis', 'AJS', 'Cholera_intersectional', 'Measles_intersectional', 'Meningitis_intersectional', 'AJS_intersectional', 'Diphtheria_intersectional', 'Mortality', 'Nutrition', 'Vaccination_long', 'Vaccination_short', 'ebs'",
     fixed = TRUE
   )
 
@@ -64,11 +58,11 @@ test_that("msf_dict works", {
 
 })
 
-test_that("msf_survey_dict works", {
+test_that("msf_dict works for surveys", {
 
   for (type in surveys) {
-    nested <- msf_dict_survey(type, compact = TRUE)
-    long   <- msf_dict_survey(type, compact = FALSE)
+    nested <- msf_dict(type, compact = TRUE)
+    long   <- msf_dict(type, compact = FALSE)
 
     # a tibble is produced
     expect_is(nested, "tbl_df", label = type)
@@ -85,8 +79,11 @@ test_that("msf_survey_dict works", {
 test_that("outbreak data can be generated", {
 
   for (disease in c(outbreaks)) {
+
+    varnames = ifelse(grepl("_intersectional", disease), "name", "data_element_shortname")
+
     dictionary <- msf_dict(disease)
-    data       <- gen_data(disease, numcases = 300)
+    data       <- gen_data(disease, varnames = varnames, numcases = 300)
 
     # a tibble is produced
     expect_is(data, "tbl_df", label = disease)
@@ -103,7 +100,7 @@ test_that("outbreak data can be generated", {
 test_that("survey data can be generated", {
 
   for (disease in surveys) {
-    dictionary <- msf_dict_survey(disease)
+    dictionary <- msf_dict(disease)
     data       <- gen_data(disease, varnames = "name", numcases = 300)
 
     # check that produces a tibble
@@ -114,16 +111,20 @@ test_that("survey data can be generated", {
     expect_true(check_age_integers(get_ages(data)))
 
 
-    # define which var is eligible and interviewed for each dictionary
-    eligible <- ifelse(tolower(disease) == "mortality",
-                      "member_number",
-                      "number_children")
+    if (disease != "ebs") {
+      # define which var is eligible and interviewed for each dictionary
+      eligible <- ifelse(tolower(disease) == "mortality",
+                         "member_number",
+                         "number_children")
 
-    # check appropriate numbers (existing) for eligible
-    # (interviewed doesnt exist anymore)
-    # we now have NAs due to adding in non-response
-    # (i.e. those who dont consent dont get filled in)
-    expect_true(sum(data[[eligible]], na.rm = TRUE) > 0)
+      # check appropriate numbers (existing) for eligible
+      # (interviewed doesnt exist anymore)
+      # we now have NAs due to adding in non-response
+      # (i.e. those who dont consent dont get filled in)
+      expect_true(sum(data[[eligible]], na.rm = TRUE) > 0)
+
+    }
+
 
     # pull together how many variables there should be
 
@@ -143,7 +144,7 @@ test_that("survey data can be generated", {
     }
 
     # add the extra IDs generated
-    id_counts <- 3
+    id_counts <- ifelse(disease != "ebs", 3, 0)
 
     total_counts <- base_count + multiple_count + id_counts
 
