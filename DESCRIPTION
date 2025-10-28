@@ -42,12 +42,13 @@ Imports:
     tidyr,
     utils
 Suggests: 
-    testthat (>= 2.1.0),
-    matchmaker,
     covr,
+    DT, 
     knitr,
+    matchmaker,
     rmarkdown,
-    DT
+    testthat (>= 2.1.0), 
+    withr
 Remotes:
   R4EPI/sitrep
 Encoding: UTF-8
