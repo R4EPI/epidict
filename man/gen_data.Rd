@@ -46,7 +46,7 @@ if (require("dplyr") & require("matchmaker")) {
     print(dat)
 
     # We want the expanded dictionary, so we will select `compact = FALSE`
-    dict <- msf_dict(disease = "Cholera", long = TRUE, compact = FALSE, tibble = TRUE)
+    dict <- msf_dict(dictionary = "Cholera", long = TRUE, compact = FALSE, tibble = TRUE)
     print(dict)
 
     # Now we can use matchmaker to filter the data:

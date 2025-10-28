@@ -1,19 +1,19 @@
 #' Data dictionaries
 #'
-#' These function read dictionaries in ODK and DHIS2  formats, and reformats them 
-#' for dataset recoding into human-readable format. 
+#' These function read dictionaries in ODK and DHIS2  formats, and reformats them
+#' for dataset recoding into human-readable format.
 #'
 #' @param path Define the path to .xlsx file where the dictionary is stored
-#' 
-#' @param sheet Optional, if your sheets have non-standard names 
-#'    (e.g. using a disease pre-fix) - this can be specified here. 
-#' 
-#' @param format The format which the dictionary is in. Currently supports 
-#'    "DHIS2" and "ODK". 
 #'
-#' @param tibble If `TRUE` (default), return data dictionary as a 
-#'    tidyverse tibble otherwise will return a list. 
-#' 
+#' @param sheet Optional, if your sheets have non-standard names
+#'    (e.g. using a disease pre-fix) - this can be specified here.
+#'
+#' @param format The format which the dictionary is in. Currently supports
+#'    "DHIS2" and "ODK".
+#'
+#' @param tibble If `TRUE` (default), return data dictionary as a
+#'    tidyverse tibble otherwise will return a list.
+#'
 #' @param long If `TRUE` (default), the returned data dictionary is in long
 #'   format with each option getting one row. If `FALSE`, then two data frames
 #'   are returned, one with variables and the other with content options.
@@ -22,20 +22,20 @@
 #'   where each row represents a single variable and a nested data frame column
 #'   called "options", which can be expanded with [tidyr::unnest()]. This only
 #'   works if `long = TRUE`.
-#' 
+#'
 #' @importFrom readxl read_excel
 #' @importFrom dplyr bind_rows left_join group_by mutate ungroup select distinct starts_with n
 #' @importFrom tidyr nest
 #' @importFrom tibble as_tibble
 #' @importFrom utils packageVersion
-#' 
+#'
 #' @export
 
 
-read_dict <- function(path, sheet, format, 
+read_dict <- function(path, sheet, format,
                      tibble = TRUE, long = TRUE, compact = TRUE) {
-  
-  #### import dictionaries 
+
+  #### import dictionaries
 
   if (format == "DHIS2")  {
 
@@ -67,7 +67,7 @@ read_dict <- function(path, sheet, format,
 
   }
 
-  #### clean dictionaries 
+  #### clean dictionaries
 
   # clean col names
   colnames(dat_dict) <- tidy_labels(colnames(dat_dict))
@@ -100,7 +100,7 @@ read_dict <- function(path, sheet, format,
 
     # bind these on to the bottom of dat_opts (option list) as rows
     suppressWarnings(dat_opts <- dplyr::bind_rows(dat_opts, BOOLEAN, TRUE_ONLY))
-    
+
       # add the unique identifier to link above three in dictionary to options list
       for (i in c("BOOLEAN", "TRUE_ONLY")) {
         dat_dict$used_optionset_uid[dat_dict$data_element_valuetype == i] <- i
@@ -142,7 +142,7 @@ read_dict <- function(path, sheet, format,
     dat_opts <- dplyr::ungroup(dat_opts)
   }
 
-  #### reshape dictionaries 
+  #### reshape dictionaries
 
   if (long) {
     outtie <- dplyr::left_join(dat_dict, dat_opts,
@@ -150,7 +150,8 @@ read_dict <- function(path, sheet, format,
             format,
             ODK  = c("type" = "option_list_name"),
             DHIS2 = c("used_optionset_uid" = "optionset_uid")
-    )
+    ),
+    relationship = "many-to-many"
     )
 
     outtie <- if (tibble) tibble::as_tibble(outtie) else outtie
@@ -165,7 +166,7 @@ read_dict <- function(path, sheet, format,
       dictionary = dat_dict,
       options    = dat_opts
     )
-  }  
+  }
 
 
 
@@ -184,16 +185,19 @@ read_dict <- function(path, sheet, format,
       squished <- tidyr::nest(squished, dplyr::starts_with("option_"), .key = "options")
       outtie <- dplyr::select(outtie, -dplyr::starts_with("option_"))
       outtie <- dplyr::distinct(outtie)
-      squished <- dplyr::left_join(outtie, squished, by = switch(
-        format, 
-        ODK = c("type" = "option_list_name"), 
-        DHIS2 = "data_element_shortname")
+      squished <- dplyr::left_join(outtie, squished,
+                                   by = switch(
+                                     format,
+                                     ODK = c("type" = "option_list_name"),
+                                     DHIS2 = "data_element_shortname"),
+                                   relationship = "many-to-many"
+
       )
     }
     return(dplyr::ungroup(squished))
   }
-  
+
   # return dictionary dataset
   outtie
-  
+
 }

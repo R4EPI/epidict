@@ -1,7 +1,7 @@
-#' Helper for aligning your data to MSF standardised dictionaries and analysis templates. 
+#' Helper for aligning your data to MSF standardised dictionaries and analysis templates.
 #'
 #' @param dictionary Specify which MSF dictionary you would like to use.
-#' See [msf_dict()] for options. 
+#' See [msf_dict()] for options.
 #'
 #' @param copy_to_clipboard if `TRUE` (default), the rename template will be
 #'   copied to the user's clipboard with [clipr::write_clip()]. If `FALSE`, the
@@ -11,7 +11,8 @@
 #' to the dictionary
 #'
 #' @importFrom readxl read_excel
-#' 
+#' @importFrom sitrep available_sitrep_templates
+#'
 #' @export
 
 msf_dict_rename_helper <- function(dictionary,
@@ -21,12 +22,12 @@ msf_dict_rename_helper <- function(dictionary,
   if (missing("dictionary")) {
     dictionary <- "empty"
     }
-  
-  # define dictionary types 
+
+  # define dictionary types
   dict <- get_dictionary(dictionary, org = "MSF")
   disease <- unlist(dict, use.names = FALSE)
   is_survey <- length(dict$survey) == 1
-  format <- ifelse(is_survey | grepl("_intersectional", disease), 
+  format <- ifelse(is_survey | grepl("_intersectional", disease),
                   "ODK", "DHIS2")
 
   # get dictionary
@@ -45,12 +46,12 @@ msf_dict_rename_helper <- function(dictionary,
   outbreak_file <- sitrep::available_sitrep_templates(recursive = TRUE, pattern = ".Rmd", full.names = TRUE)
   outbreak_file <- grep(tolower(disease), outbreak_file, value = TRUE)[[1]]
 
-  # call the dict_rename_helper function 
+  # call the dict_rename_helper function
   dict_rename_helper(
-    dictionary = dat_dict, 
-    varnames = varnames, 
-    varnames_type = varnames_type, 
-    rmd = outbreak_file, 
+    dictionary = dat_dict,
+    varnames = varnames,
+    varnames_type = varnames_type,
+    rmd = outbreak_file,
     copy_to_clipboard = copy_to_clipboard
   )
 
