@@ -17,12 +17,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-There are four MSF survey dictionaries available:
+The currently available MSF survey dictionaries:
 
  - Retrospective mortality and access to care ("Mortality")
  - Malnutrition ("Nutrition") 
  - Vaccination coverage long form ("Vaccination_long")
  - Vaccination coverage short form ("vaccination_short")
+ - Event based surveillance ("ebs")
 
 > You can read more about the survey dictionaries at <https://r4epis.netlify.com/surveys>
 

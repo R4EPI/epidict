@@ -6,7 +6,7 @@
 \alias{epidict-package}
 \title{epidict: Epidemiology data dictionaries and random data generators}
 \description{
-The 'R4EPIs' project \url{https://r4epi.github.io/sitrep} seeks to provide a set of standardized tools for analysis of outbreak and survey data in humanitarian aid settings. This package currently provides standardized data dictionaries from MSF OCA for four outbreak scenarios (Acute Jaundice Syndrome, Cholera, Measles, Meningitis) and three surveys (Retrospective mortality and access to care, Malnutrition, and Vaccination coverage). In addition, a data generator from these dictionaries is provided.
+The 'R4EPIs' project \url{https://r4epi.github.io/sitrep} seeks to provide a set of standardized tools for analysis of outbreak and survey data in humanitarian aid settings. This package currently provides standardized data dictionaries from MSF OCA for outbreak scenarios (Acute Jaundice Syndrome, Cholera, Diphtheria, Measles, Meningitis) and surveys (Retrospective mortality and access to care, Malnutrition, Vaccination coverage and Event Based Surveillance). In addition, a data generator from these dictionaries is provided. It is also possible to read in any ODK format data dictionary.
 }
 \seealso{
 Useful links:
@@ -29,6 +29,8 @@ Authors:
 Other contributors:
 \itemize{
   \item Annick Lenglet [contributor]
+  \item Applied Epi Incorporated [copyright holder]
+  \item Medecins Sans Frontieres Operational Centre Amsterdam [funder]
 }
 
 }

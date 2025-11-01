@@ -42,6 +42,14 @@ msf_dict_rename_helper <- function(dictionary,
     disease  <- "vaccination"
   }
 
+  # only call sitrep if it's installed
+  if (!requireNamespace("sitrep", quietly = TRUE)) {
+    stop(
+      "The 'sitrep' package is required for this function but is not installed.\n",
+      "Please install it from GitHub: R4EPI/sitrep"
+    )
+  }
+
   # get the outbreak Rmd to check if the variable is optional or required
   outbreak_file <- sitrep::available_sitrep_templates(recursive = TRUE, pattern = ".Rmd", full.names = TRUE)
   outbreak_file <- grep(tolower(disease), outbreak_file, value = TRUE)[[1]]

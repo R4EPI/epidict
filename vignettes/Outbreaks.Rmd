@@ -17,13 +17,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-There are five MSF intersectional outbreak dictionaries available (in ODK format): 
+The currently available MSF **intersectional** outbreak dictionaries (in ODK format): 
  - Cholera/Acute watery diarrhea ("Cholera_intersectional")
  - Meningitis ("Meningitis_intersectional)
  - Measles/Rubella ("Measles_intersectional")
  - Acute Jaundice Syndrome (often suspected to be Hepatitis E) ("AJS_intersectional")
 
-There are four MSF OCA outbreak dictionaries available (in DHIS2 format):
+The currently available MSF **OCA** outbreak dictionaries available (in DHIS2 format):
 
  - Cholera/Acute watery diarrhea ("Cholera")
  - Meningitis ("Meningitis)
