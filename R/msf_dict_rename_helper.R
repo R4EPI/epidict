@@ -11,7 +11,6 @@
 #' to the dictionary
 #'
 #' @importFrom readxl read_excel
-#' @importFrom sitrep available_sitrep_templates
 #'
 #' @export
 
