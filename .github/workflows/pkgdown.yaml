@@ -32,6 +32,9 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: Install remotes package
+        run: Rscript -e "install.packages('remotes')"
+
       - name: Install sitrep from GitHub
         run: |
           Rscript -e "if (!requireNamespace('sitrep', quietly = TRUE)) remotes::install_github('R4EPI/sitrep')"
