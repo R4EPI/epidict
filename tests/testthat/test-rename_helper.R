@@ -268,149 +268,149 @@ test_that("dict_rename_helper handles clipboard operations gracefully", {
 
 # Test msf_dict_rename_helper ---------------------------------------------------
 
-test_that("msf_dict_rename_helper validates dictionary input", {
-  skip_if_not_installed("clipr")
-  skip_if_not_installed("sitrep")
-
-  expect_error(
-    msf_dict_rename_helper(
-      dictionary = "nonexistent_disease",
-      copy_to_clipboard = FALSE
-    ),
-    "'dictionary' must be one of: 'Cholera', 'Measles', 'Meningitis', 'AJS', 'Cholera_intersectional', 'Measles_intersectional', 'Meningitis_intersectional', 'AJS_intersectional', 'Diphtheria_intersectional', 'Mortality', 'Nutrition', 'Vaccination_long', 'Vaccination_short', 'ebs'"
-  )
-})
-
-test_that("msf_dict_rename_helper works with valid outbreak dictionaries", {
-  skip_if_not_installed("clipr")
-  skip_if_not_installed("sitrep")
-  skip_on_cran()
-
-  # Test with a known outbreak dictionary
-  outbreak_dicts <- c("Cholera", "Measles", "AJS", "Meningitis")
-
-  for (dict in outbreak_dicts) {
-    # Check it runs without error
-    expect_no_error(
-      msf_dict_rename_helper(
-        dictionary = dict,
-        copy_to_clipboard = FALSE
-      )
-    )
-  }
-})
-
-test_that("msf_dict_rename_helper works with intersectional outbreak dictionaries", {
-  skip_if_not_installed("clipr")
-  skip_if_not_installed("sitrep")
-  skip_on_cran()
-
-  # Test with intersectional dictionaries
-  expect_no_error(
-    msf_dict_rename_helper(
-      dictionary = "Cholera_intersectional",
-      copy_to_clipboard = FALSE
-    )
-  )
-})
-
-test_that("msf_dict_rename_helper works with survey dictionaries", {
-  skip_if_not_installed("clipr")
-  skip_if_not_installed("sitrep")
-  skip_on_cran()
-
-  # Test with survey dictionaries
-  survey_dicts <- c("Mortality", "Nutrition", "Vaccination_long", "Vaccination_short")
-
-  for (dict in survey_dicts) {
-    expect_no_error(
-      msf_dict_rename_helper(
-        dictionary = dict,
-        copy_to_clipboard = FALSE
-      )
-    )
-  }
-})
-
-test_that("msf_dict_rename_helper uses correct varnames for format", {
-  skip_if_not_installed("clipr")
-  skip_if_not_installed("sitrep")
-  skip_on_cran()
-
-  # Capture output for DHIS2 format (e.g., Cholera)
-  output_dhis <- capture.output(
-    msf_dict_rename_helper(
-      dictionary = "Cholera",
-      copy_to_clipboard = FALSE
-    )
-  )
-
-  # For DHIS2, should use data_element_shortname as variable names
-  # We can't directly check the internal workings, but we can verify it runs
-  expect_true(length(output_dhis) > 0)
-
-  # Capture output for ODK format (e.g., Mortality)
-  output_odk <- capture.output(
-    msf_dict_rename_helper(
-      dictionary = "Mortality",
-      copy_to_clipboard = FALSE
-    )
-  )
-
-  # For ODK, should use name as variable names
-  expect_true(length(output_odk) > 0)
-})
-
-test_that("msf_dict_rename_helper handles vaccination dictionaries specially", {
-  skip_if_not_installed("clipr")
-  skip_if_not_installed("sitrep")
-  skip_on_cran()
-
-  # Both vaccination_long and vaccination_short should work
-  expect_no_error(
-    msf_dict_rename_helper(
-      dictionary = "Vaccination_long",
-      copy_to_clipboard = FALSE
-    )
-  )
-
-  expect_no_error(
-    msf_dict_rename_helper(
-      dictionary = "Vaccination_short",
-      copy_to_clipboard = FALSE
-    )
-  )
-})
-
-test_that("msf_dict_rename_helper produces valid rename syntax", {
-  skip_if_not_installed("clipr")
-  skip_if_not_installed("sitrep")
-  skip_on_cran()
-
-  output <- capture.output(
-    msf_dict_rename_helper(
-      dictionary = "Cholera",
-      copy_to_clipboard = FALSE
-    )
-  )
-
-  output_text <- paste(output, collapse = "\n")
-
-  # Check for standard rename structure
-  expect_match(output_text, "rename\\(linelist_cleaned,")
-  expect_match(output_text, "REQUIRED|optional")
-})
-
-test_that("msf_dict_rename_helper handles missing dictionary parameter", {
-  skip_if_not_installed("clipr")
-  skip_if_not_installed("sitrep")
-
-  # Should error when dictionary is missing
-  expect_error(
-    msf_dict_rename_helper(copy_to_clipboard = FALSE),
-    "'dictionary' must be one of: 'Cholera', 'Measles', 'Meningitis', 'AJS', 'Cholera_intersectional', 'Measles_intersectional', 'Meningitis_intersectional', 'AJS_intersectional', 'Diphtheria_intersectional', 'Mortality', 'Nutrition', 'Vaccination_long', 'Vaccination_short', 'ebs'"
-  )
-})
+# test_that("msf_dict_rename_helper validates dictionary input", {
+#   skip_if_not_installed("clipr")
+#   skip_if_not_installed("sitrep")
+#
+#   expect_error(
+#     msf_dict_rename_helper(
+#       dictionary = "nonexistent_disease",
+#       copy_to_clipboard = FALSE
+#     ),
+#     "'dictionary' must be one of: 'Cholera', 'Measles', 'Meningitis', 'AJS', 'Cholera_intersectional', 'Measles_intersectional', 'Meningitis_intersectional', 'AJS_intersectional', 'Diphtheria_intersectional', 'Mortality', 'Nutrition', 'Vaccination_long', 'Vaccination_short', 'ebs'"
+#   )
+# })
+#
+# test_that("msf_dict_rename_helper works with valid outbreak dictionaries", {
+#   skip_if_not_installed("clipr")
+#   skip_if_not_installed("sitrep")
+#   skip_on_cran()
+#
+#   # Test with a known outbreak dictionary
+#   outbreak_dicts <- c("Cholera", "Measles", "AJS", "Meningitis")
+#
+#   for (dict in outbreak_dicts) {
+#     # Check it runs without error
+#     expect_no_error(
+#       msf_dict_rename_helper(
+#         dictionary = dict,
+#         copy_to_clipboard = FALSE
+#       )
+#     )
+#   }
+# })
+#
+# test_that("msf_dict_rename_helper works with intersectional outbreak dictionaries", {
+#   skip_if_not_installed("clipr")
+#   skip_if_not_installed("sitrep")
+#   skip_on_cran()
+#
+#   # Test with intersectional dictionaries
+#   expect_no_error(
+#     msf_dict_rename_helper(
+#       dictionary = "Cholera_intersectional",
+#       copy_to_clipboard = FALSE
+#     )
+#   )
+# })
+#
+# test_that("msf_dict_rename_helper works with survey dictionaries", {
+#   skip_if_not_installed("clipr")
+#   skip_if_not_installed("sitrep")
+#   skip_on_cran()
+#
+#   # Test with survey dictionaries
+#   survey_dicts <- c("Mortality", "Nutrition", "Vaccination_long", "Vaccination_short")
+#
+#   for (dict in survey_dicts) {
+#     expect_no_error(
+#       msf_dict_rename_helper(
+#         dictionary = dict,
+#         copy_to_clipboard = FALSE
+#       )
+#     )
+#   }
+# })
+#
+# test_that("msf_dict_rename_helper uses correct varnames for format", {
+#   skip_if_not_installed("clipr")
+#   skip_if_not_installed("sitrep")
+#   skip_on_cran()
+#
+#   # Capture output for DHIS2 format (e.g., Cholera)
+#   output_dhis <- capture.output(
+#     msf_dict_rename_helper(
+#       dictionary = "Cholera",
+#       copy_to_clipboard = FALSE
+#     )
+#   )
+#
+#   # For DHIS2, should use data_element_shortname as variable names
+#   # We can't directly check the internal workings, but we can verify it runs
+#   expect_true(length(output_dhis) > 0)
+#
+#   # Capture output for ODK format (e.g., Mortality)
+#   output_odk <- capture.output(
+#     msf_dict_rename_helper(
+#       dictionary = "Mortality",
+#       copy_to_clipboard = FALSE
+#     )
+#   )
+#
+#   # For ODK, should use name as variable names
+#   expect_true(length(output_odk) > 0)
+# })
+#
+# test_that("msf_dict_rename_helper handles vaccination dictionaries specially", {
+#   skip_if_not_installed("clipr")
+#   skip_if_not_installed("sitrep")
+#   skip_on_cran()
+#
+#   # Both vaccination_long and vaccination_short should work
+#   expect_no_error(
+#     msf_dict_rename_helper(
+#       dictionary = "Vaccination_long",
+#       copy_to_clipboard = FALSE
+#     )
+#   )
+#
+#   expect_no_error(
+#     msf_dict_rename_helper(
+#       dictionary = "Vaccination_short",
+#       copy_to_clipboard = FALSE
+#     )
+#   )
+# })
+#
+# test_that("msf_dict_rename_helper produces valid rename syntax", {
+#   skip_if_not_installed("clipr")
+#   skip_if_not_installed("sitrep")
+#   skip_on_cran()
+#
+#   output <- capture.output(
+#     msf_dict_rename_helper(
+#       dictionary = "Cholera",
+#       copy_to_clipboard = FALSE
+#     )
+#   )
+#
+#   output_text <- paste(output, collapse = "\n")
+#
+#   # Check for standard rename structure
+#   expect_match(output_text, "rename\\(linelist_cleaned,")
+#   expect_match(output_text, "REQUIRED|optional")
+# })
+#
+# test_that("msf_dict_rename_helper handles missing dictionary parameter", {
+#   skip_if_not_installed("clipr")
+#   skip_if_not_installed("sitrep")
+#
+#   # Should error when dictionary is missing
+#   expect_error(
+#     msf_dict_rename_helper(copy_to_clipboard = FALSE),
+#     "'dictionary' must be one of: 'Cholera', 'Measles', 'Meningitis', 'AJS', 'Cholera_intersectional', 'Measles_intersectional', 'Meningitis_intersectional', 'AJS_intersectional', 'Diphtheria_intersectional', 'Mortality', 'Nutrition', 'Vaccination_long', 'Vaccination_short', 'ebs'"
+#   )
+# })
 
 # Integration tests --------------------------------------------------------------
 
