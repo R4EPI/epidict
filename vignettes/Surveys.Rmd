@@ -25,8 +25,6 @@ The currently available MSF survey dictionaries:
  - Vaccination coverage short form ("vaccination_short")
  - Event based surveillance ("ebs")
 
-> You can read more about the survey dictionaries at <https://r4epis.netlify.com/surveys>
-
 # Retrospective mortality and access to care ("mortality")
 
 ## Variables in the dictionary

@@ -4,98 +4,63 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Epidemiology data dictionaries and random data generators • epidict</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
-<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Epidemiology data dictionaries and random data generators">
-<meta property="og:description" content="The R4EPIs project &lt;https://R4epis.netlify.com&gt; seeks to provide 
-    a set of standardized tools for analysis of outbreak and survey data in
-    humanitarian aid settings. This package currently provides standardized data
-    dictionaries from MSF OCA for four outbreak scenarios (Acute Jaundice
-    Syndrome, Cholera, Measles, Meningitis) and three surveys (Retrospective
-    mortality and access to care, Malnutrition, and Vaccination coverage). In
-    addition, a data generator from these dictionaries is provided.  ">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Epidemiology data dictionaries and random data generators">
+<meta name="description" content="The R4EPIs project &lt;https://r4epi.github.io/sitrep&gt; seeks to provide a set of standardized tools for analysis of outbreak and survey data in humanitarian aid settings. This package currently provides standardized data dictionaries from MSF OCA for outbreak scenarios (Acute Jaundice Syndrome, Cholera, Diphtheria, Measles, Meningitis) and surveys (Retrospective mortality and access to care, Malnutrition, Vaccination coverage and Event Based Surveillance). In addition, a data generator from these dictionaries is provided. It is also possible to read in any ODK format data dictionary.">
+<meta property="og:description" content="The R4EPIs project &lt;https://r4epi.github.io/sitrep&gt; seeks to provide a set of standardized tools for analysis of outbreak and survey data in humanitarian aid settings. This package currently provides standardized data dictionaries from MSF OCA for outbreak scenarios (Acute Jaundice Syndrome, Cholera, Diphtheria, Measles, Meningitis) and surveys (Retrospective mortality and access to care, Malnutrition, Vaccination coverage and Event Based Surveillance). In addition, a data generator from these dictionaries is provided. It is also possible to read in any ODK format data dictionary.">
 </head>
-<body data-spy="scroll" data-target="#toc">
-    
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
-    <div class="container template-home">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">epidict</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9001</span>
-      </span>
-    </div>
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="articles/intro.html">Introduction to epidict</a>
-    </li>
-    <li>
-      <a href="articles/Outbreaks.html">MSF Outbreak Dictionaries</a>
-    </li>
-    <li>
-      <a href="articles/Surveys.html">MSF Survey Dictionaries</a>
-    </li>
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
+    <a class="navbar-brand me-2" href="index.html">epidict</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9001</small>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/intro.html">Introduction to epidict</a></li>
+    <li><a class="dropdown-item" href="articles/Outbreaks.html">MSF Outbreak Dictionaries</a></li>
+    <li><a class="dropdown-item" href="articles/Surveys.html">MSF Survey Dictionaries</a></li>
   </ul>
 </li>
-<li>
-  <a href="news/index.html">Changelog</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/R4EPI/epidict/" class="external-link">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/R4EPI/epidict/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
-
-      
-
-      </header><div class="row">
-  <div class="contents col-md-9">
-<div class="section level1">
+</nav><div class="container template-home">
+<div class="row">
+  <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="epidict">epidict<a class="anchor" aria-label="anchor" href="#epidict"></a>
 </h1></div>
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
-<p>The goal of {epidict} is to provide standardized data dictionaries for use in epidemiological data analysis templates. Currently it supports standardised dictionaries from MSF OCA. This is a product of the R4EPIs project; learn more at <a href="https://r4epis.netlify.com" class="external-link uri">https://r4epis.netlify.com</a></p>
+<p>The goal of {epidict} is to provide standardized data dictionaries for use in epidemiological data analysis templates. Currently it supports standardised dictionaries from MSF OCA. This is a product of the R4EPIs project; learn more at <a href="https://r4epi.github.io/sitrep/" class="external-link uri">https://r4epi.github.io/sitrep/</a></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -117,190 +82,11 @@ Click here for alternative installation options
 <div class="section level2">
 <h2 id="accessing-dictionaries">Accessing dictionaries<a class="anchor" aria-label="anchor" href="#accessing-dictionaries"></a>
 </h2>
-<p>There are four MSF outbreak dictionaries available in {epidict} based on DHIS2 exports:</p>
-<ul>
-<li>Acute Jaundice Syndrome (often suspected to be Hepatitis E) (“AJS”)</li>
-<li>Cholera/Acute watery diarrhea (“Cholera”)</li>
-<li>Measles/Rubella (“Measles”)</li>
-<li>Meningitis (“Meningitis”)</li>
-</ul>
-<blockquote>
-<p>You can read more about the outbreak dictionaries at <a href="https://r4epis.netlify.com/outbreaks" class="external-link uri">https://r4epis.netlify.com/outbreaks</a></p>
-</blockquote>
-<p>The dictionary can be obtained via the <code><a href="reference/msf_dict.html">msf_dict()</a></code> function, which specifies a dictionary that describes recorded variables (<code>data_element_shortname</code>) in rows and their possible options (if categorical):</p>
-<details><!--
-NOTE: everything inside the details tag will be collapsed and effectively
-hidden from the user
---><summary style="text-decoration: underline">
-Click here for code examples
-</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://r4epis.netlify.com" class="external-link">"epidict"</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/msf_dict.html">msf_dict</a></span><span class="op">(</span><span class="st">"AJS"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 68 × 8</span></span>
-<span><span class="co">#&gt;    data_element_uid data_elem…¹ data_…² data_…³ data_…⁴ data_…⁵ used_…⁶ options </span></span>
-<span><span class="co">#&gt;    &lt;lgl&gt;            &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;list&gt;  </span></span>
-<span><span class="co">#&gt;  1 NA               egen_044_e… event_… Is the… TEXT    &lt;NA&gt;    HgdrO8… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  2 NA               egen_001_p… case_n… Anonym… TEXT    &lt;NA&gt;    &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  3 NA               egen_004_d… date_o… Date p… DATE    &lt;NA&gt;    &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  4 NA               egen_022_d… detect… How pa… TEXT    &lt;NA&gt;    BlfHX5… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  5 NA               egen_005_p… patien… Patien… TEXT    &lt;NA&gt;    YNeOOp… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  6 NA               egen_029_m… msf_in… How ex… TEXT    &lt;NA&gt;    PN5NWt… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  7 NA               egen_008_a… age_ye… Age of… INTEGE… &lt;NA&gt;    &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  8 NA               egen_009_a… age_mo… Age of… INTEGE… &lt;NA&gt;    &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  9 NA               egen_010_a… age_da… Age of… INTEGE… &lt;NA&gt;    &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; 10 NA               egen_011_s… sex     Sex of… TEXT    &lt;NA&gt;    orgc5Y… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; # … with 58 more rows, and abbreviated variable names ¹​data_element_name,</span></span>
-<span><span class="co">#&gt; #   ²​data_element_shortname, ³​data_element_description,</span></span>
-<span><span class="co">#&gt; #   ⁴​data_element_valuetype, ⁵​data_element_formname, ⁶​used_optionset_uid</span></span>
-<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows</span></span>
-<span><span class="fu"><a href="reference/msf_dict.html">msf_dict</a></span><span class="op">(</span><span class="st">"Cholera"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 45 × 8</span></span>
-<span><span class="co">#&gt;    data_element_uid data_elem…¹ data_…² data_…³ data_…⁴ data_…⁵ used_…⁶ options </span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;list&gt;  </span></span>
-<span><span class="co">#&gt;  1 AafTlSwliVQ      egen_001_p… case_n… Anonym… TEXT    Case n… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  2 OTGOtWBz39J      egen_004_d… date_o… Date p… DATE    Date o… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  3 wnmMr2V3T3u      egen_006_p… patien… Locati… ORGANI… Patien… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  4 sbgqjeVwtb8      egen_008_a… age_ye… Age of… INTEGE… Age in… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  5 eXYhovYyl61      egen_009_a… age_mo… Age of… INTEGE… Age in… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  6 UrYJSk2Wp46      egen_010_a… age_da… Age of… INTEGE… Age in… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  7 D1Ky5K7pFN6      egen_011_s… sex     Sex of… TEXT    Sex     orgc5Y… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  8 dTm5R53YYXC      egen_012_p… pregna… Pregna… TEXT    Pregna… IEjzG2… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  9 FF7d81Zy0yQ      egen_013_p… trimes… If pre… TEXT    Trimes… QjGHFN… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; 10 vLAmA6Pmjip      egen_014_p… foetus… If pre… TEXT    Foetus… SR8Jtf… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; # … with 35 more rows, and abbreviated variable names ¹​data_element_name,</span></span>
-<span><span class="co">#&gt; #   ²​data_element_shortname, ³​data_element_description,</span></span>
-<span><span class="co">#&gt; #   ⁴​data_element_valuetype, ⁵​data_element_formname, ⁶​used_optionset_uid</span></span>
-<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows</span></span>
-<span><span class="fu"><a href="reference/msf_dict.html">msf_dict</a></span><span class="op">(</span><span class="st">"Measles"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 52 × 8</span></span>
-<span><span class="co">#&gt;    data_element_uid data_elem…¹ data_…² data_…³ data_…⁴ data_…⁵ used_…⁶ options </span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;list&gt;  </span></span>
-<span><span class="co">#&gt;  1 DE_EGEN_001      egen_001_p… case_n… Anonym… TEXT    Case n… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  2 DE_EGEN_004      egen_004_d… date_o… Date p… DATE    Date o… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  3 DE_EGEN_005      egen_005_p… patien… Patien… TEXT    Patien… YNeOOp… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  4 DE_EGEN_006      egen_006_p… patien… Locati… ORGANI… Patien… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  5 DE_EGEN_008      egen_008_a… age_ye… Age of… INTEGE… Age in… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  6 DE_EGEN_009      egen_009_a… age_mo… Age of… INTEGE… Age in… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  7 DE_EGEN_010      egen_010_a… age_da… Age of… INTEGE… Age in… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  8 DE_EGEN_011      egen_011_s… sex     Sex of… TEXT    Sex     orgc5Y… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  9 DE_EGEN_012      egen_012_p… pregna… Pregna… TEXT    Pregna… IEjzG2… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; 10 DE_EGEN_013      egen_013_p… trimes… If pre… TEXT    Trimes… QjGHFN… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; # … with 42 more rows, and abbreviated variable names ¹​data_element_name,</span></span>
-<span><span class="co">#&gt; #   ²​data_element_shortname, ³​data_element_description,</span></span>
-<span><span class="co">#&gt; #   ⁴​data_element_valuetype, ⁵​data_element_formname, ⁶​used_optionset_uid</span></span>
-<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows</span></span>
-<span><span class="fu"><a href="reference/msf_dict.html">msf_dict</a></span><span class="op">(</span><span class="st">"Meningitis"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 53 × 8</span></span>
-<span><span class="co">#&gt;    data_element_uid data_elem…¹ data_…² data_…³ data_…⁴ data_…⁵ used_…⁶ options </span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;list&gt;  </span></span>
-<span><span class="co">#&gt;  1 AafTlSwliVQ      egen_001_p… case_n… Anonym… TEXT    Case n… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  2 OTGOtWBz39J      egen_004_d… date_o… Date p… DATE    Date o… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  3 udXAcFEE1dl      egen_005_p… patien… Patien… TEXT    Patien… YNeOOp… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  4 wnmMr2V3T3u      egen_006_p… patien… Locati… ORGANI… Patien… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  5 sbgqjeVwtb8      egen_008_a… age_ye… Age of… INTEGE… Age in… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  6 eXYhovYyl61      egen_009_a… age_mo… Age of… INTEGE… Age in… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  7 UrYJSk2Wp46      egen_010_a… age_da… Age of… INTEGE… Age in… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  8 D1Ky5K7pFN6      egen_011_s… sex     Sex of… TEXT    Sex     orgc5Y… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt;  9 ADfNqpCL5kf      egen_015_e… exit_s… Final … TEXT    Exit s… hO9TET… &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; 10 JZ8yqTow79G      egen_016_d… date_o… Date p… DATE    Exit d… &lt;NA&gt;    &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; # … with 43 more rows, and abbreviated variable names ¹​data_element_name,</span></span>
-<span><span class="co">#&gt; #   ²​data_element_shortname, ³​data_element_description,</span></span>
-<span><span class="co">#&gt; #   ⁴​data_element_valuetype, ⁵​data_element_formname, ⁶​used_optionset_uid</span></span>
-<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows</span></span></code></pre></div>
-</details><p>In addition, there are four MSF survey dictionaries available:</p>
-<ul>
-<li>Retrospective mortality and access to care (“Mortality”)</li>
-<li>Malnutrition (“Nutrition”)</li>
-<li>Vaccination coverage long form (“vaccination_long”)</li>
-<li>Vaccination coverage short form (“vaccination_short”)</li>
-</ul>
-<blockquote>
-<p>You can read more about the survey dictionaries at <a href="https://r4epis.netlify.com/surveys" class="external-link uri">https://r4epis.netlify.com/surveys</a></p>
-</blockquote>
-<p>These are accessible via <code><a href="reference/msf_dict.html">msf_dict_survey()</a></code> where the variables are in <code>name</code>. You can also read in your own Kobo (ODK) dictionaries by specifying <code>tempalte = FALSE</code> and then setting <code>name = &lt;path to your .xlsx&gt;</code>.</p>
-<details><!--
-NOTE: everything inside the details tag will be collapsed and effectively
-hidden from the user
---><summary style="text-decoration: underline">
-Click here for code examples
-</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/msf_dict.html">msf_dict_survey</a></span><span class="op">(</span><span class="st">"Mortality"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 174 × 15</span></span>
-<span><span class="co">#&gt;    type    name  short…¹ label…² label…³ hint_…⁴ hint_…⁵ default relev…⁶ appea…⁷</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt;  1 start   start start   Start … &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  2 end     end   end     End Ti… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  3 today   today today   Date o… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  4 device… devi… device… Phone … &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  5 date    date  Date o… Date    Date    &lt;NA&gt;    &lt;NA&gt;    today() &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  6 integer team… Team n… Team n… Numéro… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    numbers</span></span>
-<span><span class="co">#&gt;  7 village vill… Villag… Villag… Nom du… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  8 text    vill… Other … Specif… Autre,… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    ${vill… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  9 integer clus… Cluste… Cluste… Numéro… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    numbers</span></span>
-<span><span class="co">#&gt; 10 integer hous… Househ… Househ… Numéro… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    numbers</span></span>
-<span><span class="co">#&gt; # … with 164 more rows, 5 more variables: constraint &lt;chr&gt;, repeat_count &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   calculation &lt;chr&gt;, value_type &lt;chr&gt;, options &lt;list&gt;, and abbreviated</span></span>
-<span><span class="co">#&gt; #   variable names ¹​short_name, ²​label_english, ³​label_french, ⁴​hint_english,</span></span>
-<span><span class="co">#&gt; #   ⁵​hint_french, ⁶​relevant, ⁷​appearance</span></span>
-<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span>
-<span><span class="fu"><a href="reference/msf_dict.html">msf_dict_survey</a></span><span class="op">(</span><span class="st">"Nutrition"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 27 × 15</span></span>
-<span><span class="co">#&gt;    type    name  short…¹ label…² label…³ hint_…⁴ hint_…⁵ repea…⁶ relev…⁷ calcu…⁸</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;lgl&gt;  </span></span>
-<span><span class="co">#&gt;  1 start   start &lt;NA&gt;    Start … &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    NA     </span></span>
-<span><span class="co">#&gt;  2 end     end   &lt;NA&gt;    End Ti… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    NA     </span></span>
-<span><span class="co">#&gt;  3 today   today &lt;NA&gt;    Date o… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    NA     </span></span>
-<span><span class="co">#&gt;  4 device… devi… &lt;NA&gt;    Phone … &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    NA     </span></span>
-<span><span class="co">#&gt;  5 date    date  Date    Date    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    NA     </span></span>
-<span><span class="co">#&gt;  6 integer team… Team n… Team n… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    NA     </span></span>
-<span><span class="co">#&gt;  7 village vill… Villag… Villag… Nom du… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    NA     </span></span>
-<span><span class="co">#&gt;  8 text    vill… Other … Specif… Précis… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    ${vill… NA     </span></span>
-<span><span class="co">#&gt;  9 geopoi… vill… Villag… Villag… Locali… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    NA     </span></span>
-<span><span class="co">#&gt; 10 integer clus… Cluste… Cluste… Numéro… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    NA     </span></span>
-<span><span class="co">#&gt; # … with 17 more rows, 5 more variables: constraint &lt;chr&gt;, appearance &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   default &lt;chr&gt;, value_type &lt;chr&gt;, options &lt;list&gt;, and abbreviated variable</span></span>
-<span><span class="co">#&gt; #   names ¹​short_name, ²​label_english, ³​label_french, ⁴​hint_english,</span></span>
-<span><span class="co">#&gt; #   ⁵​hint_french, ⁶​repeat_count, ⁷​relevant, ⁸​calculation</span></span>
-<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span>
-<span><span class="fu"><a href="reference/msf_dict.html">msf_dict_survey</a></span><span class="op">(</span><span class="st">"Vaccination_long"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 106 × 15</span></span>
-<span><span class="co">#&gt;    type    name  short…¹ label…² label…³ hint_…⁴ hint_…⁵ default relev…⁶ appea…⁷</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt;  1 start   start &lt;NA&gt;    Start … Start … &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  2 end     end   &lt;NA&gt;    End Ti… End Ti… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  3 today   today &lt;NA&gt;    Date o… Date o… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  4 device… devi… &lt;NA&gt;    Phone … Phone … &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  5 date    date  Date    Date    Date    &lt;NA&gt;    &lt;NA&gt;    today() &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  6 integer team… Team n… Team n… Numéro… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  7 village vill… Villag… Villag… Nom du… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  8 text    vill… Other … Specif… Veuill… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    ${vill… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  9 integer clus… Cluste… Cluste… Numéro… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    numbers</span></span>
-<span><span class="co">#&gt; 10 integer hous… Househ… Househ… Numéro… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; # … with 96 more rows, 5 more variables: repeat_count &lt;chr&gt;, constraint &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   calculation &lt;chr&gt;, value_type &lt;chr&gt;, options &lt;list&gt;, and abbreviated</span></span>
-<span><span class="co">#&gt; #   variable names ¹​short_name, ²​label_english, ³​label_french, ⁴​hint_english,</span></span>
-<span><span class="co">#&gt; #   ⁵​hint_french, ⁶​relevant, ⁷​appearance</span></span>
-<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span>
-<span><span class="fu"><a href="reference/msf_dict.html">msf_dict_survey</a></span><span class="op">(</span><span class="st">"Vaccination_short"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 38 × 16</span></span>
-<span><span class="co">#&gt;    type    name  short…¹ label…² label…³ hint_…⁴ hint_…⁵ default relev…⁶ appea…⁷</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt;  1 start   start &lt;NA&gt;    Start … Start … &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  2 end     end   &lt;NA&gt;    End Ti… End Ti… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  3 today   today &lt;NA&gt;    Date o… Date o… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  4 device… devi… &lt;NA&gt;    Phone … Phone … &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  5 date    date  Date    Date    Date    &lt;NA&gt;    &lt;NA&gt;    .today… &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  6 integer team… Team n… Team n… Numéro… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  7 village vill… Villag… Villag… Nom du… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  8 text    vill… Other … Specif… Veuill… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    ${vill… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  9 integer clus… Cluste… Cluste… Numéro… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    numbers</span></span>
-<span><span class="co">#&gt; 10 integer hous… Househ… Househ… Numéro… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; # … with 28 more rows, 6 more variables: repeat_count &lt;chr&gt;, constraint &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   calculation &lt;chr&gt;, hxl &lt;chr&gt;, value_type &lt;chr&gt;, options &lt;list&gt;, and</span></span>
-<span><span class="co">#&gt; #   abbreviated variable names ¹​short_name, ²​label_english, ³​label_french,</span></span>
-<span><span class="co">#&gt; #   ⁴​hint_english, ⁵​hint_french, ⁶​relevant, ⁷​appearance</span></span>
-<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span></code></pre></div>
-</details>
+<p>The dictionaries can be obtained via the <code><a href="reference/msf_dict.html">msf_dict()</a></code> function, which specifies a variable and their possible options (if categorical).</p>
+<p>There are MSF intersectional outbreak dictionaries available in {epidict} based on ODK exports.</p>
+<p>There are MSF OCA outbreak dictionaries available in {epidict} based on DHIS2 exports. &gt; You can read more about the outbreak dictionaries at <a href="https://r4epi.github.io/epidict/articles/Outbreaks.html" class="uri">https://r4epi.github.io/epidict/articles/Outbreaks.html</a></p>
+<p>In addition, there are MSF survey dictionaries available based on ODK exports. &gt; You can read more about the survey dictionaries at <a href="https://r4epi.github.io/epidict/articles/Surveys.html" class="uri">https://r4epi.github.io/epidict/articles/Surveys.html</a></p>
+<p>You can also read in your own ODK dictionaries using <code><a href="reference/read_dict.html">read_dict()</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="generating-data">Generating data<a class="anchor" aria-label="anchor" href="#generating-data"></a>
@@ -311,51 +97,50 @@ NOTE: everything inside the details tag will be collapsed and effectively
 hidden from the user
 --><summary style="text-decoration: underline">
 Click here for code examples
-</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/gen_data.html">gen_data</a></span><span class="op">(</span><span class="st">"Measles"</span>, varnames <span class="op">=</span> <span class="st">"data_element_shortname"</span>, numcases <span class="op">=</span> <span class="fl">100</span>, org <span class="op">=</span> <span class="st">"MSF"</span><span class="op">)</span></span>
+</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/R4EPI/epidict" class="external-link">"epidict"</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/gen_data.html">gen_data</a></span><span class="op">(</span><span class="st">"Measles"</span>, varnames <span class="op">=</span> <span class="st">"data_element_shortname"</span>, numcases <span class="op">=</span> <span class="fl">100</span>, org <span class="op">=</span> <span class="st">"MSF"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 100 × 52</span></span>
-<span><span class="co">#&gt;    case_number date_of_c…¹ patie…² patie…³ age_y…⁴ age_m…⁵ age_d…⁶ sex   pregn…⁷</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;       &lt;date&gt;      &lt;fct&gt;   &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;fct&gt;  </span></span>
-<span><span class="co">#&gt;  1 A1          2018-04-05  IP      Villag…      38      NA      NA M     NA     </span></span>
-<span><span class="co">#&gt;  2 A2          2018-01-07  OP      Villag…      77      NA      NA M     NA     </span></span>
-<span><span class="co">#&gt;  3 A3          2018-03-18  IP      Villag…      13      NA      NA F     NA     </span></span>
-<span><span class="co">#&gt;  4 A4          2018-02-16  IP      Villag…      28      NA      NA F     Y      </span></span>
-<span><span class="co">#&gt;  5 A5          2018-03-25  IP      Villag…      NA      NA       9 U     NA     </span></span>
-<span><span class="co">#&gt;  6 A6          2018-03-16  IP      Villag…      24      NA      NA F     Y      </span></span>
-<span><span class="co">#&gt;  7 A7          2018-04-09  OP      Villag…      86      NA      NA M     NA     </span></span>
-<span><span class="co">#&gt;  8 A8          2018-04-08  IP      Villag…       8      NA      NA U     NA     </span></span>
-<span><span class="co">#&gt;  9 A9          2018-03-23  OP      Villag…      60      NA      NA M     NA     </span></span>
-<span><span class="co">#&gt; 10 A10         2018-04-23  OP      Villag…      21      NA      NA U     NA     </span></span>
-<span><span class="co">#&gt; # … with 90 more rows, 43 more variables: trimester &lt;fct&gt;,</span></span>
+<span><span class="co">#&gt;    case_number date_of_consultation_admis…¹ patient_facility_type patient_origin</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;       &lt;date&gt;                       &lt;fct&gt;                 &lt;chr&gt;         </span></span>
+<span><span class="co">#&gt;  1 A1          2018-01-21                   OP                    Village C     </span></span>
+<span><span class="co">#&gt;  2 A2          2018-01-03                   OP                    Village B     </span></span>
+<span><span class="co">#&gt;  3 A3          2018-03-07                   OP                    Village D     </span></span>
+<span><span class="co">#&gt;  4 A4          2018-01-05                   IP                    Village D     </span></span>
+<span><span class="co">#&gt;  5 A5          2018-02-19                   OP                    Village A     </span></span>
+<span><span class="co">#&gt;  6 A6          2018-04-07                   OP                    Village D     </span></span>
+<span><span class="co">#&gt;  7 A7          2018-04-15                   IP                    Village A     </span></span>
+<span><span class="co">#&gt;  8 A8          2018-04-27                   IP                    Village C     </span></span>
+<span><span class="co">#&gt;  9 A9          2018-04-08                   OP                    Village A     </span></span>
+<span><span class="co">#&gt; 10 A10         2018-04-20                   OP                    Village D     </span></span>
+<span><span class="co">#&gt; # ℹ 90 more rows</span></span>
+<span><span class="co">#&gt; # ℹ abbreviated name: ¹​date_of_consultation_admission</span></span>
+<span><span class="co">#&gt; # ℹ 48 more variables: age_years &lt;int&gt;, age_months &lt;int&gt;, age_days &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   sex &lt;fct&gt;, pregnant &lt;fct&gt;, trimester &lt;fct&gt;,</span></span>
 <span><span class="co">#&gt; #   foetus_alive_at_admission &lt;fct&gt;, exit_status &lt;fct&gt;, date_of_exit &lt;date&gt;,</span></span>
 <span><span class="co">#&gt; #   time_to_death &lt;fct&gt;, pregnancy_outcome_at_exit &lt;fct&gt;,</span></span>
-<span><span class="co">#&gt; #   baby_born_with_complications &lt;fct&gt;, previously_vaccinated &lt;fct&gt;,</span></span>
-<span><span class="co">#&gt; #   previous_vaccine_doses_received &lt;fct&gt;, detected_by &lt;fct&gt;,</span></span>
-<span><span class="co">#&gt; #   msf_involvement &lt;fct&gt;, residential_status &lt;fct&gt;,</span></span>
-<span><span class="co">#&gt; #   residential_status_brief &lt;fct&gt;, date_of_last_vaccination &lt;date&gt;, …</span></span>
-<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span>
+<span><span class="co">#&gt; #   baby_born_with_complications &lt;fct&gt;, previously_vaccinated &lt;fct&gt;, …</span></span>
 <span><span class="fu"><a href="reference/gen_data.html">gen_data</a></span><span class="op">(</span><span class="st">"Vaccination_long"</span>, varnames <span class="op">=</span> <span class="st">"name"</span>, numcases <span class="op">=</span> <span class="fl">100</span>, org <span class="op">=</span> <span class="st">"MSF"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 100 × 120</span></span>
-<span><span class="co">#&gt;    start end   today deviceid date       team_…¹ villa…² villa…³ clust…⁴ house…⁵</span></span>
-<span><span class="co">#&gt;    &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt;    &lt;date&gt;     &lt;lgl&gt;   &lt;fct&gt;   &lt;lgl&gt;     &lt;dbl&gt;   &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1 NA    NA    NA    NA       2018-02-18 NA      villag… NA            1       1</span></span>
-<span><span class="co">#&gt;  2 NA    NA    NA    NA       2018-02-13 NA      villag… NA            7       2</span></span>
-<span><span class="co">#&gt;  3 NA    NA    NA    NA       2018-02-21 NA      villag… NA            6       1</span></span>
-<span><span class="co">#&gt;  4 NA    NA    NA    NA       2018-02-24 NA      other   NA           11       1</span></span>
-<span><span class="co">#&gt;  5 NA    NA    NA    NA       2018-03-21 NA      villag… NA            3       1</span></span>
-<span><span class="co">#&gt;  6 NA    NA    NA    NA       2018-04-06 NA      villag… NA            7       1</span></span>
-<span><span class="co">#&gt;  7 NA    NA    NA    NA       2018-02-09 NA      villag… NA            3       2</span></span>
-<span><span class="co">#&gt;  8 NA    NA    NA    NA       2018-04-29 NA      villag… NA            4       3</span></span>
-<span><span class="co">#&gt;  9 NA    NA    NA    NA       2018-04-15 NA      villag… NA            8       1</span></span>
-<span><span class="co">#&gt; 10 NA    NA    NA    NA       2018-03-26 NA      villag… NA            8       3</span></span>
-<span><span class="co">#&gt; # … with 90 more rows, 110 more variables: households_building &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   random_hh &lt;int&gt;, consent &lt;chr&gt;, no_consent_reason &lt;fct&gt;,</span></span>
-<span><span class="co">#&gt; #   no_consent_other &lt;lgl&gt;, caretaker_relation &lt;fct&gt;, caretaker_other &lt;lgl&gt;,</span></span>
-<span><span class="co">#&gt; #   number_children &lt;dbl&gt;, child_number &lt;chr&gt;, sex &lt;fct&gt;, date_birth &lt;date&gt;,</span></span>
-<span><span class="co">#&gt; #   age_years &lt;int&gt;, age_months &lt;int&gt;, any_vaccine &lt;fct&gt;, vaccine_card &lt;fct&gt;,</span></span>
-<span><span class="co">#&gt; #   hf_records &lt;fct&gt;, health_facility &lt;lgl&gt;, date_records_checked &lt;date&gt;,</span></span>
-<span><span class="co">#&gt; #   injection_upper_arm &lt;fct&gt;, scar_present &lt;fct&gt;, poliodrop_woc &lt;fct&gt;, …</span></span>
-<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span></code></pre></div>
+<span><span class="co">#&gt;    start end   today deviceid date       team_number village_name village_other</span></span>
+<span><span class="co">#&gt;    &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt;    &lt;date&gt;     &lt;lgl&gt;       &lt;fct&gt;        &lt;lgl&gt;        </span></span>
+<span><span class="co">#&gt;  1 NA    NA    NA    NA       2018-04-16 NA          village_3    NA           </span></span>
+<span><span class="co">#&gt;  2 NA    NA    NA    NA       2018-03-07 NA          village_9    NA           </span></span>
+<span><span class="co">#&gt;  3 NA    NA    NA    NA       2018-01-01 NA          village_7    NA           </span></span>
+<span><span class="co">#&gt;  4 NA    NA    NA    NA       2018-01-27 NA          village_6    NA           </span></span>
+<span><span class="co">#&gt;  5 NA    NA    NA    NA       2018-03-27 NA          village_1    NA           </span></span>
+<span><span class="co">#&gt;  6 NA    NA    NA    NA       2018-01-18 NA          village_4    NA           </span></span>
+<span><span class="co">#&gt;  7 NA    NA    NA    NA       2018-03-14 NA          village_4    NA           </span></span>
+<span><span class="co">#&gt;  8 NA    NA    NA    NA       2018-02-13 NA          village_10   NA           </span></span>
+<span><span class="co">#&gt;  9 NA    NA    NA    NA       2018-04-10 NA          other        NA           </span></span>
+<span><span class="co">#&gt; 10 NA    NA    NA    NA       2018-02-21 NA          village_4    NA           </span></span>
+<span><span class="co">#&gt; # ℹ 90 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 112 more variables: cluster_number &lt;dbl&gt;, household_number &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   households_building &lt;int&gt;, random_hh &lt;int&gt;, consent &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   no_consent_reason &lt;fct&gt;, no_consent_other &lt;lgl&gt;, caretaker_relation &lt;fct&gt;,</span></span>
+<span><span class="co">#&gt; #   caretaker_other &lt;lgl&gt;, number_children &lt;dbl&gt;, child_number &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   sex &lt;fct&gt;, date_birth &lt;date&gt;, age_years &lt;int&gt;, age_months &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   any_vaccine &lt;fct&gt;, vaccine_card &lt;fct&gt;, hf_records &lt;fct&gt;, …</span></span></code></pre></div>
 </details>
 </div>
 <div class="section level2">
@@ -367,7 +152,7 @@ NOTE: everything inside the details tag will be collapsed and effectively
 hidden from the user
 --><summary style="text-decoration: underline">
 Click here for code examples
-</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://www.repidemicsconsortium.org/matchmaker" class="external-link">"matchmaker"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span></span>
 <span></span>
@@ -378,63 +163,61 @@ Click here for code examples
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 20 × 45</span></span>
-<span><span class="co">#&gt;    case_number date_of_c…¹ patie…² age_y…³ age_m…⁴ age_d…⁵ sex   pregn…⁶ trime…⁷</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;       &lt;date&gt;      &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;fct&gt;   &lt;fct&gt;  </span></span>
-<span><span class="co">#&gt;  1 A1          2018-03-08  Villag…       8      NA      NA M     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  2 A2          2018-04-09  Villag…       9      NA      NA U     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  3 A3          2018-02-21  Villag…       8      NA      NA M     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  4 A4          2018-04-24  Villag…       3      NA      NA U     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  5 A5          2018-04-07  Villag…      52      NA      NA M     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  6 A6          2018-01-30  Villag…      24      NA      NA M     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  7 A7          2018-02-21  Villag…      57      NA      NA U     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  8 A8          2018-01-10  Villag…      12      NA      NA F     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  9 A9          2018-01-11  Villag…      NA      NA       3 U     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 10 A10         2018-04-02  Villag…       7      NA      NA F     Y       2      </span></span>
-<span><span class="co">#&gt; 11 A11         2018-04-10  Villag…      12      NA      NA F     W       &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 12 A12         2018-02-19  Villag…      23      NA      NA M     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 13 A13         2018-02-12  Villag…      NA       8      NA F     N       &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 14 A14         2018-01-31  Villag…      66      NA      NA U     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 15 A15         2018-01-11  Villag…       7      NA      NA U     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 16 A16         2018-04-22  Villag…      25      NA      NA M     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 17 A17         2018-01-10  Villag…      27      NA      NA F     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 18 A18         2018-01-18  Villag…      16      NA      NA F     N       &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 19 A19         2018-03-05  Villag…       9      NA      NA F     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 20 A20         2018-02-13  Villag…       8      NA      NA M     NA      &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; # … with 36 more variables: foetus_alive_at_admission &lt;fct&gt;, exit_status &lt;fct&gt;,</span></span>
+<span><span class="co">#&gt;    case_number date_of_consultation_admiss…¹ patient_origin age_years age_months</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;       &lt;date&gt;                        &lt;chr&gt;              &lt;int&gt;      &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 A1          2018-03-27                    Village C             42         NA</span></span>
+<span><span class="co">#&gt;  2 A2          2018-02-12                    Village D             60         NA</span></span>
+<span><span class="co">#&gt;  3 A3          2018-01-12                    Village A             63         NA</span></span>
+<span><span class="co">#&gt;  4 A4          2018-03-29                    Village C             32         NA</span></span>
+<span><span class="co">#&gt;  5 A5          2018-02-06                    Village B             37         NA</span></span>
+<span><span class="co">#&gt;  6 A6          2018-03-10                    Village C             21         NA</span></span>
+<span><span class="co">#&gt;  7 A7          2018-04-26                    Village D             65         NA</span></span>
+<span><span class="co">#&gt;  8 A8          2018-04-06                    Village A             61         NA</span></span>
+<span><span class="co">#&gt;  9 A9          2018-01-24                    Village B              8         NA</span></span>
+<span><span class="co">#&gt; 10 A10         2018-04-02                    Village C             63         NA</span></span>
+<span><span class="co">#&gt; 11 A11         2018-02-14                    Village C             38         NA</span></span>
+<span><span class="co">#&gt; 12 A12         2018-04-28                    Village C             12         NA</span></span>
+<span><span class="co">#&gt; 13 A13         2018-02-25                    Village C              4         NA</span></span>
+<span><span class="co">#&gt; 14 A14         2018-03-18                    Village B             NA         NA</span></span>
+<span><span class="co">#&gt; 15 A15         2018-01-05                    Village A             53         NA</span></span>
+<span><span class="co">#&gt; 16 A16         2018-01-24                    Village A             NA         12</span></span>
+<span><span class="co">#&gt; 17 A17         2018-02-22                    Village A              9         NA</span></span>
+<span><span class="co">#&gt; 18 A18         2018-01-29                    Village D             46         NA</span></span>
+<span><span class="co">#&gt; 19 A19         2018-03-23                    Village B             NA         24</span></span>
+<span><span class="co">#&gt; 20 A20         2018-02-28                    Village D              8         NA</span></span>
+<span><span class="co">#&gt; # ℹ abbreviated name: ¹​date_of_consultation_admission</span></span>
+<span><span class="co">#&gt; # ℹ 40 more variables: age_days &lt;int&gt;, sex &lt;fct&gt;, pregnant &lt;fct&gt;,</span></span>
+<span><span class="co">#&gt; #   trimester &lt;fct&gt;, foetus_alive_at_admission &lt;fct&gt;, exit_status &lt;fct&gt;,</span></span>
 <span><span class="co">#&gt; #   date_of_exit &lt;date&gt;, time_to_death &lt;fct&gt;, pregnancy_outcome_at_exit &lt;fct&gt;,</span></span>
 <span><span class="co">#&gt; #   previously_vaccinated &lt;fct&gt;, previous_vaccine_doses_received &lt;fct&gt;,</span></span>
 <span><span class="co">#&gt; #   readmission &lt;fct&gt;, msf_involvement &lt;fct&gt;,</span></span>
-<span><span class="co">#&gt; #   cholera_treatment_facility_type &lt;fct&gt;, residential_status_brief &lt;fct&gt;,</span></span>
-<span><span class="co">#&gt; #   date_of_last_vaccination &lt;date&gt;, prescribed_zinc_supplement &lt;fct&gt;,</span></span>
-<span><span class="co">#&gt; #   prescribed_antibiotics &lt;fct&gt;, ors_consumed_litres &lt;int&gt;, …</span></span>
-<span><span class="co">#&gt; # ℹ Use `colnames()` to see all variable names</span></span>
+<span><span class="co">#&gt; #   cholera_treatment_facility_type &lt;fct&gt;, residential_status_brief &lt;fct&gt;, …</span></span>
 <span></span>
 <span><span class="co"># We want the expanded dictionary, so we will select `compact = FALSE`</span></span>
-<span><span class="va">dict</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/msf_dict.html">msf_dict</a></span><span class="op">(</span>disease <span class="op">=</span> <span class="st">"Cholera"</span>, </span>
+<span><span class="va">dict</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/msf_dict.html">msf_dict</a></span><span class="op">(</span>dictionary <span class="op">=</span> <span class="st">"Cholera"</span>, </span>
 <span>  long    <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  compact <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  tibble  <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dict</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 182 × 11</span></span>
-<span><span class="co">#&gt;    data_elemen…¹ data_…² data_…³ data_…⁴ data_…⁵ data_…⁶ used_…⁷ optio…⁸ optio…⁹</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt;  1 AafTlSwliVQ   egen_0… case_n… Anonym… TEXT    Case n… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  2 OTGOtWBz39J   egen_0… date_o… Date p… DATE    Date o… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  3 wnmMr2V3T3u   egen_0… patien… Locati… ORGANI… Patien… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  4 sbgqjeVwtb8   egen_0… age_ye… Age of… INTEGE… Age in… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  5 eXYhovYyl61   egen_0… age_mo… Age of… INTEGE… Age in… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  6 UrYJSk2Wp46   egen_0… age_da… Age of… INTEGE… Age in… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  7 D1Ky5K7pFN6   egen_0… sex     Sex of… TEXT    Sex     orgc5Y… M       Male   </span></span>
-<span><span class="co">#&gt;  8 D1Ky5K7pFN6   egen_0… sex     Sex of… TEXT    Sex     orgc5Y… F       Female </span></span>
-<span><span class="co">#&gt;  9 D1Ky5K7pFN6   egen_0… sex     Sex of… TEXT    Sex     orgc5Y… U       Unknow…</span></span>
-<span><span class="co">#&gt; 10 dTm5R53YYXC   egen_0… pregna… Pregna… TEXT    Pregna… IEjzG2… N       Not cu…</span></span>
-<span><span class="co">#&gt; # … with 172 more rows, 2 more variables: option_uid &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   option_order_in_set &lt;dbl&gt;, and abbreviated variable names</span></span>
-<span><span class="co">#&gt; #   ¹​data_element_uid, ²​data_element_name, ³​data_element_shortname,</span></span>
-<span><span class="co">#&gt; #   ⁴​data_element_description, ⁵​data_element_valuetype, ⁶​data_element_formname,</span></span>
-<span><span class="co">#&gt; #   ⁷​used_optionset_uid, ⁸​option_code, ⁹​option_name</span></span>
-<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span>
+<span><span class="co">#&gt;    data_element_uid data_element_name                     data_element_shortname</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;                                 &lt;chr&gt;                 </span></span>
+<span><span class="co">#&gt;  1 AafTlSwliVQ      egen_001_patient_case_number          case_number           </span></span>
+<span><span class="co">#&gt;  2 OTGOtWBz39J      egen_004_date_of_consultation_admiss… date_of_consultation_…</span></span>
+<span><span class="co">#&gt;  3 wnmMr2V3T3u      egen_006_patient_origin               patient_origin        </span></span>
+<span><span class="co">#&gt;  4 sbgqjeVwtb8      egen_008_age_years                    age_years             </span></span>
+<span><span class="co">#&gt;  5 eXYhovYyl61      egen_009_age_months                   age_months            </span></span>
+<span><span class="co">#&gt;  6 UrYJSk2Wp46      egen_010_age_days                     age_days              </span></span>
+<span><span class="co">#&gt;  7 D1Ky5K7pFN6      egen_011_sex                          sex                   </span></span>
+<span><span class="co">#&gt;  8 D1Ky5K7pFN6      egen_011_sex                          sex                   </span></span>
+<span><span class="co">#&gt;  9 D1Ky5K7pFN6      egen_011_sex                          sex                   </span></span>
+<span><span class="co">#&gt; 10 dTm5R53YYXC      egen_012_pregnancy_status             pregnant              </span></span>
+<span><span class="co">#&gt; # ℹ 172 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 8 more variables: data_element_description &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   data_element_valuetype &lt;chr&gt;, data_element_formname &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   used_optionset_uid &lt;chr&gt;, option_code &lt;chr&gt;, option_name &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   option_uid &lt;chr&gt;, option_order_in_set &lt;dbl&gt;</span></span>
 <span></span>
 <span><span class="co"># Now we can use matchmaker to filter the data</span></span>
 <span><span class="va">dat_clean</span> <span class="op">&lt;-</span> <span class="fu">matchmaker</span><span class="fu">::</span><span class="fu"><a href="https://www.repidemicsconsortium.org/matchmaker/reference/match_df.html" class="external-link">match_df</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">dict</span>, </span>
@@ -445,43 +228,39 @@ Click here for code examples
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dat_clean</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 20 × 45</span></span>
-<span><span class="co">#&gt;    case_number date_of_c…¹ patie…² age_y…³ age_m…⁴ age_d…⁵ sex   pregn…⁶ trime…⁷</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;       &lt;date&gt;      &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;fct&gt;   &lt;fct&gt;  </span></span>
-<span><span class="co">#&gt;  1 A1          2018-03-08  Villag…       8      NA      NA Male  Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  2 A2          2018-04-09  Villag…       9      NA      NA Unkn… Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  3 A3          2018-02-21  Villag…       8      NA      NA Male  Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  4 A4          2018-04-24  Villag…       3      NA      NA Unkn… Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  5 A5          2018-04-07  Villag…      52      NA      NA Male  Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  6 A6          2018-01-30  Villag…      24      NA      NA Male  Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  7 A7          2018-02-21  Villag…      57      NA      NA Unkn… Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  8 A8          2018-01-10  Villag…      12      NA      NA Fema… Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt;  9 A9          2018-01-11  Villag…      NA      NA       3 Unkn… Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 10 A10         2018-04-02  Villag…       7      NA      NA Fema… Yes, c… 2nd tr…</span></span>
-<span><span class="co">#&gt; 11 A11         2018-04-10  Villag…      12      NA      NA Fema… Was pr… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 12 A12         2018-02-19  Villag…      23      NA      NA Male  Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 13 A13         2018-02-12  Villag…      NA       8      NA Fema… Not cu… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 14 A14         2018-01-31  Villag…      66      NA      NA Unkn… Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 15 A15         2018-01-11  Villag…       7      NA      NA Unkn… Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 16 A16         2018-04-22  Villag…      25      NA      NA Male  Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 17 A17         2018-01-10  Villag…      27      NA      NA Fema… Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 18 A18         2018-01-18  Villag…      16      NA      NA Fema… Not cu… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 19 A19         2018-03-05  Villag…       9      NA      NA Fema… Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; 20 A20         2018-02-13  Villag…       8      NA      NA Male  Not ap… &lt;NA&gt;   </span></span>
-<span><span class="co">#&gt; # … with 36 more variables: foetus_alive_at_admission &lt;fct&gt;, exit_status &lt;fct&gt;,</span></span>
+<span><span class="co">#&gt;    case_number date_of_consultation_admiss…¹ patient_origin age_years age_months</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;       &lt;date&gt;                        &lt;chr&gt;              &lt;int&gt;      &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 A1          2018-03-27                    Village C             42         NA</span></span>
+<span><span class="co">#&gt;  2 A2          2018-02-12                    Village D             60         NA</span></span>
+<span><span class="co">#&gt;  3 A3          2018-01-12                    Village A             63         NA</span></span>
+<span><span class="co">#&gt;  4 A4          2018-03-29                    Village C             32         NA</span></span>
+<span><span class="co">#&gt;  5 A5          2018-02-06                    Village B             37         NA</span></span>
+<span><span class="co">#&gt;  6 A6          2018-03-10                    Village C             21         NA</span></span>
+<span><span class="co">#&gt;  7 A7          2018-04-26                    Village D             65         NA</span></span>
+<span><span class="co">#&gt;  8 A8          2018-04-06                    Village A             61         NA</span></span>
+<span><span class="co">#&gt;  9 A9          2018-01-24                    Village B              8         NA</span></span>
+<span><span class="co">#&gt; 10 A10         2018-04-02                    Village C             63         NA</span></span>
+<span><span class="co">#&gt; 11 A11         2018-02-14                    Village C             38         NA</span></span>
+<span><span class="co">#&gt; 12 A12         2018-04-28                    Village C             12         NA</span></span>
+<span><span class="co">#&gt; 13 A13         2018-02-25                    Village C              4         NA</span></span>
+<span><span class="co">#&gt; 14 A14         2018-03-18                    Village B             NA         NA</span></span>
+<span><span class="co">#&gt; 15 A15         2018-01-05                    Village A             53         NA</span></span>
+<span><span class="co">#&gt; 16 A16         2018-01-24                    Village A             NA         12</span></span>
+<span><span class="co">#&gt; 17 A17         2018-02-22                    Village A              9         NA</span></span>
+<span><span class="co">#&gt; 18 A18         2018-01-29                    Village D             46         NA</span></span>
+<span><span class="co">#&gt; 19 A19         2018-03-23                    Village B             NA         24</span></span>
+<span><span class="co">#&gt; 20 A20         2018-02-28                    Village D              8         NA</span></span>
+<span><span class="co">#&gt; # ℹ abbreviated name: ¹​date_of_consultation_admission</span></span>
+<span><span class="co">#&gt; # ℹ 40 more variables: age_days &lt;int&gt;, sex &lt;fct&gt;, pregnant &lt;fct&gt;,</span></span>
+<span><span class="co">#&gt; #   trimester &lt;fct&gt;, foetus_alive_at_admission &lt;fct&gt;, exit_status &lt;fct&gt;,</span></span>
 <span><span class="co">#&gt; #   date_of_exit &lt;date&gt;, time_to_death &lt;fct&gt;, pregnancy_outcome_at_exit &lt;fct&gt;,</span></span>
 <span><span class="co">#&gt; #   previously_vaccinated &lt;fct&gt;, previous_vaccine_doses_received &lt;fct&gt;,</span></span>
 <span><span class="co">#&gt; #   readmission &lt;fct&gt;, msf_involvement &lt;fct&gt;,</span></span>
-<span><span class="co">#&gt; #   cholera_treatment_facility_type &lt;fct&gt;, residential_status_brief &lt;fct&gt;,</span></span>
-<span><span class="co">#&gt; #   date_of_last_vaccination &lt;date&gt;, prescribed_zinc_supplement &lt;fct&gt;,</span></span>
-<span><span class="co">#&gt; #   prescribed_antibiotics &lt;fct&gt;, ors_consumed_litres &lt;int&gt;, …</span></span>
-<span><span class="co">#&gt; # ℹ Use `colnames()` to see all variable names</span></span></code></pre></div>
+<span><span class="co">#&gt; #   cholera_treatment_facility_type &lt;fct&gt;, residential_status_brief &lt;fct&gt;, …</span></span></code></pre></div>
 </details>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="links">
+  </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/R4EPI/epidict/" class="external-link">Browse source code</a></li>
@@ -517,9 +296,9 @@ Click here for code examples
 <ul class="list-unstyled">
 <li>Alexander Spina <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8425-1867" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Zhian N. Kamvar <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-1458-7108" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Alexander Spina <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-8425-1867" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Lukas Richter <br><small class="roles"> Author </small>  </li>
 <li>Patrick Keating <br><small class="roles"> Author </small>  </li>
+<li>Medecins Sans Frontieres Operational Centre Amsterdam <br><small class="roles"> Funder </small>  </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
@@ -529,32 +308,30 @@ Click here for code examples
 <ul class="list-unstyled">
 <li><a href="https://www.tidyverse.org/lifecycle/#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 <li><a href="https://CRAN.R-project.org/package=epidict" class="external-link"><img src="https://www.r-pkg.org/badges/version/epidict" alt="CRAN status"></a></li>
-<li><a href="https://codecov.io/gh/R4EPI/epidict?branch=master" class="external-link"><img src="https://codecov.io/gh/R4EPI/epidict/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://github.com/R4EPI/epidict/actions" class="external-link"><img src="https://github.com/R4EPI/epidict/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/R4EPI/epidict/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/R4EPI/epidict/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/R4EPI/epidict" class="external-link"><img src="https://codecov.io/gh/R4EPI/epidict/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 
-  </div>
+  </aside>
 </div>
 
 
-      <footer><div class="copyright">
-  <p></p>
-<p>Developed by Alexander Spina, Zhian N. Kamvar, Alexander Spina, Lukas Richter, Patrick Keating.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p>Developed by Alexander Spina, Zhian N. Kamvar, Lukas Richter, Patrick Keating, Medecins Sans Frontieres Operational Centre Amsterdam.</p>
 </div>
 
-<div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<div class="pkgdown-footer-right">
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
-  
 
 
-  
+
 
   </body>
 </html>
