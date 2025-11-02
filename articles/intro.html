@@ -70,7 +70,7 @@
 <p>The goal of {epidict} is to provide standardized data dictionaries
 for use in epidemiological data analysis templates. Currently it
 supports standardised dictionaries from MSF OCA. This is a product of
-the R4EPIs project; learn more at <a href="https://r4epis.netlify.com" class="external-link uri">https://r4epis.netlify.com</a></p>
+the R4EPIs project; learn more at <a href="https://r4epi.github.io/sitrep/" class="external-link uri">https://r4epi.github.io/sitrep/</a></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -94,191 +94,18 @@ install it via the {drat} package:</p>
 <div class="section level2">
 <h2 id="accessing-dictionaries">Accessing dictionaries<a class="anchor" aria-label="anchor" href="#accessing-dictionaries"></a>
 </h2>
-<p>There are four MSF outbreak dictionaries available in {epidict} based
-on DHIS2 exports:</p>
-<ul>
-<li>Acute Jaundice Syndrome (often suspected to be Hepatitis E)
-(“AJS”)</li>
-<li>Cholera/Acute watery diarrhea (“Cholera”)</li>
-<li>Measles/Rubella (“Measles”)</li>
-<li>Meningitis (“Meningitis”)</li>
-</ul>
-<blockquote>
-<p>You can read more about the outbreak dictionaries at <a href="https://r4epis.netlify.com/outbreaks" class="external-link uri">https://r4epis.netlify.com/outbreaks</a></p>
-</blockquote>
-<p>The dictionary can be obtained via the <code><a href="../reference/msf_dict.html">msf_dict()</a></code>
-function, which specifies a dictionary that describes recorded variables
-(<code>data_element_shortname</code>) in rows and their possible options
-(if categorical):</p>
-<details><!--
-NOTE: everything inside the details tag will be collapsed and effectively
-hidden from the user
---><summary style="text-decoration: underline">
-Click here for code examples
-</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://r4epis.netlify.com" class="external-link">"epidict"</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/msf_dict.html">msf_dict</a></span><span class="op">(</span><span class="st">"AJS"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 68 × 8</span></span></span>
-<span><span class="co">#&gt;    data_element_uid data_element_name                     data_element_shortname</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> <span style="color: #BB0000;">NA</span>               egen_044_event_file_type              event_file_type       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> <span style="color: #BB0000;">NA</span>               egen_001_patient_case_number          case_number           </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> <span style="color: #BB0000;">NA</span>               egen_004_date_of_consultation_admiss… date_of_consultation_…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> <span style="color: #BB0000;">NA</span>               egen_022_detected_by                  detected_by           </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> <span style="color: #BB0000;">NA</span>               egen_005_patient_facility_type        patient_facility_type </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> <span style="color: #BB0000;">NA</span>               egen_029_msf_involvement              msf_involvement       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> <span style="color: #BB0000;">NA</span>               egen_008_age_years                    age_years             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> <span style="color: #BB0000;">NA</span>               egen_009_age_months                   age_months            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> <span style="color: #BB0000;">NA</span>               egen_010_age_days                     age_days              </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> <span style="color: #BB0000;">NA</span>               egen_011_sex                          sex                   </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 58 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more variables: data_element_description &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   data_element_valuetype &lt;chr&gt;, data_element_formname &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   used_optionset_uid &lt;chr&gt;, options &lt;list&gt;</span></span></span>
-<span><span class="fu"><a href="../reference/msf_dict.html">msf_dict</a></span><span class="op">(</span><span class="st">"Cholera"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 45 × 8</span></span></span>
-<span><span class="co">#&gt;    data_element_uid data_element_name                     data_element_shortname</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> AafTlSwliVQ      egen_001_patient_case_number          case_number           </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> OTGOtWBz39J      egen_004_date_of_consultation_admiss… date_of_consultation_…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> wnmMr2V3T3u      egen_006_patient_origin               patient_origin        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> sbgqjeVwtb8      egen_008_age_years                    age_years             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> eXYhovYyl61      egen_009_age_months                   age_months            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> UrYJSk2Wp46      egen_010_age_days                     age_days              </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> D1Ky5K7pFN6      egen_011_sex                          sex                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> dTm5R53YYXC      egen_012_pregnancy_status             pregnant              </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> FF7d81Zy0yQ      egen_013_pregnancy_trimester          trimester             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> vLAmA6Pmjip      egen_014_pregnant_foetus_alive_at_ad… foetus_alive_at_admis…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 35 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more variables: data_element_description &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   data_element_valuetype &lt;chr&gt;, data_element_formname &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   used_optionset_uid &lt;chr&gt;, options &lt;list&gt;</span></span></span>
-<span><span class="fu"><a href="../reference/msf_dict.html">msf_dict</a></span><span class="op">(</span><span class="st">"Measles"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 52 × 8</span></span></span>
-<span><span class="co">#&gt;    data_element_uid data_element_name                     data_element_shortname</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> DE_EGEN_001      egen_001_patient_case_number          case_number           </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> DE_EGEN_004      egen_004_date_of_consultation_admiss… date_of_consultation_…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> DE_EGEN_005      egen_005_patient_facility_type        patient_facility_type </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> DE_EGEN_006      egen_006_patient_origin               patient_origin        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> DE_EGEN_008      egen_008_age_years                    age_years             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> DE_EGEN_009      egen_009_age_months                   age_months            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> DE_EGEN_010      egen_010_age_days                     age_days              </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> DE_EGEN_011      egen_011_sex                          sex                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> DE_EGEN_012      egen_012_pregnancy_status             pregnant              </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> DE_EGEN_013      egen_013_pregnancy_trimester          trimester             </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 42 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more variables: data_element_description &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   data_element_valuetype &lt;chr&gt;, data_element_formname &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   used_optionset_uid &lt;chr&gt;, options &lt;list&gt;</span></span></span>
-<span><span class="fu"><a href="../reference/msf_dict.html">msf_dict</a></span><span class="op">(</span><span class="st">"Meningitis"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 53 × 8</span></span></span>
-<span><span class="co">#&gt;    data_element_uid data_element_name                     data_element_shortname</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> AafTlSwliVQ      egen_001_patient_case_number          case_number           </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> OTGOtWBz39J      egen_004_date_of_consultation_admiss… date_of_consultation_…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> udXAcFEE1dl      egen_005_patient_facility_type        patient_facility_type </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> wnmMr2V3T3u      egen_006_patient_origin               patient_origin        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> sbgqjeVwtb8      egen_008_age_years                    age_years             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> eXYhovYyl61      egen_009_age_months                   age_months            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> UrYJSk2Wp46      egen_010_age_days                     age_days              </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> D1Ky5K7pFN6      egen_011_sex                          sex                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> ADfNqpCL5kf      egen_015_exit_status                  exit_status           </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> JZ8yqTow79G      egen_016_date_of_exit                 date_of_exit          </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 43 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more variables: data_element_description &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   data_element_valuetype &lt;chr&gt;, data_element_formname &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   used_optionset_uid &lt;chr&gt;, options &lt;list&gt;</span></span></span></code></pre></div>
-</details><p>In addition, there are four MSF survey dictionaries available:</p>
-<ul>
-<li>Retrospective mortality and access to care (“Mortality”)</li>
-<li>Malnutrition (“Nutrition”)</li>
-<li>Vaccination coverage long form (“vaccination_long”)</li>
-<li>Vaccination coverage short form (“vaccination_short”)</li>
-</ul>
-<blockquote>
-<p>You can read more about the survey dictionaries at <a href="https://r4epis.netlify.com/surveys" class="external-link uri">https://r4epis.netlify.com/surveys</a></p>
-</blockquote>
-<p>These are accessible via <code><a href="../reference/msf_dict.html">msf_dict_survey()</a></code> where the
-variables are in <code>name</code>. You can also read in your own Kobo
-(ODK) dictionaries by specifying <code>tempalte = FALSE</code> and then
-setting <code>name = &lt;path to your .xlsx&gt;</code>.</p>
-<details><!--
-NOTE: everything inside the details tag will be collapsed and effectively
-hidden from the user
---><summary style="text-decoration: underline">
-Click here for code examples
-</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/msf_dict.html">msf_dict_survey</a></span><span class="op">(</span><span class="st">"Mortality"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 174 × 14</span></span></span>
-<span><span class="co">#&gt;    type     name     label_english label_french hint_english hint_french default</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> start    start    Start Time    <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> end      end      End Time      <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> today    today    Date of Surv… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> deviceid deviceid Phone Serial… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> date     date     Date          Date         <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          today()</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> integer  team_nu… Team number   Numéro d'éq… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> village  village… Village name  Nom du vill… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> text     village… Specify other Autre, spéc… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> integer  cluster… Cluster numb… Numéro de l… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> integer  househo… Household nu… Numéro du m… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 164 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7 more variables: relevant &lt;chr&gt;, appearance &lt;chr&gt;, constraint &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   repeat_count &lt;chr&gt;, calculation &lt;chr&gt;, value_type &lt;chr&gt;, options &lt;list&gt;</span></span></span>
-<span><span class="fu"><a href="../reference/msf_dict.html">msf_dict_survey</a></span><span class="op">(</span><span class="st">"Nutrition"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 27 × 14</span></span></span>
-<span><span class="co">#&gt;    type   name  label_english label_french hint_english hint_french repeat_count</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> start  start Start Time    <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> end    end   End Time      <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> today  today Date of Surv… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> devic… devi… Phone Serial… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> date   date  Date          <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> integ… team… Team number   <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> villa… vill… Village name  Nom du vill… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> text   vill… Specify other Précisez au… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> geopo… vill… Village loca… Localisatio… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> integ… clus… Cluster numb… Numéro de g… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>          </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 17 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7 more variables: relevant &lt;chr&gt;, calculation &lt;lgl&gt;, constraint &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   appearance &lt;chr&gt;, default &lt;chr&gt;, value_type &lt;chr&gt;, options &lt;list&gt;</span></span></span>
-<span><span class="fu"><a href="../reference/msf_dict.html">msf_dict_survey</a></span><span class="op">(</span><span class="st">"Vaccination_long"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 106 × 14</span></span></span>
-<span><span class="co">#&gt;    type     name     label_english label_french hint_english hint_french default</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> start    start    Start Time    Start Time   <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> end      end      End Time      End Time     <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> today    today    Date of Surv… Date of Sur… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> deviceid deviceid Phone Serial… Phone Seria… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> date     date     Date          Date         <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          today()</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> integer  team_nu… Team number   Numéro de l… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> village  village… Village name  Nom du vill… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> text     village… Specify other Veuillez sp… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> integer  cluster… Cluster numb… Numéro de l… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> integer  househo… Household nu… Numéro du m… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 96 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7 more variables: relevant &lt;chr&gt;, appearance &lt;chr&gt;, repeat_count &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   constraint &lt;chr&gt;, calculation &lt;chr&gt;, value_type &lt;chr&gt;, options &lt;list&gt;</span></span></span>
-<span><span class="fu"><a href="../reference/msf_dict.html">msf_dict_survey</a></span><span class="op">(</span><span class="st">"Vaccination_short"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 38 × 15</span></span></span>
-<span><span class="co">#&gt;    type     name     label_english label_french hint_english hint_french default</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> start    start    Start Time    Start Time   <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> end      end      End Time      End Time     <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> today    today    Date of Surv… Date of Sur… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> deviceid deviceid Phone Serial… Phone Seria… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> date     date     Date          Date         <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          .today…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> integer  team_nu… Team number   Numéro de l… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> village  village… Village name  Nom du vill… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> text     village… Specify other Veuillez sp… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> integer  cluster… Cluster numb… Numéro de l… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> integer  househo… Household nu… Numéro du m… <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 28 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 8 more variables: relevant &lt;chr&gt;, appearance &lt;chr&gt;, repeat_count &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   constraint &lt;chr&gt;, calculation &lt;chr&gt;, hxl &lt;chr&gt;, value_type &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   options &lt;list&gt;</span></span></span></code></pre></div>
-</details>
+<p>The dictionaries can be obtained via the <code><a href="../reference/msf_dict.html">msf_dict()</a></code>
+function, which specifies a variable and their possible options (if
+categorical).</p>
+<p>There are MSF intersectional outbreak dictionaries available in
+{epidict} based on ODK exports.</p>
+<p>There are MSF OCA outbreak dictionaries available in {epidict} based
+on DHIS2 exports. &gt; You can read more about the outbreak dictionaries
+at <a href="https://r4epi.github.io/epidict/articles/Outbreaks.html" class="uri">https://r4epi.github.io/epidict/articles/Outbreaks.html</a></p>
+<p>In addition, there are MSF survey dictionaries available based on ODK
+exports. &gt; You can read more about the survey dictionaries at <a href="https://r4epi.github.io/epidict/articles/Surveys.html" class="uri">https://r4epi.github.io/epidict/articles/Surveys.html</a></p>
+<p>You can also read in your own ODK dictionaries using
+<code><a href="../reference/read_dict.html">read_dict()</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="generating-data">Generating data<a class="anchor" aria-label="anchor" href="#generating-data"></a>
@@ -292,8 +119,9 @@ NOTE: everything inside the details tag will be collapsed and effectively
 hidden from the user
 --><summary style="text-decoration: underline">
 Click here for code examples
-</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/gen_data.html">gen_data</a></span><span class="op">(</span><span class="st">"Measles"</span>, varnames <span class="op">=</span> <span class="st">"data_element_shortname"</span>, numcases <span class="op">=</span> <span class="fl">100</span>, org <span class="op">=</span> <span class="st">"MSF"</span><span class="op">)</span></span>
+</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/R4EPI/epidict" class="external-link">"epidict"</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/gen_data.html">gen_data</a></span><span class="op">(</span><span class="st">"Measles"</span>, varnames <span class="op">=</span> <span class="st">"data_element_shortname"</span>, numcases <span class="op">=</span> <span class="fl">100</span>, org <span class="op">=</span> <span class="st">"MSF"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 100 × 52</span></span></span>
 <span><span class="co">#&gt;    case_number date_of_consultation_admis…¹ patient_facility_type patient_origin</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span></span>
@@ -347,7 +175,7 @@ NOTE: everything inside the details tag will be collapsed and effectively
 hidden from the user
 --><summary style="text-decoration: underline">
 Click here for code examples
-</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://www.repidemicsconsortium.org/matchmaker" class="external-link">"matchmaker"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span></span>
 <span></span>
@@ -389,7 +217,7 @@ Click here for code examples
 <span><span class="co">#&gt; <span style="color: #949494;">#   cholera_treatment_facility_type &lt;fct&gt;, residential_status_brief &lt;fct&gt;, …</span></span></span>
 <span></span>
 <span><span class="co"># We want the expanded dictionary, so we will select `compact = FALSE`</span></span>
-<span><span class="va">dict</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/msf_dict.html">msf_dict</a></span><span class="op">(</span>disease <span class="op">=</span> <span class="st">"Cholera"</span>, </span>
+<span><span class="va">dict</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/msf_dict.html">msf_dict</a></span><span class="op">(</span>dictionary <span class="op">=</span> <span class="st">"Cholera"</span>, </span>
 <span>  long    <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  compact <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  tibble  <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -461,11 +289,11 @@ Click here for code examples
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Alexander Spina, Zhian N. Kamvar, Lukas Richter, Patrick Keating.</p>
+  <p>Developed by Alexander Spina, Zhian N. Kamvar, Lukas Richter, Patrick Keating, Medecins Sans Frontieres Operational Centre Amsterdam.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
