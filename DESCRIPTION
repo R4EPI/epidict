@@ -1,6 +1,6 @@
 Package: epidict
 Title: Epidemiology data dictionaries and random data generators
-Version: 0.0.0.9001
+Version: 0.1.0
 Authors@R: c(
     person(given = "Alexander",
            family = "Spina",
