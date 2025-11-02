@@ -36,15 +36,15 @@ remotes::install_github("R4EPI/epidict")
 The dictionaries can be obtained via the `msf_dict()` function, which specifies a
 variable and their possible options (if categorical).
 
-There are five MSF intersectional outbreak dictionaries available in {epidict}
+There are MSF intersectional outbreak dictionaries available in {epidict}
 based on ODK exports. 
 
-There are four MSF OCA outbreak dictionaries available in {epidict} based on DHIS2
+There are MSF OCA outbreak dictionaries available in {epidict} based on DHIS2
 exports.
 > You can read more about the outbreak dictionaries at <https://r4epi.github.io/epidict/articles/Outbreaks.html>
 
 
-In addition, there are four MSF survey dictionaries available based on 
+In addition, there are MSF survey dictionaries available based on 
 ODK exports. 
 > You can read more about the survey dictionaries at <https://r4epi.github.io/epidict/articles/Surveys.html>
 

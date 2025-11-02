@@ -20,14 +20,20 @@ Authors@R: c(
            role = c("aut")),
     person(given = "Annick",
            family = "Lenglet",
-           role = c("ctb")))
+           role = c("ctb")), 
+    person("Applied Epi Incorporated", 
+           role = "cph"), 
+    person("Medecins Sans Frontieres Operational Centre Amsterdam", 
+           role = "fnd"))
 Description: The 'R4EPIs' project <https://r4epi.github.io/sitrep> seeks to provide 
     a set of standardized tools for analysis of outbreak and survey data in
     humanitarian aid settings. This package currently provides standardized data
-    dictionaries from MSF OCA for four outbreak scenarios (Acute Jaundice
-    Syndrome, Cholera, Measles, Meningitis) and three surveys (Retrospective
-    mortality and access to care, Malnutrition, and Vaccination coverage). In
-    addition, a data generator from these dictionaries is provided.  
+    dictionaries from MSF OCA for outbreak scenarios (Acute Jaundice
+    Syndrome, Cholera, Diphtheria, Measles, Meningitis) and surveys 
+    (Retrospective mortality and access to care, Malnutrition, Vaccination 
+    coverage and Event Based Surveillance). In addition, a data generator from 
+    these dictionaries is provided. It is also possible to read in any ODK format
+    data dictionary. 
 URL: https://github.com/R4EPI/epidict,
     https://r4epi.github.io/epidict
 License: GPL-3
@@ -36,7 +42,6 @@ Imports:
     dplyr,
     readxl,
     rlang,
-    sitrep,
     stats,
     tibble,
     tidyr,
@@ -49,8 +54,6 @@ Suggests:
     rmarkdown,
     testthat (>= 2.1.0), 
     withr
-Remotes:
-  R4EPI/sitrep
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

@@ -34,5 +34,5 @@ to the dictionary
 Dictionary-based helper for aligning your data to variables used in a script
 }
 \seealso{
-\code{\link[=read_dict]{read_dict()}} \code{\link[=msf_dict_rename_helper]{msf_dict_rename_helper()}}
+\code{\link[=read_dict]{read_dict()}}
 }

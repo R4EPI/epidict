@@ -1,13 +1,13 @@
-#' Dictionary-based helper for aligning your data to variables used in a script 
-#' 
-#' @param dictionary A dataframe of the dictionary which you would like to use. 
-#' 
-#' @param varnames The name of `dictionary` column that contains variable names. 
+#' Dictionary-based helper for aligning your data to variables used in a script
+#'
+#' @param dictionary A dataframe of the dictionary which you would like to use.
+#'
+#' @param varnames The name of `dictionary` column that contains variable names.
 #'
 #' @param varnames_type The name of `dictionary` column that contains the variable type.
 #' This variable needs to be the same number of rows as as `varnames`.
-#' 
-#' @param rmd Path to the Rmarkdown file which you would like to compare to. 
+#'
+#' @param rmd Path to the Rmarkdown file which you would like to compare to.
 #'
 #' @param copy_to_clipboard if `TRUE` (default), the rename template will be
 #'   copied to the user's clipboard with [clipr::write_clip()]. If `FALSE`, the
@@ -18,18 +18,18 @@
 #'
 #' @importFrom readxl read_excel
 #' @importFrom clipr write_clip
-#' 
-#' @seealso [read_dict()] [msf_dict_rename_helper()]
-#' 
+#'
+#' @seealso [read_dict()]
+#'
 #' @export
 
-dict_rename_helper <- function(dictionary, 
-                               varnames, 
-                               varnames_type, 
-                               rmd, 
+dict_rename_helper <- function(dictionary,
+                               varnames,
+                               varnames_type,
+                               rmd,
                                copy_to_clipboard = TRUE) {
 
-  # check format of inputs 
+  # check format of inputs
   if (!is.data.frame(dictionary)) {
     stop("`dictionary` must be a dataframe")
   }
@@ -41,11 +41,11 @@ dict_rename_helper <- function(dictionary,
   if (!(varnames %in% names(dictionary))) {
     stop(paste0("`varnames` must be a column in `dictionary`, but '", varnames, "' not found"))
   }
-  
+
   if (!(varnames_type %in% names(dictionary))) {
     stop(paste0("`varnames_type` must be a column in `dictionary`, but '", varnames_type, "' not found"))
   }
-  
+
   if (!file.exists(rmd)) {
     stop(paste0("The file '", rmd, "' does not exist"))
   }
@@ -87,5 +87,5 @@ dict_rename_helper <- function(dictionary,
   } else {
     cat(msg)
   }
-  
+
 }
