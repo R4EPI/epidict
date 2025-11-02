@@ -1,4 +1,8 @@
 # epidict 0.1.0
+* First CRAN release 
+* Separated out functions for reading dictionaries 
+* Created generic function for renaming variables based on a dictionary
+* Removed msf_dict_rename_helper() until dependencies are on CRAN
 
 # epidict 0.0.0.9001
 
