@@ -4,15 +4,15 @@
 \name{epidict-package}
 \alias{epidict}
 \alias{epidict-package}
-\title{epidict: Epidemiology data dictionaries and random data generators}
+\title{epidict: Epidemiology Data Dictionaries and Random Data Generators}
 \description{
-The 'R4EPIs' project \url{https://r4epi.github.io/sitrep} seeks to provide a set of standardized tools for analysis of outbreak and survey data in humanitarian aid settings. This package currently provides standardized data dictionaries from MSF OCA for outbreak scenarios (Acute Jaundice Syndrome, Cholera, Diphtheria, Measles, Meningitis) and surveys (Retrospective mortality and access to care, Malnutrition, Vaccination coverage and Event Based Surveillance). In addition, a data generator from these dictionaries is provided. It is also possible to read in any ODK format data dictionary.
+The 'R4EPIs' project \url{https://r4epi.github.io/sitrep/} seeks to provide a set of standardized tools for analysis of outbreak and survey data in humanitarian aid settings. This package currently provides standardized data dictionaries from Medecins Sans Frontieres Operational Centre Amsterdam for outbreak scenarios (Acute Jaundice Syndrome, Cholera, Diphtheria, Measles, Meningitis) and surveys (Retrospective mortality and access to care, Malnutrition, Vaccination coverage and Event Based Surveillance). In addition, a data generator from these dictionaries is provided. It is also possible to read in any Open Data Kit format data dictionary.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/R4EPI/epidict}
-  \item \url{https://r4epi.github.io/epidict}
+  \item \url{https://github.com/R4EPI/epidict/}
+  \item \url{https://r4epi.github.io/epidict/}
 }
 
 }
