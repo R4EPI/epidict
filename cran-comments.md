@@ -13,6 +13,7 @@
 
 All URLs and metadata issues noted in the previous submission have been corrected:
 - Updated Title field to title case.
+- possible misspelled words in DESCRIPTION are correct as is. 
 - Updated all URLs to canonical HTTPS versions with trailing slashes.
 - Updated lifecycle badge link to https://lifecycle.r-lib.org/articles/stages.html#maturing.
 - Spelled out acronyms.
