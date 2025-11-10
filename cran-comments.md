@@ -17,5 +17,6 @@ All URLs and metadata issues noted in the previous submission have been correcte
 - Updated lifecycle badge link to https://lifecycle.r-lib.org/articles/stages.html#maturing.
 - Spelled out acronyms.
 - description spacing fixed and link added to describe methods 
+- value descriptions added to functions 
 
 
