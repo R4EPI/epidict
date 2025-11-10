@@ -140,7 +140,8 @@ gen_data("Vaccination_long", varnames = "name", numcases = 100, org = "MSF")
 ## Cleaning data with the dictionaries
 
 You can use the dictionaries to clean the data via the
-[{matchmaker}](https://www.repidemicsconsortium.org/matchmaker) package:
+[{matchmaker}](https://www.repidemicsconsortium.org/matchmaker/)
+package:
 
 <details>
 
