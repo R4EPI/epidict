@@ -6,7 +6,7 @@ epidict
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/epidict)](https://CRAN.R-project.org/package=epidict)
 [![R-CMD-check](https://github.com/R4EPI/epidict/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/R4EPI/epidict/actions/workflows/R-CMD-check.yaml)
@@ -95,16 +95,16 @@ gen_data("Measles", varnames = "data_element_shortname", numcases = 100, org = "
 #> # A tibble: 100 × 52
 #>    case_number date_of_consultation_admis…¹ patient_facility_type patient_origin
 #>    <chr>       <date>                       <fct>                 <chr>         
-#>  1 A1          2018-03-16                   OP                    Village C     
-#>  2 A2          2018-03-21                   IP                    Village C     
-#>  3 A3          2018-02-12                   IP                    Village C     
-#>  4 A4          2018-04-22                   OP                    Village A     
-#>  5 A5          2018-01-05                   IP                    Village C     
-#>  6 A6          2018-04-04                   OP                    Village C     
-#>  7 A7          2018-01-14                   IP                    Village B     
-#>  8 A8          2018-04-06                   OP                    Village B     
-#>  9 A9          2018-02-27                   IP                    Village B     
-#> 10 A10         2018-04-01                   IP                    Village D     
+#>  1 A1          2018-03-02                   OP                    Village A     
+#>  2 A2          2018-03-19                   IP                    Village A     
+#>  3 A3          2018-03-16                   OP                    Village A     
+#>  4 A4          2018-01-02                   IP                    Village D     
+#>  5 A5          2018-03-30                   IP                    Village D     
+#>  6 A6          2018-02-25                   OP                    Village B     
+#>  7 A7          2018-02-10                   IP                    Village B     
+#>  8 A8          2018-02-22                   IP                    Village B     
+#>  9 A9          2018-02-10                   OP                    Village C     
+#> 10 A10         2018-01-17                   IP                    Village B     
 #> # ℹ 90 more rows
 #> # ℹ abbreviated name: ¹​date_of_consultation_admission
 #> # ℹ 48 more variables: age_years <int>, age_months <int>, age_days <int>,
@@ -116,16 +116,16 @@ gen_data("Vaccination_long", varnames = "name", numcases = 100, org = "MSF")
 #> # A tibble: 100 × 120
 #>    start end   today deviceid date       team_number village_name village_other
 #>    <lgl> <lgl> <lgl> <lgl>    <date>     <lgl>       <fct>        <lgl>        
-#>  1 NA    NA    NA    NA       2018-04-20 NA          village_3    NA           
-#>  2 NA    NA    NA    NA       2018-02-01 NA          other        NA           
-#>  3 NA    NA    NA    NA       2018-03-09 NA          village_9    NA           
-#>  4 NA    NA    NA    NA       2018-01-07 NA          village_1    NA           
-#>  5 NA    NA    NA    NA       2018-02-20 NA          village_4    NA           
-#>  6 NA    NA    NA    NA       2018-04-11 NA          village_10   NA           
-#>  7 NA    NA    NA    NA       2018-04-12 NA          village_2    NA           
-#>  8 NA    NA    NA    NA       2018-02-16 NA          village_5    NA           
-#>  9 NA    NA    NA    NA       2018-04-21 NA          village_2    NA           
-#> 10 NA    NA    NA    NA       2018-03-22 NA          village_4    NA           
+#>  1 NA    NA    NA    NA       2018-03-14 NA          village_1    NA           
+#>  2 NA    NA    NA    NA       2018-02-24 NA          other        NA           
+#>  3 NA    NA    NA    NA       2018-04-28 NA          village_1    NA           
+#>  4 NA    NA    NA    NA       2018-03-23 NA          village_5    NA           
+#>  5 NA    NA    NA    NA       2018-02-19 NA          village_1    NA           
+#>  6 NA    NA    NA    NA       2018-02-23 NA          other        NA           
+#>  7 NA    NA    NA    NA       2018-04-23 NA          village_4    NA           
+#>  8 NA    NA    NA    NA       2018-03-19 NA          village_10   NA           
+#>  9 NA    NA    NA    NA       2018-02-09 NA          village_8    NA           
+#> 10 NA    NA    NA    NA       2018-04-10 NA          village_8    NA           
 #> # ℹ 90 more rows
 #> # ℹ 112 more variables: cluster_number <dbl>, household_number <int>,
 #> #   households_building <int>, random_hh <int>, consent <chr>,
@@ -167,26 +167,26 @@ print(dat)
 #> # A tibble: 20 × 45
 #>    case_number date_of_consultation_admiss…¹ patient_origin age_years age_months
 #>    <chr>       <date>                        <chr>              <int>      <int>
-#>  1 A1          2018-04-22                    Village B             NA         30
-#>  2 A2          2018-03-17                    Village B             NA         NA
-#>  3 A3          2018-04-02                    Village A             13         NA
-#>  4 A4          2018-01-26                    Village C             83         NA
-#>  5 A5          2018-01-15                    Village A             NA         NA
-#>  6 A6          2018-03-11                    Village A             38         NA
-#>  7 A7          2018-04-17                    Village A             85         NA
-#>  8 A8          2018-04-16                    Village C             30         NA
-#>  9 A9          2018-03-16                    Village B             12         NA
-#> 10 A10         2018-01-29                    Village A             66         NA
-#> 11 A11         2018-04-17                    Village C             35         NA
-#> 12 A12         2018-01-04                    Village A             10         NA
-#> 13 A13         2018-02-28                    Village A              6         NA
-#> 14 A14         2018-04-25                    Village C             NA         NA
-#> 15 A15         2018-04-06                    Village A             21         NA
-#> 16 A16         2018-04-29                    Village A             44         NA
-#> 17 A17         2018-02-22                    Village D             17         NA
-#> 18 A18         2018-03-07                    Village A             82         NA
-#> 19 A19         2018-03-29                    Village B              8         NA
-#> 20 A20         2018-04-21                    Village D             64         NA
+#>  1 A1          2018-02-01                    Village D             25         NA
+#>  2 A2          2018-02-17                    Village A             72         NA
+#>  3 A3          2018-04-29                    Village D             79         NA
+#>  4 A4          2018-02-15                    Village A             NA         19
+#>  5 A5          2018-03-13                    Village C             40         NA
+#>  6 A6          2018-01-06                    Village A             32         NA
+#>  7 A7          2018-01-26                    Village D             16         NA
+#>  8 A8          2018-03-06                    Village B             25         NA
+#>  9 A9          2018-02-22                    Village D             10         NA
+#> 10 A10         2018-03-29                    Village D             54         NA
+#> 11 A11         2018-04-13                    Village B             69         NA
+#> 12 A12         2018-02-26                    Village B              6         NA
+#> 13 A13         2018-04-27                    Village D             10         NA
+#> 14 A14         2018-02-05                    Village B              4         NA
+#> 15 A15         2018-02-05                    Village C             23         NA
+#> 16 A16         2018-03-25                    Village A             36         NA
+#> 17 A17         2018-02-01                    Village D              3         NA
+#> 18 A18         2018-04-21                    Village C             20         NA
+#> 19 A19         2018-04-08                    Village C             10         NA
+#> 20 A20         2018-03-27                    Village C              3         NA
 #> # ℹ abbreviated name: ¹​date_of_consultation_admission
 #> # ℹ 40 more variables: age_days <int>, sex <fct>, pregnant <fct>,
 #> #   trimester <fct>, foetus_alive_at_admission <fct>, exit_status <fct>,
@@ -232,26 +232,26 @@ print(dat_clean)
 #> # A tibble: 20 × 45
 #>    case_number date_of_consultation_admiss…¹ patient_origin age_years age_months
 #>    <chr>       <date>                        <chr>              <int>      <int>
-#>  1 A1          2018-04-22                    Village B             NA         30
-#>  2 A2          2018-03-17                    Village B             NA         NA
-#>  3 A3          2018-04-02                    Village A             13         NA
-#>  4 A4          2018-01-26                    Village C             83         NA
-#>  5 A5          2018-01-15                    Village A             NA         NA
-#>  6 A6          2018-03-11                    Village A             38         NA
-#>  7 A7          2018-04-17                    Village A             85         NA
-#>  8 A8          2018-04-16                    Village C             30         NA
-#>  9 A9          2018-03-16                    Village B             12         NA
-#> 10 A10         2018-01-29                    Village A             66         NA
-#> 11 A11         2018-04-17                    Village C             35         NA
-#> 12 A12         2018-01-04                    Village A             10         NA
-#> 13 A13         2018-02-28                    Village A              6         NA
-#> 14 A14         2018-04-25                    Village C             NA         NA
-#> 15 A15         2018-04-06                    Village A             21         NA
-#> 16 A16         2018-04-29                    Village A             44         NA
-#> 17 A17         2018-02-22                    Village D             17         NA
-#> 18 A18         2018-03-07                    Village A             82         NA
-#> 19 A19         2018-03-29                    Village B              8         NA
-#> 20 A20         2018-04-21                    Village D             64         NA
+#>  1 A1          2018-02-01                    Village D             25         NA
+#>  2 A2          2018-02-17                    Village A             72         NA
+#>  3 A3          2018-04-29                    Village D             79         NA
+#>  4 A4          2018-02-15                    Village A             NA         19
+#>  5 A5          2018-03-13                    Village C             40         NA
+#>  6 A6          2018-01-06                    Village A             32         NA
+#>  7 A7          2018-01-26                    Village D             16         NA
+#>  8 A8          2018-03-06                    Village B             25         NA
+#>  9 A9          2018-02-22                    Village D             10         NA
+#> 10 A10         2018-03-29                    Village D             54         NA
+#> 11 A11         2018-04-13                    Village B             69         NA
+#> 12 A12         2018-02-26                    Village B              6         NA
+#> 13 A13         2018-04-27                    Village D             10         NA
+#> 14 A14         2018-02-05                    Village B              4         NA
+#> 15 A15         2018-02-05                    Village C             23         NA
+#> 16 A16         2018-03-25                    Village A             36         NA
+#> 17 A17         2018-02-01                    Village D              3         NA
+#> 18 A18         2018-04-21                    Village C             20         NA
+#> 19 A19         2018-04-08                    Village C             10         NA
+#> 20 A20         2018-03-27                    Village C              3         NA
 #> # ℹ abbreviated name: ¹​date_of_consultation_admission
 #> # ℹ 40 more variables: age_days <int>, sex <fct>, pregnant <fct>,
 #> #   trimester <fct>, foetus_alive_at_admission <fct>, exit_status <fct>,

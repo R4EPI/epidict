@@ -16,5 +16,6 @@ All URLs and metadata issues noted in the previous submission have been correcte
 - Updated all URLs to canonical HTTPS versions with trailing slashes.
 - Updated lifecycle badge link to https://lifecycle.r-lib.org/articles/stages.html#maturing.
 - Spelled out acronyms.
+- description spacing fixed and link added to describe methods 
 
 

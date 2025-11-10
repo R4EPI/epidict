@@ -1,8 +1,8 @@
 #' MSF data dictionaries and dummy datasets
 #'
 #' These function produce MSF dictionaries based on DHIS2 (for OCA outbreaks)
-#' and ODK (for intersectional outbreaks and surveys) data sets defining the 
-#' data element name, code, short names, types, and key/value pairs for 
+#' and ODK (for intersectional outbreaks and surveys) data sets defining the
+#' data element name, code, short names, types, and key/value pairs for
 #' translating the codes into human-readable format.
 #'
 #' @param dictionary Specify which dictionary you would like to use.
@@ -12,9 +12,9 @@
 #'   - MSF OCA surveys include "Mortality", "Nutrition", "Vaccination_long",
 #'    "Vaccination_short" and "ebs"
 #'
-#' @param tibble If `TRUE` (default), return data dictionary as a 
-#'    tidyverse tibble otherwise will return a list. 
-#' 
+#' @param tibble If `TRUE` (default), return data dictionary as a
+#'    tidyverse tibble otherwise will return a list.
+#'
 #' @param long If `TRUE` (default), the returned data dictionary is in long
 #'   format with each option getting one row. If `FALSE`, then two data frames
 #'   are returned, one with variables and the other with content options.
@@ -24,7 +24,13 @@
 #'   called "options", which can be expanded with [tidyr::unnest()]. This only
 #'   works if `long = TRUE`.
 #'
-#' @seealso [read_dict()] [gen_data()] [matchmaker::match_df()] 
+#' @return A data frame (tibble) containing the specified MSF data dictionary.
+#'   If `long = TRUE`, each variable-option pair is represented as a row.
+#'   If `compact = TRUE`, the options are nested as a data frame column named
+#'   "options". If `long = FALSE`, a list is returned with two data frames:
+#'   `dictionary` and `options`.
+#'
+#' @seealso [read_dict()] [gen_data()] [matchmaker::match_df()]
 #' @export
 #' @examples
 #'
@@ -54,16 +60,16 @@
 #'     print(dat_clean)
 #'   })
 #' }
-msf_dict <- function(dictionary, 
-                     tibble = TRUE, 
+msf_dict <- function(dictionary,
+                     tibble = TRUE,
                      long = TRUE,
                      compact = TRUE) {
-  
-  # define dictionary types 
+
+  # define dictionary types
   dict <- get_dictionary(dictionary, org = "MSF")
   disease <- unlist(dict, use.names = FALSE)
   is_survey <- length(dict$survey) == 1
-  format <- ifelse(is_survey | grepl("_intersectional", disease), 
+  format <- ifelse(is_survey | grepl("_intersectional", disease),
                   "ODK", "DHIS2")
 
   if (length(disease) == 0) {
@@ -82,7 +88,7 @@ msf_dict <- function(dictionary,
   # get excel file path (need to specify the file name)
   path <- system.file("extdata", name, package = "epidict")
 
-  read_dict(path = path, sheet = disease, format = format, 
+  read_dict(path = path, sheet = disease, format = format,
             tibble = tibble, long = long, compact = compact)
 
 }
