@@ -28,6 +28,13 @@ where each row represents a single variable and a nested data frame column
 called "options", which can be expanded with \code{\link[tidyr:unnest]{tidyr::unnest()}}. This only
 works if \code{long = TRUE}.}
 }
+\value{
+A data frame (tibble) containing the specified MSF data dictionary.
+If \code{long = TRUE}, each variable-option pair is represented as a row.
+If \code{compact = TRUE}, the options are nested as a data frame column named
+"options". If \code{long = FALSE}, a list is returned with two data frames:
+\code{dictionary} and \code{options}.
+}
 \description{
 These function produce MSF dictionaries based on DHIS2 (for OCA outbreaks)
 and ODK (for intersectional outbreaks and surveys) data sets defining the

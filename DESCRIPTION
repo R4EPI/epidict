@@ -2,43 +2,31 @@ Package: epidict
 Title: Epidemiology Data Dictionaries and Random Data Generators
 Version: 0.1.0
 Authors@R: c(
-    person(given = "Alexander",
-           family = "Spina",
-           email = "aspina@appliedepi.org", 
-           comment = c(ORCID = "0000-0001-8425-1867"),
-           role = c("aut", "cre")),
-    person(given = "Zhian N.",
-           family = "Kamvar",
-           role = c("aut"),
-           email = "zkamvar@gmail.com",
+    person("Alexander", "Spina", , "aspina@appliedepi.org", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-8425-1867")),
+    person("Zhian N.", "Kamvar", , "zkamvar@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0003-1458-7108")),
-    person(given = "Lukas",
-           family = "Richter",
-           role = c("aut")),
-    person(given = "Patrick",
-           family = "Keating",
-           role = c("aut")),
-    person(given = "Annick",
-           family = "Lenglet",
-           role = c("ctb")), 
-    person("Applied Epi Incorporated", 
-           role = "cph"), 
-    person("Medecins Sans Frontieres Operational Centre Amsterdam", 
-           role = "fnd"))
-Description: The 'R4EPIs' project <https://r4epi.github.io/sitrep/> seeks to provide 
-    a set of standardized tools for analysis of outbreak and survey data in
-    humanitarian aid settings. This package currently provides standardized data
-    dictionaries from Medecins Sans Frontieres Operational Centre Amsterdam 
-    for outbreak scenarios (Acute Jaundice Syndrome, Cholera, Diphtheria, 
-    Measles, Meningitis) and surveys (Retrospective mortality and access to care, 
-    Malnutrition, Vaccination coverage and Event Based Surveillance). In addition, 
-    a data generator from these dictionaries is provided. It is also possible to 
-    read in any Open Data Kit format data dictionary. 
-URL: https://github.com/R4EPI/epidict/,
-    https://r4epi.github.io/epidict/
+    person("Lukas", "Richter", role = "aut"),
+    person("Patrick", "Keating", role = "aut"),
+    person("Annick", "Lenglet", role = "ctb"),
+    person("Applied Epi Incorporated", role = "cph"),
+    person("Medecins Sans Frontieres Operational Centre Amsterdam", role = "fnd")
+  )
+Description: The 'R4EPIs' project <https://r4epi.github.io/sitrep/> seeks
+    to provide a set of standardized tools for analysis of outbreak and
+    survey data in humanitarian aid settings. This package currently
+    provides standardized data dictionaries from Medecins Sans Frontieres
+    Operational Centre Amsterdam for outbreak scenarios (Acute Jaundice
+    Syndrome, Cholera, Diphtheria, Measles, Meningitis) and surveys
+    (Retrospective mortality and access to care, Malnutrition, Vaccination
+    coverage and Event Based Surveillance) - as described in the following
+    <https://scienceportal.msf.org/assets/standardised-mortality-surveys?utm_source=chatgpt.com>.
+    In addition, a data generator from these dictionaries is provided. It
+    is also possible to read in any Open Data Kit format data dictionary.
 License: GPL-3
+URL: https://github.com/R4EPI/epidict/, https://r4epi.github.io/epidict/
 Imports: 
-    clipr, 
+    clipr,
     dplyr,
     readxl,
     rlang,
@@ -48,14 +36,15 @@ Imports:
     utils
 Suggests: 
     covr,
-    DT, 
+    DT,
     knitr,
     matchmaker,
     rmarkdown,
-    testthat (>= 2.1.0), 
+    testthat (>= 2.1.0),
     withr
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-VignetteBuilder: knitr

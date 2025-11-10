@@ -27,6 +27,12 @@ where each row represents a single variable and a nested data frame column
 called "options", which can be expanded with \code{\link[tidyr:unnest]{tidyr::unnest()}}. This only
 works if \code{long = TRUE}.}
 }
+\value{
+If \code{long = TRUE}, returns a tibble of the merged dictionary and
+value options. If \code{long = FALSE}, returns a list with elements \code{dictionary}
+and \code{options}. If \code{compact = TRUE}, options are nested as a column of
+data frames under "options".
+}
 \description{
 These function read dictionaries in ODK and DHIS2  formats, and reformats them
 for dataset recoding into human-readable format.

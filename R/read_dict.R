@@ -23,6 +23,11 @@
 #'   called "options", which can be expanded with [tidyr::unnest()]. This only
 #'   works if `long = TRUE`.
 #'
+#' @return If `long = TRUE`, returns a tibble of the merged dictionary and
+#'   value options. If `long = FALSE`, returns a list with elements `dictionary`
+#'   and `options`. If `compact = TRUE`, options are nested as a column of
+#'   data frames under "options".
+#'
 #' @importFrom readxl read_excel
 #' @importFrom dplyr bind_rows left_join group_by mutate ungroup select distinct starts_with n
 #' @importFrom tidyr nest
