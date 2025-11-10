@@ -89,6 +89,14 @@ works if <code>long = TRUE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A data frame (tibble) containing the specified MSF data dictionary.
+If <code>long = TRUE</code>, each variable-option pair is represented as a row.
+If <code>compact = TRUE</code>, the options are nested as a data frame column named
+"options". If <code>long = FALSE</code>, a list is returned with two data frames:
+<code>dictionary</code> and <code>options</code>.</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="read_dict.html">read_dict()</a></code> <code><a href="gen_data.html">gen_data()</a></code> <code><a href="https://www.repidemicsconsortium.org/matchmaker/reference/match_df.html" class="external-link">matchmaker::match_df()</a></code></p></div>
     </div>
@@ -220,7 +228,7 @@ works if <code>long = TRUE</code>.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
