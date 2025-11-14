@@ -2,6 +2,8 @@
 
 ## epidict 0.1.0
 
+CRAN release: 2025-11-13
+
 - First CRAN release
 - Separated out functions for reading dictionaries
 - Created generic function for renaming variables based on a dictionary
