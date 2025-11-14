@@ -20,7 +20,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/R4EPI/epidict/blob/v0.1.0/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/R4EPI/epidict/blob/master/DESCRIPTION)
 
 Spina A, Kamvar Z, Richter L, Keating P (2025). *epidict: Epidemiology
 Data Dictionaries and Random Data Generators*. R package version 0.1.0,
