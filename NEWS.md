@@ -1,3 +1,5 @@
+# epidict 0.2.0
+
 # epidict 0.1.0
 * First CRAN release 
 * Separated out functions for reading dictionaries 

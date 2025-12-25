@@ -1,6 +1,6 @@
 Package: epidict
 Title: Epidemiology Data Dictionaries and Random Data Generators
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
     person("Alexander", "Spina", , "aspina@appliedepi.org", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8425-1867")),
