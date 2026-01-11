@@ -3,6 +3,7 @@
 export(dict_rename_helper)
 export(gen_data)
 export(msf_dict)
+export(msf_dict_rename_helper)
 export(read_dict)
 importFrom(clipr,write_clip)
 importFrom(dplyr,bind_rows)

@@ -7,17 +7,8 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 note
 
-* This is a new submission to CRAN.*
-
-All URLs and metadata issues noted in the previous submission have been corrected:
-- Updated Title field to title case.
-- possible misspelled words in DESCRIPTION are correct as is. 
-- Updated all URLs to canonical HTTPS versions with trailing slashes.
-- Updated lifecycle badge link to https://lifecycle.r-lib.org/articles/stages.html#maturing.
-- Spelled out acronyms.
-- description spacing fixed and link added to describe methods 
-- value descriptions added to functions 
+- new function added for a minor release
 
 
