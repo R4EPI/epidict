@@ -9,5 +9,8 @@
   : Generate random linelist or survey data
 - [`msf_dict()`](https://r4epi.github.io/epidict/reference/msf_dict.md)
   : MSF data dictionaries and dummy datasets
+- [`msf_dict_rename_helper()`](https://r4epi.github.io/epidict/reference/msf_dict_rename_helper.md)
+  : Helper for aligning your data to MSF standardised dictionaries and
+  analysis templates.
 - [`read_dict()`](https://r4epi.github.io/epidict/reference/read_dict.md)
   : Data dictionaries

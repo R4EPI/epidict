@@ -1,5 +1,11 @@
 # Changelog
 
+## epidict 0.2.0
+
+CRAN release: 2026-01-11
+
+- Reinstate msf_dict_rename_helper() with sitrep in DESCRIPTION suggests
+
 ## epidict 0.1.0
 
 CRAN release: 2025-11-13

@@ -20,16 +20,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/R4EPI/epidict/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/R4EPI/epidict/blob/v0.2.0/DESCRIPTION)
 
-Spina A, Kamvar Z, Richter L, Keating P (2025). *epidict: Epidemiology
-Data Dictionaries and Random Data Generators*. R package version 0.1.0,
+Spina A, Kamvar Z, Richter L, Keating P (2026). *epidict: Epidemiology
+Data Dictionaries and Random Data Generators*. R package version 0.2.0,
 <https://github.com/R4EPI/epidict/>.
 
     @Manual{,
       title = {epidict: Epidemiology Data Dictionaries and Random Data Generators},
       author = {Alexander Spina and Zhian N. Kamvar and Lukas Richter and Patrick Keating},
-      year = {2025},
-      note = {R package version 0.1.0},
+      year = {2026},
+      note = {R package version 0.2.0},
       url = {https://github.com/R4EPI/epidict/},
     }
