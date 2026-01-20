@@ -4,7 +4,7 @@
 \alias{msf_dict}
 \title{MSF data dictionaries and dummy datasets}
 \usage{
-msf_dict(dictionary, tibble = TRUE, long = TRUE, compact = TRUE)
+msf_dict(dictionary, tibble = TRUE, long = TRUE, compact = TRUE, clean = TRUE)
 }
 \arguments{
 \item{dictionary}{Specify which dictionary you would like to use.
@@ -27,6 +27,9 @@ are returned, one with variables and the other with content options.}
 where each row represents a single variable and a nested data frame column
 called "options", which can be expanded with \code{\link[tidyr:unnest]{tidyr::unnest()}}. This only
 works if \code{long = TRUE}.}
+
+\item{clean}{If \code{TRUE} (default), then will clean variable names and variable options.
+This will set text to lower snake case and remove any accents.}
 }
 \value{
 A data frame (tibble) containing the specified MSF data dictionary.

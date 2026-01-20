@@ -22,6 +22,9 @@
 #'   where each row represents a single variable and a nested data frame column
 #'   called "options", which can be expanded with [tidyr::unnest()]. This only
 #'   works if `long = TRUE`.
+#' 
+#' @param clean If `TRUE` (default), then will clean variable names and variable options. 
+#'   This will set text to lower snake case and remove any accents. 
 #'
 #' @return If `long = TRUE`, returns a tibble of the merged dictionary and
 #'   value options. If `long = FALSE`, returns a list with elements `dictionary`
@@ -38,7 +41,7 @@
 
 
 read_dict <- function(path, sheet, format,
-                     tibble = TRUE, long = TRUE, compact = TRUE) {
+                     tibble = TRUE, long = TRUE, compact = TRUE, clean = TRUE) {
 
   #### import dictionaries
 
@@ -82,8 +85,10 @@ read_dict <- function(path, sheet, format,
     # clean future var names
     # excel names (data element shortname)
     # csv names (data_element_name)
+    if (clean) {
     dat_dict$data_element_shortname <- tidy_labels(dat_dict$data_element_shortname)
     dat_dict$data_element_name <- tidy_labels(dat_dict$data_element_name)
+    }
 
     # Adding hardcoded var types to options list
     # 2 types added to - BOOLEAN, TRUE_ONLY
@@ -113,11 +118,13 @@ read_dict <- function(path, sheet, format,
 
     # remove back end codes from front end var in the options list
     dat_opts$option_name <- gsub("^\\[.*\\] ", "", dat_opts$option_name)
-  }
+    }
 
   if (format == "ODK") {
     # clean future var names
+    if (clean) {
     dat_dict$name <- tidy_labels(dat_dict$name)
+    }
 
     # prepend "option" to options dataset (otherwise duplicated column names on merge)
     colnames(dat_opts) <- sprintf("option_%s", colnames(dat_opts))
@@ -145,7 +152,7 @@ read_dict <- function(path, sheet, format,
     dat_opts <- dplyr::group_by(dat_opts, .data$option_list_name)
     dat_opts <- dplyr::mutate(dat_opts, option_order_in_set = seq(dplyr::n()))
     dat_opts <- dplyr::ungroup(dat_opts)
-  }
+    }
 
   #### reshape dictionaries
 
@@ -175,7 +182,7 @@ read_dict <- function(path, sheet, format,
 
 
 
-  # produce clean compact data dictionary for use in gen_data
+  # produce compact data dictionary for use in gen_data
   if (long && compact == TRUE) {
     squished <- dplyr::group_by(outtie, .data[[switch(
                   format,
@@ -205,4 +212,4 @@ read_dict <- function(path, sheet, format,
   # return dictionary dataset
   outtie
 
-}
+  }

@@ -4,7 +4,15 @@
 \alias{read_dict}
 \title{Data dictionaries}
 \usage{
-read_dict(path, sheet, format, tibble = TRUE, long = TRUE, compact = TRUE)
+read_dict(
+  path,
+  sheet,
+  format,
+  tibble = TRUE,
+  long = TRUE,
+  compact = TRUE,
+  clean = TRUE
+)
 }
 \arguments{
 \item{path}{Define the path to .xlsx file where the dictionary is stored}
@@ -26,6 +34,9 @@ are returned, one with variables and the other with content options.}
 where each row represents a single variable and a nested data frame column
 called "options", which can be expanded with \code{\link[tidyr:unnest]{tidyr::unnest()}}. This only
 works if \code{long = TRUE}.}
+
+\item{clean}{If \code{TRUE} (default), then will clean variable names and variable options.
+This will set text to lower snake case and remove any accents.}
 }
 \value{
 If \code{long = TRUE}, returns a tibble of the merged dictionary and

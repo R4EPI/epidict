@@ -23,6 +23,9 @@
 #'   where each row represents a single variable and a nested data frame column
 #'   called "options", which can be expanded with [tidyr::unnest()]. This only
 #'   works if `long = TRUE`.
+#' 
+#' @param clean If `TRUE` (default), then will clean variable names and variable options. 
+#'   This will set text to lower snake case and remove any accents. 
 #'
 #' @return A data frame (tibble) containing the specified MSF data dictionary.
 #'   If `long = TRUE`, each variable-option pair is represented as a row.
@@ -63,7 +66,8 @@
 msf_dict <- function(dictionary,
                      tibble = TRUE,
                      long = TRUE,
-                     compact = TRUE) {
+                     compact = TRUE, 
+                     clean = TRUE) {
 
   # define dictionary types
   dict <- get_dictionary(dictionary, org = "MSF")
@@ -89,6 +93,9 @@ msf_dict <- function(dictionary,
   path <- system.file("extdata", name, package = "epidict")
 
   read_dict(path = path, sheet = disease, format = format,
-            tibble = tibble, long = long, compact = compact)
+            tibble = tibble, long = long, compact = compact, 
+            clean = ifelse(
+              unlist(dict, use.names = FALSE) == "AJS_intersectional",
+              FALSE, clean))
 
 }
