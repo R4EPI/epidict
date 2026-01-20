@@ -1,3 +1,5 @@
+# epidict 0.3.0
+
 # epidict 0.2.0
 * Reinstate msf_dict_rename_helper() with sitrep in DESCRIPTION suggests 
 
