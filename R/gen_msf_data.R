@@ -124,15 +124,15 @@ gen_msf_data <- function(dictionary, dat_dict, is_survey, varnames = "name", num
     dis_output$post_partum[dis_output$pregnant == "Yes"] <- "No"
 
     # remove follow-up vaccine doses
-    dis_output$vacci_hev_dose2_yn[!grepl("Yes", dis_output$vacci_hev_dose1_yn)] <- NA
-    dis_output$vacci_hev_dose3_yn[!grepl("Yes", dis_output$vacci_hev_dose2_yn)] <- NA
+    dis_output$vacci_HEV_dose2_yn[!grepl("Yes", dis_output$vacci_HEV_dose1_yn)] <- NA
+    dis_output$vacci_HEV_dose3_yn[!grepl("Yes", dis_output$vacci_HEV_dose2_yn)] <- NA
   }
 
   if (dictionary == "Cholera_intersectional") {
     # add admin areas (have "current", different to other dictionaries - stupid)
-    dis_output$adm1_residencecurrent <- gen_eral(paste0("State ", 1:4), nrow(dis_output))
-    dis_output$adm2_residencecurrent <- gen_eral(paste0("County ", 1:4), nrow(dis_output))
-    dis_output$adm3_residencecurrent <- gen_eral(paste0("Locality ", 1:4), nrow(dis_output))
+    dis_output$adm1_residencecurent <- gen_eral(paste0("State ", 1:4), nrow(dis_output))
+    dis_output$adm2_residencecurent <- gen_eral(paste0("County ", 1:4), nrow(dis_output))
+    dis_output$adm3_residencecurent <- gen_eral(paste0("Locality ", 1:4), nrow(dis_output))
 
     # remove doses for those not vaccinated
     dis_output$vacci_doses[!grepl("Yes", dis_output$vacci_status)] <- NA

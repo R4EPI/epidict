@@ -9,6 +9,6 @@
 
 0 errors | 0 warnings | 0 note
 
-- new function added for a minor release
+- argument added to function for a minor release
 
 

@@ -1,3 +1,8 @@
+# epidict 0.3.0
+* Update intersectional dictionaries 
+* add a logical "clean" argument to `read_dict()` and `msf_dict()` with default TRUE
+* adjust so that for "AJS_intersectional" dictionaries it does not clean variable names
+
 # epidict 0.2.0
 * Reinstate msf_dict_rename_helper() with sitrep in DESCRIPTION suggests 
 
