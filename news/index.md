@@ -1,5 +1,18 @@
 # Changelog
 
+## epidict 0.3.0
+
+CRAN release: 2026-01-20
+
+- Update intersectional dictionaries
+- add a logical “clean” argument to
+  [`read_dict()`](https://r4epi.github.io/epidict/reference/read_dict.md)
+  and
+  [`msf_dict()`](https://r4epi.github.io/epidict/reference/msf_dict.md)
+  with default TRUE
+- adjust so that for “AJS_intersectional” dictionaries it does not clean
+  variable names
+
 ## epidict 0.2.0
 
 CRAN release: 2026-01-11

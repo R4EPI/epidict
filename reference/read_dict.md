@@ -6,7 +6,15 @@ them for dataset recoding into human-readable format.
 ## Usage
 
 ``` r
-read_dict(path, sheet, format, tibble = TRUE, long = TRUE, compact = TRUE)
+read_dict(
+  path,
+  sheet,
+  format,
+  tibble = TRUE,
+  long = TRUE,
+  compact = TRUE,
+  clean = TRUE
+)
 ```
 
 ## Arguments
@@ -43,6 +51,12 @@ read_dict(path, sheet, format, tibble = TRUE, long = TRUE, compact = TRUE)
   "options", which can be expanded with
   [`tidyr::unnest()`](https://tidyr.tidyverse.org/reference/unnest.html).
   This only works if `long = TRUE`.
+
+- clean:
+
+  If `TRUE` (default), then will clean variable names and variable
+  options. This will set text to lower snake case and remove any
+  accents.
 
 ## Value
 

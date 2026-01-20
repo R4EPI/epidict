@@ -8,7 +8,7 @@ pairs for translating the codes into human-readable format.
 ## Usage
 
 ``` r
-msf_dict(dictionary, tibble = TRUE, long = TRUE, compact = TRUE)
+msf_dict(dictionary, tibble = TRUE, long = TRUE, compact = TRUE, clean = TRUE)
 ```
 
 ## Arguments
@@ -44,6 +44,12 @@ msf_dict(dictionary, tibble = TRUE, long = TRUE, compact = TRUE)
   "options", which can be expanded with
   [`tidyr::unnest()`](https://tidyr.tidyverse.org/reference/unnest.html).
   This only works if `long = TRUE`.
+
+- clean:
+
+  If `TRUE` (default), then will clean variable names and variable
+  options. This will set text to lower snake case and remove any
+  accents.
 
 ## Value
 

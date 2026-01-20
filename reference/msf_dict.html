@@ -13,7 +13,7 @@ translating the codes into human-readable format."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">epidict</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,7 @@ translating the codes into human-readable format."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>MSF data dictionaries and dummy datasets</h1>
-      <small class="dont-index">Source: <a href="https://github.com/R4EPI/epidict/blob/master/R/msf_dict.R" class="external-link"><code>R/msf_dict.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/R4EPI/epidict/blob/v0.3.0/R/msf_dict.R" class="external-link"><code>R/msf_dict.R</code></a></small>
       <div class="d-none name"><code>msf_dict.Rd</code></div>
     </div>
 
@@ -54,7 +54,7 @@ translating the codes into human-readable format.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">msf_dict</span><span class="op">(</span><span class="va">dictionary</span>, tibble <span class="op">=</span> <span class="cn">TRUE</span>, long <span class="op">=</span> <span class="cn">TRUE</span>, compact <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">msf_dict</span><span class="op">(</span><span class="va">dictionary</span>, tibble <span class="op">=</span> <span class="cn">TRUE</span>, long <span class="op">=</span> <span class="cn">TRUE</span>, compact <span class="op">=</span> <span class="cn">TRUE</span>, clean <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -86,6 +86,11 @@ are returned, one with variables and the other with content options.</p></dd>
 where each row represents a single variable and a nested data frame column
 called "options", which can be expanded with <code><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">tidyr::unnest()</a></code>. This only
 works if <code>long = TRUE</code>.</p></dd>
+
+
+<dt id="arg-clean">clean<a class="anchor" aria-label="anchor" href="#arg-clean"></a></dt>
+<dd><p>If <code>TRUE</code> (default), then will clean variable names and variable options.
+This will set text to lower snake case and remove any accents.</p></dd>
 
 </dl></div>
     <div class="section level2">
