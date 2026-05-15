@@ -15,8 +15,8 @@
 #' }
 #'
 #' @param x A data frame.
-#' @param format Character; target format. Currently only \code{"odk"} is
-#'   supported.
+#' @param format Character; target format for writing. Currently only
+#'   \code{"odk"} is implemented; ignored when \code{path = NULL}.
 #' @param path Optional file path ending in \code{.xlsx}. If provided the
 #'   dictionary is written via [write_dict()] and returned invisibly. If
 #'   \code{NULL} (default) the epidict tibble is returned directly.
@@ -29,27 +29,42 @@
 #'   categorical. Default \code{20}.
 #' @param id_cols Character vector of column names to force to type \code{text}
 #'   regardless of content (e.g. unique identifiers).
-#' @param clean Logical; if \code{TRUE} (default) variable names and choice
-#'   values are converted to lower snake case via [tidy_labels()], matching
-#'   the behaviour of [read_dict()].
+#' @param clean Logical; if \code{TRUE}, variable names and choice values are
+#'   converted to lower snake case via [tidy_labels()]. Defaults to
+#'   \code{FALSE} so that names are preserved as-is.
+#' @param long Logical; if \code{TRUE} (default) the returned dictionary is in
+#'   long format. If \code{FALSE}, a list with elements \code{dictionary} and
+#'   \code{options} is returned as two separate flat data frames — useful for
+#'   copying into LLM chats or spreadsheets.
+#' @param compact Logical; if \code{TRUE} (default) and \code{long = TRUE},
+#'   returns a nested tibble with one row per variable and a nested
+#'   \code{options} list-column (same structure as [read_dict()] with
+#'   \code{compact = TRUE}). If \code{FALSE}, returns a fully flat long-format
+#'   tibble with one row per variable-option combination.
 #' @param ... Additional arguments passed to the format writer (e.g.
 #'   \code{form_title}, \code{form_id} for ODK). See [to_odk()].
 #'
-#' @return A tibble in epidict format (same structure as [read_dict()] with
-#'   \code{compact = TRUE}): one row per variable with columns \code{name},
-#'   \code{type}, \code{label}, \code{value_type}, \code{hint},
-#'   \code{required}, \code{relevant}, \code{constraint},
-#'   \code{constraint_message}, and a nested \code{options} column. Returned
-#'   invisibly when \code{path} is given.
+#' @return Depends on \code{long} and \code{compact}:
+#'   \itemize{
+#'     \item \code{long = TRUE, compact = TRUE}: nested tibble, one row per
+#'       variable with a nested \code{options} list-column.
+#'     \item \code{long = TRUE, compact = FALSE}: flat tibble, one row per
+#'       variable-option combination.
+#'     \item \code{long = FALSE}: list with elements \code{dictionary} (one row
+#'       per variable) and \code{options} (all choices as a flat data frame).
+#'   }
+#'   Returned invisibly when \code{path} is given.
 #'
 #' @importFrom tibble tibble
+#' @importFrom tidyr unnest
 #' @export
 gen_dict <- function(x, format = "odk", path = NULL, constraints = TRUE,
-                     max_choices = 20, id_cols = NULL, clean = TRUE, ...) {
+                     max_choices = 20, id_cols = NULL, clean = FALSE,
+                     long = TRUE, compact = TRUE, ...) {
   stopifnot(is.data.frame(x))
-  format <- match.arg(format, "odk")
 
-  dict <- gen_dict_core(x,
+  # Always build in compact form; to_*() translators expect this structure
+  dict_compact <- gen_dict_core(x,
     constraints = constraints,
     max_choices = max_choices,
     id_cols     = id_cols,
@@ -57,23 +72,24 @@ gen_dict <- function(x, format = "odk", path = NULL, constraints = TRUE,
   )
 
   if (!is.null(path)) {
-    write_dict(dict, path = path, format = format, ...)
-    invisible(dict)
-  } else {
-    dict
+    write_dict(dict_compact, path = path, format = format, ...)
   }
+
+  out <- dict_reshape(dict_compact, long = long, compact = compact)
+  if (!is.null(path)) invisible(out) else out
 }
 
 
 #' Write an epidict tibble to an Excel file
 #'
 #' Translates a dictionary tibble (as returned by [gen_dict()]) to the target
-#' format and writes it as an \code{.xlsx} file. Requires the \pkg{writexl}
-#' package.
+#' format and writes it as an \code{.xlsx} file using the \pkg{writexl}
+#' package. To add support for a new format, implement a \code{to_<format>()}
+#' function and register it in the \code{switch} below.
 #'
 #' @param dict A tibble in epidict format (output of [gen_dict()]).
 #' @param path File path to write (should end in \code{.xlsx}).
-#' @param format Character; target format. Currently only \code{"odk"}.
+#' @param format Character; target format. Currently \code{"odk"}.
 #' @param ... Additional arguments passed to the format translator (e.g.
 #'   \code{form_title}, \code{form_id} for [to_odk()]).
 #'
@@ -87,9 +103,11 @@ write_dict <- function(dict, path, format = "odk", ...) {
       call. = FALSE
     )
   }
-  format <- match.arg(format, "odk")
-  xlsform <- switch(format, odk = to_odk(dict, ...))
-  writexl::write_xlsx(xlsform, path = path)
+  sheets <- switch(format,
+    odk   = to_odk(dict, ...),
+    stop(sprintf("Dictionary format '%s' is not yet implemented.", format), call. = FALSE)
+  )
+  writexl::write_xlsx(sheets, path = path)
   message("Dictionary written to: ", path)
   invisible(path)
 }
@@ -103,7 +121,7 @@ write_dict <- function(dict, path, format = "odk", ...) {
 # this tibble and reshape it into their own sheet structure.
 
 gen_dict_core <- function(x, constraints = TRUE,
-                          max_choices = 20, id_cols = NULL, clean = TRUE) {
+                          max_choices = 20, id_cols = NULL, clean = FALSE) {
 
   col_names <- if (clean) tidy_labels(names(x)) else names(x)
 
@@ -251,4 +269,37 @@ dict_empty_options <- function() {
     option_order_in_set = integer(),
     stringsAsFactors    = FALSE
   )
+}
+
+
+# Reshape a compact epidict tibble into the requested output structure ---------
+#
+# Mirrors the long/compact behaviour of read_dict() so gen_dict() output can
+# be used interchangeably with read_dict() output downstream.
+
+dict_reshape <- function(dict, long, compact) {
+
+  if (!long) {
+    # Two flat data frames: dictionary (no options column) + options combined
+    opts_rows <- Filter(function(x) nrow(x) > 0L, dict$options)
+    opts <- if (length(opts_rows) > 0L) {
+      result <- do.call(rbind, opts_rows)
+      rownames(result) <- NULL
+      result
+    } else {
+      dict_empty_options()
+    }
+    return(list(
+      dictionary = dict[setdiff(names(dict), "options")],
+      options    = opts
+    ))
+  }
+
+  if (!compact) {
+    # Flat long tibble: one row per variable-option combination
+    return(tidyr::unnest(dict, cols = "options", keep_empty = TRUE))
+  }
+
+  # long = TRUE, compact = TRUE: already in the right shape
+  dict
 }
