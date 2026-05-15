@@ -34,15 +34,17 @@ Imports:
     tibble,
     tidyr,
     utils
-Suggests: 
+Suggests:
     covr,
     DT,
     knitr,
+    labelled,
     matchmaker,
     rmarkdown,
-    sitrep, 
+    sitrep,
     testthat (>= 2.1.0),
-    withr
+    withr,
+    writexl
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
